@@ -1,0 +1,483 @@
+---
+title: "CCA_desc_stats"
+author: "Kate Bray"
+date: "28 May 2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(corrplot)
+library(plyr)
+library(dplyr)
+library(psych)
+library(ggplot2)
+library(gridExtra)
+library(jtools)#for apa_theme
+library(AMR) #for freq function
+library(mctest) #multicollinearity checking
+library(GGally) #ggpairs
+library(ppcor) #pcor
+library(numform) #leading zeros
+library(apaTables)
+
+
+
+setwd("C:/Users/Kate/SkyDrive/PhD/CCA/CCA_scored_data/")#Read in scored dataframe
+cca_maindata <- read.csv("cca_maindata.csv", header=TRUE, stringsAsFactors = FALSE)
+my_dataset_scored <- read.csv("cca_data_scored.csv", header=TRUE, stringsAsFactors = FALSE)
+setwd("C:/Users/Kate/SkyDrive/PhD/CCA/CCA_raw_data/")#Read in the ethinicity 
+ethnic_race <- read.csv("37_F_T1_FollowUP_ParIV.csv", header=TRUE, stringsAsFactors = FALSE)
+```
+
+## Descriptive Statistics etc
+
+
+```{r}
+
+# Correlation plot --------------------------------------------------------------------------- 
+##Make the matrix
+corrmatrix <-  dplyr::select(cca_maindata, 
+                             aff_shar, cog_emp, emp_conc, emp_dist, silent_films_total, 
+                             negmood_phys, neg_selfest, ineff, intprobs, 
+                             scasseps, scassoc , scasphysinj , scasgad, scasocd, scasopanicag,
+                             gender,FSIQ, F_T1_P_education, seifa_irsad_aus_percent, age)
+
+
+M <- cor(corrmatrix, use = "complete.obs")
+colnames(M) <- c("Aff. Sharing", "Cog. Emp.", "Emp. Concern", "Emp. Distress",
+                 "Silent Films", "Neg. Mood", "Neg. Self-est.",
+                 "Ineff.", "Interpersonal", "Sep. Anx.", "Social Anx.",
+                 "Phys. Injury", "GAD", "OCD",
+                 "Panic/Ag.","Sex","IQ","Parent Ed.","Neighborhood", "Age")
+rownames(M) <- c("Aff. Sharing", "Cog. Emp.", "Emp. Concern", "Emp. Distress",
+                 "Silent Films", "Neg. Mood", "Neg. Self-est.",
+                 "Ineff.", "Interpersonal", "Sep. Anx.", "Social Anx.",
+                 "Phys. Injury", "GAD", "OCD",
+                 "Panic/Ag.","Sex","IQ","Parent Ed.","Neighborhood", "Age")
+res1 <- cor.mtest(corrmatrix, use = "complete.obs", 
+                  conf.level = .95)
+#2 different options for plots below
+corrplot(M, method = "circle", order = "hclust", 
+         tl.col = "black", tl.srt = 45,tl.cex = 1,
+         p.mat = res1$p, sig.level = .05, insig = "blank")
+
+corrplot.mixed(M,  order = "hclust", lower.col = "black", number.cex = .7,
+               tl.col = "black", tl.srt = 45,tl.cex = 1, tl.pos= "lt",
+               p.mat = res1$p, sig.level = .05, insig = "blank") 
+
+#APA table - 
+# gives ms, sds and correlations, table too big need to make smaller and sort out p-values
+apa.cor.table(corrmatrix , filename="C:/Users/Kate/SkyDrive/PhD/CCA/plots/Table1_APA.doc", table.number=1)
+
+
+# Descriptive statistics -------------------------------------------------------------------
+
+psych::describe(cca_maindata)
+
+#gender
+plyr::count(cca_maindata$gender)
+ summarytools::freq(cca_maindata$gender, order = "freq")
+
+mean(cca_maindata$age)
+sd(cca_maindata$age)
+range(cca_maindata$age)
+
+cca_maindata$gender <- as.factor(cca_maindata$gender)
+cca_maindata$gender <- factor(cca_maindata$gender,
+                              labels = c("male", "female"))
+
+
+plyr::count(cca_maindata$F_T1_P_education)
+summarytools::freq(cca_maindata$F_T1_P_education, order = "freq")
+
+mean(cca_maindata$seifa_irsad_aus_percent)
+sd(cca_maindata$seifa_irsad_aus_percent)
+
+cca_maindata$quintiles <- as.factor(car::recode(cca_maindata$seifa_irsad_aus_percent, " 0:20='Q1';21:40='Q2';
+                                      41:60='Q3'; 61:80='Q4'; else='Q5'"))
+summarytools::freq(cca_maindata$quintiles, order = "freq")
+
+mean(cca_maindata$FSIQ)
+sd(cca_maindata$FSIQ)
+
+#Ethnicity
+
+list.of.data.frames = list(cca_maindata, ethnic_race)
+tempdataframe= Reduce(function(...) merge(..., by = "FACTS_ID", all=T), list.of.data.frames)
+
+cca_ethnicrace<- dplyr::select(tempdataframe, FACTS_ID, age, X12_cEthnicity, X13_cRace)
+
+ccaonlyethnic<- cca_ethnicrace[which(!is.na(cca_ethnicrace$age)),]
+
+write.csv(ccaonlyethnic, file = "C:/Users/Kate/SkyDrive/PhD/CCA/CCA_scored_data/ccaonlyethnic.csv")
+
+#This next step has been manually coded - can just read in this file if rerunning without changes, or recode if have changed number of participnats
+setwd("C:/Users/Kate/SkyDrive/PhD/CCA/CCA_scored_data/")
+ethnic_coded <- read.csv("ccaonlyethnic_coded.csv", header=TRUE, stringsAsFactors = FALSE)
+
+###codes for race/ethnicity
+##Race
+#1-White
+#2-Asian
+#3-Mixed
+#4-Other
+##Ethnicity
+#1-Aus/NZ
+#2-Aus/Euro
+#3-Aus/Asia
+#4-Asian ethnicity
+#5-European Ethnicity
+#6-Other
+
+
+ summarytools::freq(ethnic_coded$coded_race, order = "freq")
+ summarytools::freq(ethnic_coded$coded_ethnicity, order = "freq")
+
+##Cronbach's alpha
+#find the Fs from the cca set
+ID <- cca_maindata$FACTS_ID
+#subset the original set by just the participants who were in the cca dataset
+cronbach_set <- my_dataset_scored[my_dataset_scored$FACTS_ID %in% ID, ]
+#collect together the items for each measure
+##Aff shar
+cron_aff_shar<- cronbach_set[,c("F_T1_C_EMPATHY_1_5","F_T1_C_EMPATHY_1_7","F_T1_C_EMPATHY_1_9","F_T1_C_EMPATHY_1_12")]
+psych::alpha(cron_aff_shar)
+cron_cog_emp<- cronbach_set[,c("F_T1_C_EMPATHY_1_1", "F_T1_C_EMPATHY_1_3","F_T1_C_EMPATHY_1_8","F_T1_C_EMPATHY_1_10")]
+psych::alpha(cron_cog_emp)
+cron_emp_conc<- cronbach_set[,c("F_T1_C_EMPATHY_1_2","F_T1_C_EMPATHY_1_4","F_T1_C_EMPATHY_1_6","F_T1_C_EMPATHY_1_11")]
+psych::alpha(cron_emp_conc)
+cron_emp_dist<- cronbach_set[,c("F_T1_C_EMPATHY_2_1","F_T1_C_EMPATHY_2_2","F_T1_C_EMPATHY_2_3")]
+psych::alpha(cron_emp_dist)
+cron_sil_films<- cronbach_set[,c("F_T1_C_SF_1","F_T1_C_SF_2","F_T1_C_SF_3","F_T1_C_SF_4","F_T1_C_SF_5","F_T1_C_SF_6")]
+psych::alpha(cron_sil_films)
+cron_negmood_phys<- cronbach_set[,c("F_T1_C_CDI_1","F_T1_C_CDI_9","F_T1_C_CDI_10","F_T1_C_CDI_15" , "F_T1_C_CDI_16" , "F_T1_C_CDI_17" ,
+                                 "F_T1_C_CDI_18","F_T1_C_CDI_26" , "F_T1_C_CDI_27")]
+psych::alpha(cron_negmood_phys, keys=c("F_T1_C_CDI_9","F_T1_C_CDI_10","F_T1_C_CDI_15" , "F_T1_C_CDI_17" ,
+                                       "F_T1_C_CDI_26" , "F_T1_C_CDI_27"))
+cron_neg_selfest<- cronbach_set[,c("F_T1_C_CDI_2","F_T1_C_CDI_6","F_T1_C_CDI_7" , "F_T1_C_CDI_8", "F_T1_C_CDI_13","F_T1_C_CDI_24")]
+psych::alpha(cron_neg_selfest, keys=c("F_T1_C_CDI_2","F_T1_C_CDI_6","F_T1_C_CDI_7" ,"F_T1_C_CDI_24"))
+cron_ineff<- cronbach_set[,c("F_T1_C_CDI_3" , "F_T1_C_CDI_4","F_T1_C_CDI_12", "F_T1_C_CDI_14","F_T1_C_CDI_20","F_T1_C_CDI_22", "F_T1_C_CDI_23", 
+                             "F_T1_C_CDI_28")]
+psych::alpha(cron_ineff, keys=c("F_T1_C_CDI_12", "F_T1_C_CDI_14","F_T1_C_CDI_20", "F_T1_C_CDI_23"))
+cron_intprobs<- cronbach_set[,c("F_T1_C_CDI_5","F_T1_C_CDI_11","F_T1_C_CDI_19","F_T1_C_CDI_21", "F_T1_C_CDI_25")]
+psych::alpha(cron_intprobs)
+cron_scasseps<- cronbach_set[,c("F_T1_C_SCAS_5","F_T1_C_SCAS_8","F_T1_C_SCAS_12","F_T1_C_SCAS_15" , 
+                                "F_T1_C_SCAS_16","F_T1_C_SCAS_44")]
+psych::alpha(cron_scasseps)
+cron_scassoc<- cronbach_set[,c("F_T1_C_SCAS_6","F_T1_C_SCAS_7","F_T1_C_SCAS_9","F_T1_C_SCAS_10" , 
+                               "F_T1_C_SCAS_29","F_T1_C_SCAS_35")]
+psych::alpha(cron_scassoc)
+cron_scasocd<- cronbach_set[,c("F_T1_C_SCAS_14","F_T1_C_SCAS_19","F_T1_C_SCAS_27","F_T1_C_SCAS_40" , 
+                               "F_T1_C_SCAS_41","F_T1_C_SCAS_42")]
+psych::alpha(cron_scasocd)
+cron_scasopanicag<- cronbach_set[,c("F_T1_C_SCAS_13","F_T1_C_SCAS_21","F_T1_C_SCAS_28","F_T1_C_SCAS_30" , 
+                                    "F_T1_C_SCAS_32","F_T1_C_SCAS_34","F_T1_C_SCAS_36","F_T1_C_SCAS_37","F_T1_C_SCAS_39")]
+psych::alpha(cron_scasopanicag)
+cron_scasphysinj<- cronbach_set[,c("F_T1_C_SCAS_2","F_T1_C_SCAS_18","F_T1_C_SCAS_23","F_T1_C_SCAS_25" , 
+                                   "F_T1_C_SCAS_33")]
+psych::alpha(cron_scasphysinj)
+cron_scasgad<- cronbach_set[,c("F_T1_C_SCAS_1","F_T1_C_SCAS_3","F_T1_C_SCAS_4","F_T1_C_SCAS_20" , 
+                               "F_T1_C_SCAS_22","F_T1_C_SCAS_24")]
+psych::alpha(cron_scasgad)
+
+
+# Violin plots displaying spread of data, means and standard deviations and split by gender -----------------------------
+#make sure you make gender as.factor - see above before you run these plots
+
+
+data_summary <- function(x) {
+  m <- mean(x)
+  ymin <- m-sd(x)
+  ymax <- m+sd(x)
+  return(c(y=m,ymin=ymin,ymax=ymax))
+}
+
+data_summary_alt <- function(x) {
+  m <- mean(x)
+  ymin <- 0
+  ymax <- m+sd(x)
+  return(c(y=m,ymin=ymin,ymax=ymax))
+}
+
+p1 <- ggplot(cca_maindata, aes(x=gender, y=aff_shar, color=gender)) + 
+  geom_violin()+ 
+  stat_summary(fun.data=data_summary)+
+  scale_color_manual(values=c("#000000", "#666666"))+
+  theme_apa()+
+  theme(panel.border = element_blank(),axis.line = element_line(), legend.position="none",
+        axis.title.x = element_blank(), axis.text.y =element_text(size=12, face = "bold"), 
+        axis.text.x  =element_text(size=12, face = "bold")) +
+  labs(x= "Gender", y="Affective Sharing")+ 
+  scale_y_continuous(limits = c(4, 20))
+
+p2 <- ggplot(cca_maindata, aes(x=gender, y=cog_emp, color=gender)) + 
+  geom_violin() + 
+  stat_summary(fun.data=data_summary) +
+  scale_color_manual(values=c("#000000", "#666666")) +
+  theme_apa()+
+  theme(panel.border = element_blank(),axis.line = element_line(),legend.position="none",
+        axis.title.x = element_blank(), axis.text.y =element_text(size=12, face = "bold"), 
+        axis.text.x  =element_text(size=12, face = "bold")) + 
+  labs(x= "Gender", y="Cognitive Empathy") + 
+  scale_y_continuous(limits = c(4, 20))
+
+p3 <- ggplot(cca_maindata, aes(x=gender, y=emp_conc, color=gender)) + 
+  geom_violin() + 
+  stat_summary(fun.data=data_summary) +
+  scale_color_manual(values=c("#000000", "#666666")) +
+  theme_apa()+
+  theme(panel.border = element_blank(),axis.line = element_line(),legend.position="none",
+        axis.title.x = element_blank(), axis.text.y =element_text(size=12, face = "bold"), 
+        axis.text.x  =element_text(size=12, face = "bold")) + 
+  labs(x= "Gender", y="Empathic Concern") + 
+  scale_y_continuous(limits = c(4, 20))
+
+p4 <- ggplot(cca_maindata, aes(x=gender, y=emp_dist, color=gender)) + 
+  geom_violin() + 
+  stat_summary(fun.data=data_summary) +
+  scale_color_manual(values=c("#000000", "#666666")) +
+  theme_apa()+
+  theme(panel.border = element_blank(),axis.line = element_line(),legend.position="none",
+        axis.title.x = element_blank(), axis.text.y =element_text(size=12, face = "bold"), 
+        axis.text.x  =element_text(size=12, face = "bold")) + 
+  labs(x= "Gender", y="Empathic Distress") + 
+  scale_y_continuous(limits = c(3, 18))
+
+p0 <- ggplot(cca_maindata, aes(x=gender, y=silent_films_total, color=gender)) + 
+  geom_violin() + 
+  stat_summary(fun.data=data_summary) +
+  scale_color_manual(values=c("#000000", "#666666")) +
+  theme_apa()+
+  theme(panel.border = element_blank(),axis.line = element_line(),legend.position="none",
+        axis.title.x = element_blank(), axis.text.y =element_text(size=12, face = "bold"), 
+        axis.text.x  =element_text(size=12, face = "bold")) + 
+  labs(x= "Gender", y="Silent Films") + 
+  scale_y_continuous(limits = c(0, 12))
+
+
+
+p5 <- ggplot(cca_maindata, aes(x=gender, y=negmood_phys, color=gender)) + 
+  geom_violin() + 
+  stat_summary(fun.data=data_summary) +
+  scale_color_manual(values=c("#000000", "#666666")) +
+  theme_apa()+
+  theme(panel.border = element_blank(),axis.line = element_line(),legend.position="none",
+        axis.title.x = element_blank(), axis.text.y =element_text(size=12, face = "bold"), 
+        axis.text.x  =element_text(size=12, face = "bold")) + 
+  labs(x= "Gender", y="Negative Mood/Physical Symptoms") + 
+  scale_y_continuous(limits = c(0, 18))
+
+p6 <- ggplot(cca_maindata, aes(x=gender, y=neg_selfest, color=gender)) + 
+  geom_violin() + 
+  stat_summary(fun.data=data_summary_alt) +
+  scale_color_manual(values=c("#000000", "#666666")) +
+  theme_apa()+
+  theme(panel.border = element_blank(),axis.line = element_line(),legend.position="none",
+        axis.title.x = element_blank(), axis.text.y =element_text(size=12, face = "bold"), 
+        axis.text.x  =element_text(size=12, face = "bold")) + 
+  labs(x= "Gender", y="Negative Self-esteem") + 
+  scale_y_continuous(limits = c(0, 12.00))
+
+p7 <- ggplot(cca_maindata, aes(x=gender, y=ineff, color=gender)) + 
+  geom_violin() + 
+  stat_summary(fun.data=data_summary) +
+  scale_color_manual(values=c("#000000", "#666666")) +
+  theme_apa()+
+  theme(panel.border = element_blank(),axis.line = element_line(),legend.position="none",
+        axis.title.x = element_blank(), axis.text.y =element_text(size=12, face = "bold"), 
+        axis.text.x  =element_text(size=12, face = "bold")) + 
+  labs(x= "Gender", y="Inefficacy") + 
+  scale_y_continuous(limits = c(0, 16))
+
+p8 <- ggplot(cca_maindata, aes(x=gender, y=intprobs, color=gender)) + 
+  geom_violin() + 
+  stat_summary(fun.data=data_summary_alt) +
+  scale_color_manual(values=c("#000000", "#666666")) +
+  theme_apa()+
+  theme(panel.border = element_blank(),axis.line = element_line(),legend.position="none",
+        axis.title.x = element_blank(), axis.text.y =element_text(size=12, face = "bold"), 
+        axis.text.x  =element_text(size=12, face = "bold")) + 
+  labs(x= "Gender", y="Interpersonal Problems") + 
+  scale_y_continuous(limits = c(0, 10))
+
+p9 <- ggplot(cca_maindata, aes(x=gender, y=scasseps, color=gender)) + 
+  geom_violin() + 
+  stat_summary(fun.data=data_summary) +
+  scale_color_manual(values=c("#000000", "#666666")) +
+  theme_apa()+
+  theme(panel.border = element_blank(),axis.line = element_line(),legend.position="none",
+        axis.title.x = element_blank(), axis.text.y =element_text(size=12, face = "bold"), 
+        axis.text.x  =element_text(size=12, face = "bold")) + 
+  labs(x= "Gender", y="Seperation Anxiety") + 
+  scale_y_continuous(limits = c(0, 18))
+
+p10 <- ggplot(cca_maindata, aes(x=gender, y=scassoc, color=gender)) + 
+  geom_violin() + 
+  stat_summary(fun.data=data_summary) +
+  scale_color_manual(values=c("#000000", "#666666")) +
+  theme_apa()+
+  theme(panel.border = element_blank(),axis.line = element_line(),legend.position="none",
+        axis.title.x = element_blank(), axis.text.y =element_text(size=12, face = "bold"), 
+        axis.text.x  =element_text(size=12, face = "bold")) + 
+  labs(x= "Gender", y="Social Phobia") + 
+  scale_y_continuous(limits = c(0, 18))
+
+p11 <- ggplot(cca_maindata, aes(x=gender, y=scasphysinj, color=gender)) + 
+  geom_violin() + 
+  stat_summary(fun.data=data_summary) +
+  scale_color_manual(values=c("#000000", "#666666")) +
+  theme_apa()+
+  theme(panel.border = element_blank(),axis.line = element_line(),legend.position="none",
+        axis.title.x = element_blank(), axis.text.y =element_text(size=12, face = "bold"), 
+        axis.text.x  =element_text(size=12, face = "bold")) + 
+  labs(x= "Gender", y="Physical Injury Fears") + 
+  scale_y_continuous(limits = c(0, 15))
+
+p12 <- ggplot(cca_maindata, aes(x=gender, y=scasocd, color=gender)) + 
+  geom_violin() + 
+  stat_summary(fun.data=data_summary) +
+  scale_color_manual(values=c("#000000", "#666666")) +
+  theme_apa()+
+  theme(panel.border = element_blank(),axis.line = element_line(),legend.position="none",
+        axis.title.x = element_blank(), axis.text.y =element_text(size=12, face = "bold"), 
+        axis.text.x  =element_text(size=12, face = "bold")) + 
+  labs(x= "Gender", y="Obessive Compulsive") + 
+  scale_y_continuous(limits = c(0, 18))
+
+p13 <- ggplot(cca_maindata, aes(x=gender, y=scasgad, color=gender)) + 
+  geom_violin() + 
+  stat_summary(fun.data=data_summary) +
+  scale_color_manual(values=c("#000000", "#666666")) +
+  theme_apa()+
+  theme(panel.border = element_blank(),axis.line = element_line(),legend.position="none",
+        axis.title.x = element_blank(), axis.text.y =element_text(size=12, face = "bold"), 
+        axis.text.x  =element_text(size=12, face = "bold")) + 
+  labs(x= "Gender", y="Generalized Anxiety") + 
+  scale_y_continuous(limits = c(0, 18))
+
+p14 <- ggplot(cca_maindata, aes(x=gender, y=scasopanicag, color=gender)) + 
+  geom_violin() + 
+  stat_summary(fun.data=data_summary_alt) +
+  scale_color_manual(values=c("#000000", "#666666")) +
+  theme_apa()+
+  theme(panel.border = element_blank(),axis.line = element_line(),legend.position="none",
+        axis.title.x = element_blank(), axis.text.y =element_text(size=12, face = "bold"), 
+        axis.text.x  =element_text(size=12, face = "bold")) + 
+  labs(x= "Gender", y="Panic/Agoraphobia") + 
+  scale_y_continuous(limits = c(0, 27))
+
+#emp plots
+grid.arrange(p1,p2,p3,p4,p0, nrow=1)
+grid.arrange(p5,p6,p7,p8, nrow=1)
+grid.arrange(p9,p10,p11,p12,p13,p14 ,nrow=1)
+
+# T-scores for symptoms ----------------------------------------------------------------------------------------------------------
+
+##CDI
+
+#Round the values to make them match a t-scores precisely
+cca_maindata$totalCDI <- round(cca_maindata$totalCDI)
+
+##look up table for categories
+
+male_cdi_tscores <- read.csv("C:/Users/Kate/SkyDrive/PhD/CCA/CCA_raw_data/male_cdi_tscores.csv", 
+                             header=TRUE, stringsAsFactors = FALSE)
+female_cdi_tscores <- read.csv("C:/Users/Kate/SkyDrive/PhD/CCA/CCA_raw_data/female_cdi_tscores.csv", 
+                               header=TRUE, stringsAsFactors = FALSE)
+
+#create vector
+cca_maindata$totalCDI_tscores <- cca_maindata[,"totalCDI"]
+
+
+for (i in 1: length(male_cdi_tscores$male_raw_score_total)) {
+  a<- male_cdi_tscores$male_raw_score_total[i]
+  b <- male_cdi_tscores$male_t.score_total[i]
+  c <- which(cca_maindata$totalCDI ==a & cca_maindata$gender == "1" )
+  cca_maindata$totalCDI_tscores[c] <- b
+}
+
+for (i in 1: length(female_cdi_tscores$female_raw_score_total)) {
+  a<- female_cdi_tscores$female_raw_score_total[i]
+  b <- female_cdi_tscores$female_t.score_total[i]
+  c <- which(cca_maindata$totalCDI ==a & cca_maindata$gender == "2" )
+  cca_maindata$totalCDI_tscores[c] <- b
+}
+
+
+#categories
+##Very Elevated - 70
+##Elevated - 65
+##High ave - 60
+##Ave - 40-60
+
+# To count how many in each bracket modify this code
+plyr::count(cca_maindata$gender[which(cca_maindata$totalCDI_tscores< 60)])
+ summarytools::freq(cca_maindata$gender[which(cca_maindata$totalCDI_tscores< 60)], order = "freq")
+
+# Or if need can put into categories e.g.
+cca_maindata$CDIcategory<- ifelse(cca_maindata$totalCDI_tscores < 65, 1, ifelse(cca_maindata$totalCDI_tscores >= 65, 2, NA))
+
+
+# SCAS 
+#Round the values to make them match a t-scores precisely
+cca_maindata$totalSCAS <- round(cca_maindata$totalSCAS)
+
+##look up table for categories
+
+male_scas_tscores <- read.csv("C:/Users/Kate/SkyDrive/PhD/CCA/CCA_raw_data/SCAS_boys_tscores.csv", 
+                             header=TRUE, stringsAsFactors = FALSE)
+female_scas_tscores <- read.csv("C:/Users/Kate/SkyDrive/PhD/CCA/CCA_raw_data/SCAS_girls_tscores.csv", 
+                               header=TRUE, stringsAsFactors = FALSE)
+
+#create vector
+cca_maindata$totalSCAS_tscores <- cca_maindata[,"totalSCAS"]
+
+
+for (i in 1: length(male_scas_tscores$Total_SCAS)) {
+  a<- male_scas_tscores$Total_SCAS[i]
+  b <- male_scas_tscores$Tscore[i]
+  c <- which(cca_maindata$totalSCAS ==a & cca_maindata$gender == "1" )
+  cca_maindata$totalSCAS_tscores[c] <- b
+}
+
+for (i in 1: length(female_scas_tscores$Total_SCAS)) {
+  a<- female_scas_tscores$Total_SCAS[i]
+  b <- female_scas_tscores$Tscore[i]
+  c <- which(cca_maindata$totalSCAS ==a & cca_maindata$gender == "2" )
+  cca_maindata$totalSCAS_tscores[c] <- b
+}
+
+
+#categories
+## 70
+## 65
+## 60
+##Ave - 40-60
+
+# To count how many in each bracket modify this code
+plyr::count(cca_maindata$gender[which(cca_maindata$totalSCAS_tscores< 60)])
+ summarytools::freq(cca_maindata$gender[which(cca_maindata$totalSCAS_tscores< 60)], order = "freq")
+
+
+
+# Checking Multicollinearity------------------------------------------
+
+#Putting the varibales into their sets
+mainX <- dplyr::select(cca_maindata, aff_shar, cog_emp, emp_conc, emp_dist, silent_films_total,
+                       gender,FSIQ, F_T1_P_education, seifa_irsad_aus_percent)
+
+#
+
+mainY <- dplyr::select(cca_maindata, negmood_phys_bin, neg_selfest_bin, ineff_bin, intprobs_bin, 
+                       scasseps, scassoc , scasphysinj , scasgad, 
+                       scasocd, scasopanicag)
+
+
+#looking at correlations
+ggpairs(mainX)
+
+#Farrar-Glauber Test
+
+```
