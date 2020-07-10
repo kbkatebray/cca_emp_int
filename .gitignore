@@ -2,5 +2,11 @@
 # to stop data been uploaded to remote repo.
 *.csv
 
+# ignores word docs
+*.docx
+
 # ignores R history file
 *.Rhistory
+
+#Automatically gets added when you add an R project file
+.Rproj.user
