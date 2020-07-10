@@ -15,8 +15,7 @@ library(ggplot2)
 library(jtools)#for apa_theme
 
 
-setwd("C:/Users/Kate/SkyDrive/PhD/CCA/CCA_scored_data/")#Read in scored dataframe
-cca_maindata <- read.csv("cca_maindata.csv", header=TRUE, stringsAsFactors = FALSE)
+cca_maindata <- read.csv("data_scored/cca_maindata.csv", header=TRUE, stringsAsFactors = FALSE)
 ```
 
 ## Main CCA script
@@ -26,7 +25,7 @@ This script takes the scored data and runs CCA between empathy variables and int
 
 ```{r}
 
-# Setting up X and Y varibale sets -------------------------------------------------------------
+# Setting up X and Y variable sets -------------------------------------------------------------
 mainX <- dplyr::select(cca_maindata, aff_shar, cog_emp, emp_conc, emp_dist, silent_films_total,
                        gender,FSIQ, F_T1_P_education, seifa_irsad_aus_percent)
 

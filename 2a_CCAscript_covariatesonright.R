@@ -5,13 +5,10 @@ require(CCA) #needed for cc function etc.
 require(Hmisc) #needed for rcorr function
 library(ggplot2)
 
-setwd("C:/Users/Kate/SkyDrive/PhD/CCA/CCA_scored_data/")#Read in scored dataframe
-cca_maindata <- read.csv("cca_maindata.csv", header=TRUE, stringsAsFactors = FALSE)
+cca_maindata <- read.csv("scored_data/cca_maindata.csv", header=TRUE, stringsAsFactors = FALSE)
 
-# Setting up X and Y varibale sets -------------------------------------------------------------
+# Setting up X and Y variable sets -------------------------------------------------------------
 mainX <- dplyr::select(cca_maindata, aff_shar, cog_emp, emp_conc, emp_dist, silent_films_total)
-
-#
 
 mainY <- dplyr::select(cca_maindata, negmood_phys_bin, neg_selfest_bin, ineff_bin, intprobs_bin, 
                        scasseps, scassoc , scasphysinj , scasgad, 

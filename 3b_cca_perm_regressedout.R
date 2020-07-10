@@ -2,8 +2,6 @@ library(gridExtra)
 library(CCP)
 library(jtools)#for apa_theme
 
-setwd("C:/Users/Kate/SkyDrive/PhD/CCA/CCA_scored_data/")#Read in scored dataframe
-
 
 #Start from section 2 the plots if don't want to redo the permutation
 
@@ -65,13 +63,13 @@ for (i in c(1:nrow(perm))){
 
 #Write perm table
 write.csv(perm, 
-          file = "C:/Users/Kate/SkyDrive/PhD/CCA/CCA_scored_data/permuted_results_alt_cov_onright.csv")
+          file = "scored_data/permuted_results_alt_cov_onright.csv")
 
 
 ########Plots - Go from this point if don't want to redo the permutation##################
 
 
-perm <- read.csv("permuted_results_alt_cov_onright.csv", header=TRUE, stringsAsFactors = FALSE)
+perm <- read.csv("scored_data/permuted_results_alt_cov_onright.csv", header=TRUE, stringsAsFactors = FALSE)
 
 
 #Plot canonical correlation. 

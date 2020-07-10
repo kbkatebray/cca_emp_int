@@ -4,22 +4,20 @@
 #It also does some basic cleaning such as getting rid of pilots, and only retaining those who returned for phase 2.
 
 # Inputs:
-# csv files that are currently in "C:/Users/Kate/SkyDrive/PhD/CCA/CCA_raw_data"
+# csv files that are currently in "raw_data/"
 # This is the raw data exported from Access database and copied into this folder
 # There is one file per measure
 
 # Outputs:
 # One dataframe saved as a csv file with all the raw and scored data merged together
-# Kept in "C:/Users/Kate/SkyDrive/PhD/CCA/CCA_scored_data"
+# Kept in "scored_data/"
 # Called data_scored.csv
 
 # Author: Kate Bray
-# Last edited: 15/5/2020
+# Last edited: 10/7/2020
 
 # Set up ---------------------------------------------------------------------------------------------------
 
-# Set working directory
-setwd("C:/Users/Kate/SkyDrive/PhD/CCA/CCA_raw_data")
 
 # Load packages
 library(psych) # for scoring functions
@@ -28,16 +26,16 @@ library(plyr) # join
 library(car) # for recode
 
 # Read in the csv files for each measure
-empathy <- read.csv("41_F_T2_C_Empathy.csv", header=TRUE, stringsAsFactors = FALSE)
-silent_films <- read.csv("38_F_T2_C_Silent Films.csv ", header=TRUE, stringsAsFactors = FALSE)
-child_CDI <- read.csv("28_F_T2_C_CDI.csv", header=TRUE, stringsAsFactors = FALSE)
-SCAS <- read.csv("29_F_T2_C_SCAS.csv", header=TRUE, stringsAsFactors = FALSE)
-switchboard <- read.csv("Switchboard.csv", header=FALSE, stringsAsFactors = FALSE) 
-WISC <- read.csv("36-6_F_T2_C_WISC.csv", header=TRUE, stringsAsFactors = FALSE)
-FSIQ <- read.csv("FSIQ_lookup_table.csv", header=TRUE, stringsAsFactors = FALSE)
-parent_demog<- read.csv("26_F_T2_P_ParentDemog.csv", header=TRUE, stringsAsFactors = FALSE)
-SEIFA <- read.csv("SEIFA.csv", header=TRUE, stringsAsFactors = FALSE)
-FSIQ <- read.csv("FSIQ_lookup_table.csv", header=TRUE, stringsAsFactors = FALSE)
+empathy <- read.csv("raw_data/41_F_T2_C_Empathy.csv", header=TRUE, stringsAsFactors = FALSE)
+silent_films <- read.csv("raw_data/38_F_T2_C_Silent Films.csv ", header=TRUE, stringsAsFactors = FALSE)
+child_CDI <- read.csv("raw_data/28_F_T2_C_CDI.csv", header=TRUE, stringsAsFactors = FALSE)
+SCAS <- read.csv("raw_data/29_F_T2_C_SCAS.csv", header=TRUE, stringsAsFactors = FALSE)
+switchboard <- read.csv("raw_data/Switchboard.csv", header=FALSE, stringsAsFactors = FALSE) 
+WISC <- read.csv("raw_data/36-6_F_T2_C_WISC.csv", header=TRUE, stringsAsFactors = FALSE)
+FSIQ <- read.csv("raw_data/FSIQ_lookup_table.csv", header=TRUE, stringsAsFactors = FALSE)
+parent_demog<- read.csv("raw_data/26_F_T2_P_ParentDemog.csv", header=TRUE, stringsAsFactors = FALSE)
+SEIFA <- read.csv("raw_data/SEIFA.csv", header=TRUE, stringsAsFactors = FALSE)
+FSIQ <- read.csv("raw_data/FSIQ_lookup_table.csv", header=TRUE, stringsAsFactors = FALSE)
 
 
 # Empathy ---------------------------------------------------------------------------------
@@ -280,7 +278,7 @@ WISC$FSIQ <- WISC$Total_scaledscores
 WISC$FSIQ[] <- FSIQ$FSIQ[match(unlist(WISC$Total_scaledscores), FSIQ$Sum_scaledscores)]
 
 
-# Parent demogographics------------------------------------------------------------------------------------------
+# Parent demographics------------------------------------------------------------------------------------------
 
 parent_demog$ID <- NULL
 parent_demog[parent_demog == -9]  <- NA
@@ -304,7 +302,7 @@ which(rowSums(is.na(data_scored_onlyFs))>120)
 
 my_dataset_scored<- data_scored_onlyFs[which(rowSums(is.na(data_scored_onlyFs))<120),]
 
-write.csv(my_dataset_scored, file = "C:/Users/Kate/SkyDrive/PhD/CCA/CCA_scored_data/cca_data_scored.csv")
+write.csv(my_dataset_scored, file = "scored_data/cca_data_scored.csv")
 
 
 # Select what's relevant for CCA -------------------------------------------------------------------------------------------------------------
@@ -328,5 +326,5 @@ cca_maindata <- cca_maindata[rowSums(is.na(cca_maindata))<1, ]
 # write the scored and merged data to a csv file
 
 
-write.csv(cca_maindata, file = "C:/Users/Kate/SkyDrive/PhD/CCA/CCA_scored_data/cca_maindata.csv")
+write.csv(cca_maindata, file = "scored_data/cca_maindata.csv")
 

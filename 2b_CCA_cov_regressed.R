@@ -5,13 +5,12 @@ require(CCA) #needed for cc function etc.
 require(Hmisc) #needed for rcorr function
 library(ggplot2)
 
-setwd("C:/Users/Kate/SkyDrive/PhD/CCA/CCA_scored_data/")#Read in scored dataframe
-cca_maindata <- read.csv("cca_maindata.csv", header=TRUE, stringsAsFactors = FALSE)
+cca_maindata <- read.csv("scored_data/cca_maindata.csv", header=TRUE, stringsAsFactors = FALSE)
 
 
 #regress out the variables ------------------------------------------------------------------------
 
-#Create new matrix with the variables regressed out. Do this by running regressions for each of the Y vraiables using the 
+#Create new matrix with the variables regressed out. Do this by running regressions for each of the Y variables using the 
 #covariates as predictors. Then use the residuals.
 
 # #For the Y variables
@@ -39,7 +38,7 @@ silent_films_total_resid<- resid(lm(silent_films_total~ gender + FSIQ+ F_T1_P_ed
 cca_maindata <- cbind(cca_maindata, aff_shar_resid, cog_emp_resid, emp_conc_resid, emp_dist_resid,
                       silent_films_total_resid)
 
-# Setting up X and Y varibale sets -------------------------------------------------------------
+# Setting up X and Y variable sets -------------------------------------------------------------
 mainX <- dplyr::select(cca_maindata, aff_shar_resid, cog_emp_resid, emp_conc_resid, emp_dist_resid, silent_films_total_resid)
 
 #

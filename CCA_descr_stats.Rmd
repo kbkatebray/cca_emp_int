@@ -23,12 +23,10 @@ library(numform) #leading zeros
 library(apaTables)
 
 
-
-setwd("C:/Users/Kate/SkyDrive/PhD/CCA/CCA_scored_data/")#Read in scored dataframe
-cca_maindata <- read.csv("cca_maindata.csv", header=TRUE, stringsAsFactors = FALSE)
-my_dataset_scored <- read.csv("cca_data_scored.csv", header=TRUE, stringsAsFactors = FALSE)
-setwd("C:/Users/Kate/SkyDrive/PhD/CCA/CCA_raw_data/")#Read in the ethinicity 
-ethnic_race <- read.csv("37_F_T1_FollowUP_ParIV.csv", header=TRUE, stringsAsFactors = FALSE)
+#read in csv files
+cca_maindata <- read.csv("scored_data/cca_maindata.csv", header=TRUE, stringsAsFactors = FALSE)
+my_dataset_scored <- read.csv("scored_data/cca_data_scored.csv", header=TRUE, stringsAsFactors = FALSE)
+ethnic_race <- read.csv("raw_data/37_F_T1_FollowUP_ParIV.csv", header=TRUE, stringsAsFactors = FALSE)
 ```
 
 ## Descriptive Statistics etc
@@ -69,8 +67,16 @@ corrplot.mixed(M,  order = "hclust", lower.col = "black", number.cex = .7,
 
 #APA table - 
 # gives ms, sds and correlations, table too big need to make smaller and sort out p-values
-apa.cor.table(corrmatrix , filename="C:/Users/Kate/SkyDrive/PhD/CCA/plots/Table1_APA.doc", table.number=1)
+#apa.cor.table(corrmatrix , filename="Table1_APA.doc", table.number=1)
 
+#corr values
+M
+#pvalues
+res1$p
+
+#Export these for easy making of tables
+write.csv(M, file = "scored_data/corrvalues.csv")
+write.csv(res1$p, file = "scored_data/pvalues.csv")
 
 # Descriptive statistics -------------------------------------------------------------------
 
@@ -111,11 +117,10 @@ cca_ethnicrace<- dplyr::select(tempdataframe, FACTS_ID, age, X12_cEthnicity, X13
 
 ccaonlyethnic<- cca_ethnicrace[which(!is.na(cca_ethnicrace$age)),]
 
-write.csv(ccaonlyethnic, file = "C:/Users/Kate/SkyDrive/PhD/CCA/CCA_scored_data/ccaonlyethnic.csv")
+write.csv(ccaonlyethnic, file = "scored_data/ccaonlyethnic.csv")
 
-#This next step has been manually coded - can just read in this file if rerunning without changes, or recode if have changed number of participnats
-setwd("C:/Users/Kate/SkyDrive/PhD/CCA/CCA_scored_data/")
-ethnic_coded <- read.csv("ccaonlyethnic_coded.csv", header=TRUE, stringsAsFactors = FALSE)
+#This next step has been manually coded - can just read in this file if rerunning without changes, or recode if have changed number of participants
+ethnic_coded <- read.csv("scored_data/ccaonlyethnic_coded.csv", header=TRUE, stringsAsFactors = FALSE)
 
 ###codes for race/ethnicity
 ##Race
@@ -382,9 +387,9 @@ cca_maindata$totalCDI <- round(cca_maindata$totalCDI)
 
 ##look up table for categories
 
-male_cdi_tscores <- read.csv("C:/Users/Kate/SkyDrive/PhD/CCA/CCA_raw_data/male_cdi_tscores.csv", 
+male_cdi_tscores <- read.csv("raw_data/male_cdi_tscores.csv", 
                              header=TRUE, stringsAsFactors = FALSE)
-female_cdi_tscores <- read.csv("C:/Users/Kate/SkyDrive/PhD/CCA/CCA_raw_data/female_cdi_tscores.csv", 
+female_cdi_tscores <- read.csv("raw_data/female_cdi_tscores.csv", 
                                header=TRUE, stringsAsFactors = FALSE)
 
 #create vector
@@ -426,9 +431,9 @@ cca_maindata$totalSCAS <- round(cca_maindata$totalSCAS)
 
 ##look up table for categories
 
-male_scas_tscores <- read.csv("C:/Users/Kate/SkyDrive/PhD/CCA/CCA_raw_data/SCAS_boys_tscores.csv", 
+male_scas_tscores <- read.csv("raw_data/SCAS_boys_tscores.csv", 
                              header=TRUE, stringsAsFactors = FALSE)
-female_scas_tscores <- read.csv("C:/Users/Kate/SkyDrive/PhD/CCA/CCA_raw_data/SCAS_girls_tscores.csv", 
+female_scas_tscores <- read.csv("raw_data/SCAS_girls_tscores.csv", 
                                header=TRUE, stringsAsFactors = FALSE)
 
 #create vector
@@ -478,6 +483,5 @@ mainY <- dplyr::select(cca_maindata, negmood_phys_bin, neg_selfest_bin, ineff_bi
 #looking at correlations
 ggpairs(mainX)
 
-#Farrar-Glauber Test
 
 ```
