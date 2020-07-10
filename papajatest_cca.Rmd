@@ -1,0 +1,118 @@
+---
+title             : "Associations between cognitive and affective empathy and internalizing symptoms in late childhood"
+shorttitle        : "Empathy and internalizing symptoms in late childhood"
+
+author: 
+  - name          : "Kate Bray"
+    affiliation   : "1,2"
+    corresponding : yes    # Define only one corresponding author
+    address       : "Postal address"
+    email         : "my@email.com"
+  - name          : "Sarah Whittle"
+    affiliation   : "1"
+
+affiliation:
+  - id            : "1"
+    institution   : "Melbourne Neuropsychiatry Centre (MNC), Department of Psychiatry, The University of Melbourne & Melbourne Health, Melbourne, Australia"
+  - id            : "2"
+    institution   : "2Melbourne School of Psychological Sciences, University of Melbourne, Melbourne, Australia "
+
+authornote: |
+  Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
+
+  Enter author note here.
+
+abstract: |
+  Empathy is a multidimensional construct, which includes cognitive (i.e., understanding another’s emotional state) and affective (i.e., experiencing and reacting to another’s emotional state) components. Studies in adults have demonstrated that both affective and cognitive empathy are related to anxious and depressive symptoms. The aim of this study was to examine these associations in childhood, where there is relatively less research. Participants were 127 9- and 10-year-old children, recruited from the community. Self-report measures of cognitive and affective empathy, and internalizing symptoms were administered, as well as a task-based measure of cognitive empathy. Canonical correlation analysis demonstrated that components of affective empathy, specifically affective sharing and empathic distress, were associated with internalizing (particularly social anxiety) symptoms. Although empathy is important for successful social interaction, this study suggests that children who share each other’s emotions strongly are more likely to experience anxiety, particularly of a social nature. 
+  
+  <!-- https://tinyurl.com/ybremelq -->
+  
+keywords          : "keywords"
+wordcount         : "X"
+
+bibliography      : ["r-references.bib"]
+
+floatsintext      : yes
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+linenumbers       : yes
+mask              : no
+draft             : no
+
+documentclass     : "apa6"
+classoption       : "jou"
+output            : papaja::apa6_word
+---
+
+```{r setup, include = FALSE}
+library("papaja")
+library(psych)
+library(dplyr)
+r_refs("r-references.bib")
+
+cca_maindata <- read.csv("scored_data/cca_maindata.csv", header=TRUE, stringsAsFactors = FALSE)
+
+```
+
+```{r analysis-preferences}
+# Seed for random number generation
+#set.seed(42)
+#knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
+```
+
+
+
+# Methods
+#We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study. <!-- 21-word solution (Simmons, Nelson & Simonsohn, 2012; retrieved from http://ssrn.com/abstract=2160588) -->
+
+## Participants
+
+## Material
+
+## Procedure
+
+## Data analysis
+#We used `r cite_r("r-references.bib")` for all our analyses.
+
+
+# Results
+## Reproducible table section
+
+
+```{r, tables, echo=FALSE, results='asis'}
+
+#Select the variables to go in
+
+analysis_vars<- dplyr::select(cca_maindata, aff_shar, cog_emp, emp_conc, emp_dist, silent_films_total)
+
+#provides mean, sd, kurtosis, skew etc
+desc <- describe(analysis_vars)
+
+#Just select the columns want for table (at this point n,m,sd,range)
+desc1 <- desc[, c("n", "mean", "sd", "range", "skew", "kurtosis")]
+
+row.names(desc1) <- c("Affective Sharing","Cognitive Empathy","Empathic Concern","Empathic Distress","Silent Films")
+
+#Use the wrapper apa_table to make an apa table of the descriptive
+apa_table(desc1,
+          caption = "Means, standard deviations, range, skew and kurtosis for the key measures used in the CCA",
+          #note = "bottom part",
+          align = c("l","c", "c", "c", "c", "c", "c" ),
+          col.names = c("Measure of interest", "N","Mean","SD","Range", "Skew", "Kurtosis"))
+
+```
+
+# Discussion
+
+
+\newpage
+
+# References
+
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+<div id="refs" custom-style="Bibliography"></div>
+\endgroup
