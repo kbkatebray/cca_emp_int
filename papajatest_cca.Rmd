@@ -80,26 +80,43 @@ cca_maindata <- read.csv("scored_data/cca_maindata.csv", header=TRUE, stringsAsF
 ## Reproducible table section
 
 
-```{r, tables, echo=FALSE, results='asis'}
+```{r, table1, echo=FALSE, results='asis'}
 
-#Select the variables to go in
+#Select the variables to go in (keeping separate to allow for variable grouping)
+emp_analysis_vars<- dplyr::select(cca_maindata, aff_shar, cog_emp, emp_conc, emp_dist, silent_films_total)
+cdi_analysis_vars<- dplyr::select(cca_maindata, negmood_phys, neg_selfest, ineff, intprobs)
+scas_analysis_vars<- dplyr::select(cca_maindata, scasseps, scassoc, scasphysinj, scasgad, scasocd, scasopanicag)
 
-analysis_vars<- dplyr::select(cca_maindata, aff_shar, cog_emp, emp_conc, emp_dist, silent_films_total)
 
 #provides mean, sd, kurtosis, skew etc
-desc <- describe(analysis_vars)
+emp_desc <- describe(emp_analysis_vars)
+cdi_desc <- describe(cdi_analysis_vars)
+scas_desc <- describe(scas_analysis_vars)
+
 
 #Just select the columns want for table (at this point n,m,sd,range)
-desc1 <- desc[, c("n", "mean", "sd", "range", "skew", "kurtosis")]
+emp_desc <- emp_desc[, c("n", "mean", "sd", "range", "skew", "kurtosis")]
+cdi_desc <- cdi_desc[, c("n", "mean", "sd", "range", "skew", "kurtosis")]
+scas_desc <- scas_desc[, c("n", "mean", "sd", "range", "skew", "kurtosis")]
 
-row.names(desc1) <- c("Affective Sharing","Cognitive Empathy","Empathic Concern","Empathic Distress","Silent Films")
+row.names(emp_desc) <- c("Affective Sharing","Cognitive Empathy","Empathic Concern","Empathic Distress","Silent Films")
+row.names(cdi_desc) <- c("Negative mood/physical symptoms","Negative self-esteem","Ineffectiveness","Interpersonal problems")
+row.names(scas_desc) <- c("Separation anxiety","Social phobia","Physical injury fears","Generalized anxiety","Obsessive compulsive", "Panic/agoraphobia")
+
+#Create the SCAS and CDI vars
 
 #Use the wrapper apa_table to make an apa table of the descriptive
-apa_table(desc1,
-          caption = "Means, standard deviations, range, skew and kurtosis for the key measures used in the CCA",
+apa_table(
+  list(`Empathy` = emp_desc, `CDI (before binarization)` = cdi_desc, `SCAS` = scas_desc),
+            caption = "Means, standard deviations, range, skew and kurtosis for the key measures used in the CCA",
           #note = "bottom part",
           align = c("l","c", "c", "c", "c", "c", "c" ),
           col.names = c("Measure of interest", "N","Mean","SD","Range", "Skew", "Kurtosis"))
+
+```
+
+```{r, table2, echo=FALSE, results='asis'}
+
 
 ```
 
