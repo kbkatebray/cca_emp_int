@@ -15,12 +15,12 @@ library(ggplot2)
 library(jtools)#for apa_theme
 
 
-cca_maindata <- read.csv("data_scored/cca_maindata.csv", header=TRUE, stringsAsFactors = FALSE)
+cca_maindata <- read.csv("scored_data/cca_maindata.csv", header=TRUE, stringsAsFactors = FALSE)
 ```
 
 ## Main CCA script
 
-This script takes the scored data and runs CCA between empathy variables and internalising symptom variables.
+This script takes the scored data and runs CCA between empathy variables and internalizing symptom variables.
 
 
 ```{r}
@@ -219,7 +219,20 @@ rcorr(res.cc$scores$xscores[,7], res.cc$scores$yscores[,7])
 rcorr(res.cc$scores$xscores[,8], res.cc$scores$yscores[,8])
 rcorr(res.cc$scores$xscores[,9], res.cc$scores$yscores[,9])
 
+#put these things into a table
+ccatable<- cbind(res.cc$cor, res.cc$cor^2, cca_signif(res.cc,mainX,mainY)[,1], cca_signif(res.cc,mainX,mainY)[,2],
+      cca_signif(res.cc,mainX,mainY)[,3], cca_signif(res.cc,mainX,mainY)[,4], cca_signif(res.cc,mainX,mainY)[,5], 
+      rbind(rcorr(res.cc$scores$xscores[,1], res.cc$scores$yscores[,1])$P[2,1], rcorr(res.cc$scores$xscores[,2], res.cc$scores$yscores[,2])$P[2,1],
+      rcorr(res.cc$scores$xscores[,3], res.cc$scores$yscores[,3])$P[2,1], rcorr(res.cc$scores$xscores[,4], res.cc$scores$yscores[,4])$P[2,1], 
+      rcorr(res.cc$scores$xscores[,5], res.cc$scores$yscores[,5])$P[2,1], rcorr(res.cc$scores$xscores[,6], res.cc$scores$yscores[,6])$P[2,1], 
+      rcorr(res.cc$scores$xscores[,7], res.cc$scores$yscores[,7])$P[2,1], rcorr(res.cc$scores$xscores[,8], res.cc$scores$yscores[,8])$P[2,1],
+      rcorr(res.cc$scores$xscores[,9], res.cc$scores$yscores[,9])$P[2,1]))
 
+
+```
+
+
+```{r, scatterplot}
 
 ggplot(data = cca_maindata, aes(x = res.cc$scores$xscores[,1], y = res.cc$scores$yscores[,1])) +
   geom_point() +
@@ -227,9 +240,13 @@ ggplot(data = cca_maindata, aes(x = res.cc$scores$xscores[,1], y = res.cc$scores
   labs(x = "Empathy Synthetic Variable", y="Internalizing Synthetic Variable")+
   theme(panel.border = element_blank(), axis.line = element_line())
 
-ggplot(data = cca_maindata, aes(x = res.cc$scores$xscores[,1], y = res.cc$scores$yscores[,1], colour = factor(gender))) +
-  geom_point()
+# ggplot(data = cca_maindata, aes(x = res.cc$scores$xscores[,1], y = res.cc$scores$yscores[,1], colour = factor(gender))) +
+#   geom_point()
 
 ```
 
+```{r, exports, include=FALSE}
 
+write.csv(ccatable, file = "scored_data/ccatable.csv")
+
+```
