@@ -53,6 +53,9 @@ r_refs("r-references.bib")
 
 cca_maindata <- read.csv("scored_data/cca_maindata.csv", header=TRUE, stringsAsFactors = FALSE)
 my_dataset_scored <- read.csv("scored_data/cca_data_scored.csv", header=TRUE, stringsAsFactors = FALSE)
+ccatable <- read.csv("scored_data/ccatable.csv", header=TRUE, stringsAsFactors = FALSE)
+desctable <- read.csv("scored_data/desctable.csv", header=TRUE, stringsAsFactors = FALSE)
+
 
 
 ```
@@ -79,7 +82,25 @@ my_dataset_scored <- read.csv("scored_data/cca_data_scored.csv", header=TRUE, st
 
 
 # Results
+## Canonical Correlation Analysis
+```{r, desctable, echo=FALSE, results='asis'}
 
+row.names(desctable) <- c("Female","Male","blank1","blank2","Grade 7 to 12", "Graduated High School","Partial tertiary university", "TAFE", "Bachelor’s degree",
+                          "Honors", "Partial graduate school", "Completed graduate school", "Quintile 1", "Quintile 2", "Quintile 3", "Quintile 4",
+                          "Quintile 5", "White", "Asian", "Mixed or other", "Missing", "Australian (or New Zealander)", "Australian/European",
+                          "Australian/Asian", "Asian1", "European", "Other", "Missin")
+
+
+apa_table(
+  list(`Sex` = desctable[1:2,2:3], `Age` = desctable[3,2:3],`Est. FSIQ` = desctable[4,2:3], `Parent Education` = desctable[5:12,2:3], `Neighborhood advantage (from least advantage to most)` = desctable[13:17,2:3], `Race` = desctable[18:21,2:3], `Ethnicity` = desctable[22:28,2:3] ),
+          caption = "Descriptive statistics characterizing the sample used for the CCA analysis",
+          note = "Est. FSIQ = Estimated full scale IQ",
+          align = c("l","c","c"),
+          col.names = c( "Demographic measure","Frequency or Mean","Percentage or Stnd. Dev.")
+  )
+
+
+```
 
 ```{r, cronalpha, include = FALSE}
 
@@ -197,17 +218,15 @@ apa_table(
   )
 
 ```
-## Canonical Correlation Analysis
+
 
 ```{r, table3, echo=FALSE, results='asis'}
 
-apa_table(
-          name,
+apa_table(ccatable,
           caption = "Pertinent values from the CCA analysis for each of the nine canonical functions created",
           note = "* = <0.05, bold text = both parametric and non-parametric p-value significant.",
           align = c("l","c", "c", "c", "c", "c", "c", "c", "c" ),
-          col.names = c("Dimension",	"Canonical Correlation (Rc)",	"Canonical Correlation Squared (Rc2)",	"Wilk’s λ",	"Multiple F",	"df1",	"df2",	"Parametric p-value for F (3 d.p.)
-(and non-parametric)",	"Parametric p-value for Rc (and non-parametric)")
+          col.names = c("Dimension",	"Canonical Correlation (Rc)",	"Canonical Correlation Squared (Rc2)",	"Wilk’s λ",	"Multiple F",	"df1",	"df2",	"Parametric p-value for F (3 d.p.) (and non-parametric)",	"Parametric p-value for Rc (and non-parametric)")
 )
 ```
 
