@@ -32,7 +32,7 @@ ethnic_race <- read.csv("raw_data/37_F_T1_FollowUP_ParIV.csv", header=TRUE, stri
 ## Descriptive Statistics etc
 
 
-```{r}
+```{r, corrplot}
 
 # Correlation plot --------------------------------------------------------------------------- 
 ##Make the matrix
@@ -77,6 +77,10 @@ res1$p
 #Export these for easy making of tables
 write.csv(M, file = "scored_data/corrvalues.csv")
 write.csv(res1$p, file = "scored_data/pvalues.csv")
+
+```
+
+```{r, descstats}
 
 # Descriptive statistics -------------------------------------------------------------------
 
@@ -186,6 +190,33 @@ psych::alpha(cron_scasphysinj)
 cron_scasgad<- cronbach_set[,c("F_T1_C_SCAS_1","F_T1_C_SCAS_3","F_T1_C_SCAS_4","F_T1_C_SCAS_20" , 
                                "F_T1_C_SCAS_22","F_T1_C_SCAS_24")]
 psych::alpha(cron_scasgad)
+
+#Collect the alphas together
+c1 <- psych::alpha(cron_aff_shar)
+c2 <- psych::alpha(cron_cog_emp)
+c3 <- psych::alpha(cron_emp_conc)
+c4 <- psych::alpha(cron_emp_dist)
+c5 <- psych::alpha(cron_sil_films)
+
+c6 <- psych::alpha(cron_negmood_phys, keys=c("F_T1_C_CDI_9","F_T1_C_CDI_10","F_T1_C_CDI_15" , "F_T1_C_CDI_17" ,
+                                       "F_T1_C_CDI_26" , "F_T1_C_CDI_27"))
+c7 <- psych::alpha(cron_neg_selfest, keys=c("F_T1_C_CDI_2","F_T1_C_CDI_6","F_T1_C_CDI_7" ,"F_T1_C_CDI_24"))
+c8 <- psych::alpha(cron_ineff, keys=c("F_T1_C_CDI_12", "F_T1_C_CDI_14","F_T1_C_CDI_20", "F_T1_C_CDI_23"))
+c9 <- psych::alpha(cron_intprobs)
+
+c10 <- psych::alpha(cron_scasseps)
+c11 <- psych::alpha(cron_scassoc)
+c12 <- psych::alpha(cron_scasocd)
+c13 <- psych::alpha(cron_scasopanicag)
+c14 <- psych::alpha(cron_scasphysinj)
+c15 <- psych::alpha(cron_scasgad)
+
+cronemp <- rbind(c1$total[2], c2$total[2], c3$total[2], c4$total[2], c5$total[2])
+croncdi <- rbind(c6$total[2], c7$total[2], c8$total[2], c9$total[2])
+cronscas <- rbind(c10$total[2], c11$total[2], c12$total[2], c13$total[2], c14$total[2], c15$total[2])
+```
+
+```{r, violin}
 
 
 # Violin plots displaying spread of data, means and standard deviations and split by gender -----------------------------
@@ -378,6 +409,9 @@ grid.arrange(p1,p2,p3,p4,p0, nrow=1)
 grid.arrange(p5,p6,p7,p8, nrow=1)
 grid.arrange(p9,p10,p11,p12,p13,p14 ,nrow=1)
 
+```
+
+```{r, tscores}
 # T-scores for symptoms ----------------------------------------------------------------------------------------------------------
 
 ##CDI
@@ -465,7 +499,9 @@ for (i in 1: length(female_scas_tscores$Total_SCAS)) {
 plyr::count(cca_maindata$gender[which(cca_maindata$totalSCAS_tscores< 60)])
  summarytools::freq(cca_maindata$gender[which(cca_maindata$totalSCAS_tscores< 60)], order = "freq")
 
+```
 
+```{r, multicoll}
 
 # Checking Multicollinearity------------------------------------------
 
