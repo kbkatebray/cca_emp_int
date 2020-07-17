@@ -41,22 +41,22 @@ mask              : no
 draft             : no
 
 documentclass     : "apa6"
-classoption       : "jou"
-output            : papaja::apa6_word
+classoption       : "man"
+output            : papaja::apa6_pdf
 ---
 
 ```{r setup, include = FALSE}
 library("papaja")
 library(psych)
 library(dplyr)
+library(corx) #formats corr tables
 r_refs("r-references.bib")
 
 cca_maindata <- read.csv("scored_data/cca_maindata.csv", header=TRUE, stringsAsFactors = FALSE)
 my_dataset_scored <- read.csv("scored_data/cca_data_scored.csv", header=TRUE, stringsAsFactors = FALSE)
 ccatable <- read.csv("scored_data/ccatable.csv", header=TRUE, stringsAsFactors = FALSE)
 desctable <- read.csv("scored_data/desctable.csv", header=TRUE, stringsAsFactors = FALSE)
-
-
+corrmatrix <- read.csv("scored_data/corrmatrix.csv", header=TRUE, stringsAsFactors = FALSE)
 
 ```
 
@@ -219,8 +219,26 @@ apa_table(
 
 ```
 
+```{r, cortable, echo=FALSE, results='asis'}
 
-```{r, table3, echo=FALSE, results='asis'}
+#removes the extra column
+corrmatrix$X <- NULL
+
+x <- corx(corrmatrix,
+          triangle = "lower",
+          stars = c(0.05, 0.01, 0.001))
+
+papaja::apa_table(x$apa, # apa contains the data.frame needed for apa_table
+                  caption = "Bivariate correlations for key variables and covariates (Pearson’s)",
+                  note = "* p < 0.05; ** p < 0.01; *** p < 0.001",
+                  landscape = TRUE,
+                  #escape = F
+                  )
+
+```
+
+
+```{r, ccatable, echo=FALSE, results='asis'}
 
 apa_table(ccatable,
           caption = "Pertinent values from the CCA analysis for each of the nine canonical functions created",
