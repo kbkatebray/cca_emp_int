@@ -42,7 +42,7 @@ draft             : no
 
 documentclass     : "apa6"
 classoption       : "man"
-output            : papaja::apa6_pdf
+output            : papaja::apa6_word
 ---
 
 ```{r setup, include = FALSE}
@@ -50,6 +50,8 @@ library("papaja")
 library(psych)
 library(dplyr)
 library(corx) #formats corr tables
+library(ggplot2)
+
 r_refs("r-references.bib")
 
 cca_maindata <- read.csv("scored_data/cca_maindata.csv", header=TRUE, stringsAsFactors = FALSE)
@@ -57,6 +59,9 @@ my_dataset_scored <- read.csv("scored_data/cca_data_scored.csv", header=TRUE, st
 ccatable <- read.csv("scored_data/ccatable.csv", header=TRUE, stringsAsFactors = FALSE)
 desctable <- read.csv("scored_data/desctable.csv", header=TRUE, stringsAsFactors = FALSE)
 corrmatrix <- read.csv("scored_data/corrmatrix.csv", header=TRUE, stringsAsFactors = FALSE)
+scatter <- read.csv("scored_data/scatter.csv", header=TRUE, stringsAsFactors = FALSE)
+xcoeftable <- read.csv("scored_data/xcoeftable.csv", header=TRUE, stringsAsFactors = FALSE)
+ycoeftable <- read.csv("scored_data/ycoeftable.csv", header=TRUE, stringsAsFactors = FALSE)
 
 ```
 
@@ -95,8 +100,9 @@ apa_table(
   list(`Sex` = desctable[1:2,2:3], `Age` = desctable[3,2:3],`Est. FSIQ` = desctable[4,2:3], `Parent Education` = desctable[5:12,2:3], `Neighborhood advantage (from least advantage to most)` = desctable[13:17,2:3], `Race` = desctable[18:21,2:3], `Ethnicity` = desctable[22:28,2:3] ),
           caption = "Descriptive statistics characterizing the sample used for the CCA analysis",
           note = "Est. FSIQ = Estimated full scale IQ",
-          align = c("l","c","c"),
-          col.names = c( "Demographic measure","Frequency or Mean","Percentage or Stnd. Dev.")
+          align = c("l",rep("c", 2)),
+          col.names = c( "Demographic measure","Frequency or Mean","Percentage or Stnd. Dev."),
+  digits = c(0,0,2)
   )
 
 
@@ -212,11 +218,12 @@ scas_desc<- cbind(scas_desc, cronscas)
 apa_table(
   list(`Empathy` = emp_desc, `CDI (before binarization)` = cdi_desc, `SCAS` = scas_desc),
             caption = "Means, standard deviations, range, skew and kurtosis for the key measures used in the CCA",
-          #note = "bottom part",
-          align = c("l","c", "c", "c", "c", "c", "c", "c" ),
-          col.names = c("Measure of interest", "N","Mean","SD","Range", "Skew", "Kurtosis", "Cronbach’s alpha")
-  )
+          align = c("l",rep("c", 7) ),
+          col.names = c("Measure of interest", "N","Mean","SD","Range", "Skew", "Kurtosis", "Cronbach’s alpha"),
+  digits = c(0,0, 2,2,2,2,2,2)
+)
 
+#c(0, 2,2,2,2,2,2)
 ```
 
 ```{r, cortable, echo=FALSE, results='asis'}
@@ -224,13 +231,15 @@ apa_table(
 #removes the extra column
 corrmatrix$X <- NULL
 
+colnames(corrmatrix) <- c("Aff. Sharing","Cog. Emp.","Emp. Concern","Emp. Distress", "Silent Films","Neg. Mood","Neg. Self-est.", "Ineff.", "Interpersonal", "Sep. Anx.","Social Anx.","Phys.Injury" ,"GAD" , "OCD" , "Panic/Ag." , "Sex" , "IQ","Parent Ed.","Neighborhood", "Age" )     
+
 x <- corx(corrmatrix,
           triangle = "lower",
           stars = c(0.05, 0.01, 0.001))
 
 papaja::apa_table(x$apa, # apa contains the data.frame needed for apa_table
                   caption = "Bivariate correlations for key variables and covariates (Pearson’s)",
-                  note = "* p < 0.05; ** p < 0.01; *** p < 0.001",
+                  note = "* p < 0.05; ** p < 0.01; *** p < 0.001. Not corrected for multiple comparisons. Full variable names: ineffectiveness, negative self-esteem, negative mood and physical symptoms, interpersonal problems, physical injury fears, separation anxiety, social anxiety/phobia, obsessive compulsive symptoms, generalized anxiety symptoms, panic/agoraphobia, parent education, neighborhood advantage, silent films task, full scale IQ estimate, sex, cognitive empathy, empathic concern, affective sharing and empathic distress.",
                   landscape = TRUE,
                   #escape = F
                   )
@@ -240,12 +249,59 @@ papaja::apa_table(x$apa, # apa contains the data.frame needed for apa_table
 
 ```{r, ccatable, echo=FALSE, results='asis'}
 
-apa_table(ccatable,
+apa_table(cbind(ccatable[,1:7], papaja::printp(ccatable[,8:9])),
           caption = "Pertinent values from the CCA analysis for each of the nine canonical functions created",
-          note = "* = <0.05, bold text = both parametric and non-parametric p-value significant.",
-          align = c("l","c", "c", "c", "c", "c", "c", "c", "c" ),
-          col.names = c("Dimension",	"Canonical Correlation (Rc)",	"Canonical Correlation Squared (Rc2)",	"Wilk’s λ",	"Multiple F",	"df1",	"df2",	"Parametric p-value for F (3 d.p.) (and non-parametric)",	"Parametric p-value for Rc (and non-parametric)")
+          note = "* = <0.05, bold text = both parametric and non-parametric p-value significant. Rc = Canonical Correlation, Rc2 = Canonical Correlation Squared",
+          align = c("l",rep("c", 8) ),
+          col.names = c("Dimension",	"Rc",	"Rc2",	"Wilk’s λ",	"Multiple F",	"df1",	"df2",	"Parametric p-value for F (and non-parametric)",	"Parametric p-value for Rc (and non-parametric)")
 )
+```
+(ref:scatter-caption) Scatterplot displaying the correlation between the empathy synthetic variable   (linear combination of the original empathy measures and the covariates), and the internalising synthetic variable from the first function in the CCA.  
+
+```{r, scatterplot, echo=FALSE, results='asis', fig.cap = "(ref:scatter-caption)"}
+
+ggplot(data = scatter, aes(x = X, y = Y)) +
+  geom_point() +
+  theme_apa()+ 
+  labs(x = "Empathy Synthetic Variable Score", y="Internalising Synthetic Variable Score")+
+  theme(panel.border = element_blank(), axis.line = element_line())
+
+
+```
+
+```{r, coefftableprep, echo=FALSE}
+
+row.names(xcoeftable) <- c("Affective Sharing","Cognitive Empathy","Empathic Concern","Empathic Distress","Silent Films","Sex","IQ","Parent Education","Neighborhood Advantage")
+xcoeftable$X <- NULL
+
+row.names(ycoeftable) <- c("Negative mood/physical symptoms","Negative self-esteem","Ineffectiveness","Interpersonal problems",
+                           "Separation anxiety","Social phobia","Physical injury fears","Generalized anxiety","Obsessive compulsive", "Panic/agoraphobia")
+ycoeftable$X <- NULL
+```
+
+```{r, coeffxtable, echo=FALSE, results='asis'}
+
+#see if I can find out about the stars code
+
+
+apa_table(cbind(xcoeftable[,1:3],papaja::printp(xcoeftable[,4])),
+          caption = "Coefficients for X variables, first function.",
+          note = "* Survive correction for multiple comparisons (Bonferroni).",
+          align = c("l",rep("c", 4) ),
+          col.names = c("X Variables", "Standardized X canonical coefficients",	"Structure coefficient (rs)",	"Squared structure",	"Parametric p-value for rs")
+)
+```
+
+```{r, coeffytable, echo=FALSE, results='asis'}
+
+
+apa_table(cbind(ycoeftable[,1:3],papaja::printp(ycoeftable[,4])),
+          caption = "Coefficients for Y variables, first function.",
+          note = "* Survive correction for multiple comparisons (Bonferroni).",
+          align = c("l",rep("c", 4) ),
+          col.names = c("Y Variables", "Standardized X canonical coefficients",	"Structure coefficient (rs)",	"Squared structure",	"Parametric p-value for rs")
+)
+
 ```
 
 # Discussion
