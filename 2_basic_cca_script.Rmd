@@ -194,13 +194,13 @@ standardised_xcanonical_coefficients(res.cc,mainX,mainY)
 standardised_ycanonical_coefficients(res.cc,mainX,mainY)
 
 
-#correlations between original varibales and the sythetic varibale as well as pvalues
+#correlations between original variables and the synthetic variable as well as pvalues
 structurecoefs<- cca_cor_sig(mainX, mainY, res.cc)
 structurecoefs
 
 structurecoefs2<- cca_cor_sig2(mainX, mainY, res.cc)
 structurecoefs2
-#squard correlations
+#squared correlations
 (structurecoefs$xvar.corr.r)^2
 (structurecoefs$yvar.corr.r)^2
 (structurecoefs2$xvar.corr.r)^2
@@ -247,6 +247,22 @@ ggplot(data = cca_maindata, aes(x = res.cc$scores$xscores[,1], y = res.cc$scores
 
 ```{r, exports, include=FALSE}
 
+#create coefficients tables
+xcoeftable <- cbind(standardised_xcanonical_coefficients(res.cc,mainX,mainY)[,1],structurecoefs$xvar.corr.r[2:10], ((structurecoefs$xvar.corr.r)^2)[2:10], structurecoefs$xvar.corr.p[2:10])
+colnames(xcoeftable) <- c("stnd_x_can_coef","str_coef", "sq_str_coef","para_p")
+
+ycoeftable <- cbind(standardised_ycanonical_coefficients(res.cc,mainX,mainY)[,1],structurecoefs$yvar.corr.r[2:11], ((structurecoefs$yvar.corr.r)^2)[2:11], structurecoefs$yvar.corr.p[2:11])
+colnames(ycoeftable) <- c("stnd_y_can_coef","str_coef", "sq_str_coef","para_p")
+
+#Create the table for scatterplot
+scatter <- cbind(res.cc$scores$xscores[,1],res.cc$scores$yscores[,1])
+colnames(scatter) <- c("X","Y")
+
+#Export the csv files
+write.csv(scatter, file = "scored_data/scatter.csv")
 write.csv(ccatable, file = "scored_data/ccatable.csv")
+write.csv(xcoeftable, file = "scored_data/xcoeftable.csv")
+write.csv(ycoeftable, file = "scored_data/ycoeftable.csv")
+
 
 ```

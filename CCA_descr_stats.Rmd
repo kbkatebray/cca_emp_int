@@ -74,9 +74,6 @@ M
 #pvalues
 res1$p
 
-#Export these for easy making of tables
-write.csv(M, file = "scored_data/corrvalues.csv")
-write.csv(res1$p, file = "scored_data/pvalues.csv")
 
 ```
 
@@ -143,6 +140,23 @@ ethnic_coded <- read.csv("scored_data/ccaonlyethnic_coded.csv", header=TRUE, str
 
  summarytools::freq(ethnic_coded$coded_race, order = "freq")
  summarytools::freq(ethnic_coded$coded_ethnicity, order = "freq")
+ 
+ #combine mixed and other categories for table display
+ ethnic_coded$coded_race1 <- car::recode(ethnic_coded$coded_race, "1='1'; 2='2'; NA=NA;
+                                     else='3'")
+  summarytools::freq(ethnic_coded$coded_race1, order = "freq")
+ 
+ 
+ #collect desc into a little matrix to be used in table
+ sex <- summarytools::freq(cca_maindata$gender, order = "freq")[c(1,2), c(1,2)]
+ age <- cbind(mean(cca_maindata$age)/12, sd(cca_maindata$age))
+ IQ <- cbind(mean(cca_maindata$FSIQ), sd(cca_maindata$FSIQ))
+ pared <- summarytools::freq(as.factor(cca_maindata$F_T1_P_education), order = "levels")[c(1:8), c(1,2)]
+ neigh <- summarytools::freq(cca_maindata$quintiles, order = "levels")[c(1:5), c(1,2)]
+ race <- summarytools::freq(as.factor(ethnic_coded$coded_race1), order = "levels")[c(1:4), c(1,4)]
+ ethn <- summarytools::freq(as.factor(ethnic_coded$coded_ethnicity), order = "levels")[c(1:7), c(1,4)]
+ 
+ desctable <- rbind(sex, age, IQ, pared, neigh, race, ethn)
 
 ##Cronbach's alpha
 #find the Fs from the cca set
@@ -520,4 +534,13 @@ mainY <- dplyr::select(cca_maindata, negmood_phys_bin, neg_selfest_bin, ineff_bi
 ggpairs(mainX)
 
 
+```
+
+```{r, exports, include=FALSE}
+
+write.csv(desctable, file = "scored_data/desctable.csv")
+write.csv(corrmatrix, file = "scored_data/corrmatrix.csv") #this is for the correlations table
+#Export these for easy making of tables
+write.csv(M, file = "scored_data/corrvalues.csv")
+write.csv(res1$p, file = "scored_data/pvalues.csv")
 ```
