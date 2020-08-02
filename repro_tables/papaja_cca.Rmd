@@ -1,0 +1,361 @@
+---
+title             : "Associations between cognitive and affective empathy and internalizing symptoms in late childhood"
+shorttitle        : "Empathy and internalizing symptoms in late childhood"
+
+author: 
+  - name          : "Kate Bray"
+    affiliation   : "1,2"
+    corresponding : yes    # Define only one corresponding author
+    address       : "Postal address"
+    email         : "my@email.com"
+  - name          : "Elena Pozzi"
+    affiliation   : "1,4" 
+  - name          : "Orli S. Schwartz"
+    affiliation   : "4"    
+  - name          : "Nandita Vijayakumar"
+    affiliation   : "5" 
+  - name          : "Sally Richmond"
+    affiliation   : "6" 
+  - name          : "Camille Deane"
+    affiliation   : "5" 
+  - name          : "Nicholas B. Allen"
+    affiliation   : "7" 
+  - name          : "Vicki Anderson"
+    affiliation   : "2,3" 
+  - name          : "Christos Pantelis"
+    affiliation   : "1" 
+  - name          : "Sarah Whittle"
+    affiliation   : "1"
+
+affiliation:
+  - id            : "1"
+    institution   : "Melbourne Neuropsychiatry Centre (MNC), Department of Psychiatry, The University of Melbourne & Melbourne Health, Melbourne, Australia"
+  - id            : "2"
+    institution   : "Melbourne School of Psychological Sciences, University of Melbourne, Melbourne, Australia"
+  - id            : "3"
+    institution   : "Murdoch Children's Research Centre, Melbourne, Australia"
+  - id            : "4"
+    institution   : "Orygen, Melbourne Australia, Centre for Youth Mental Health, University of Melbourne, Australia"
+  - id            : "5"
+    institution   : "School of Psychology, Deakin University, Melbourne, Australia"
+  - id            : "6"
+    institution   : "Turner Institute for Brain and Mental Health, School of Psychological Sciences, Monash University, Melbourne, Australia"
+  - id            : "7"
+    institution   : "Department of Psychology, University of Oregon, USA"
+
+authornote: |
+  Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
+
+  Enter author note here.
+
+abstract: |
+  Empathy is a multidimensional construct, which includes cognitive (i.e., understanding another’s emotional state) and affective (i.e., experiencing and reacting to another’s emotional state) components. Studies in adults have demonstrated that both affective and cognitive empathy are related to anxious and depressive symptoms. The aim of this study was to examine these associations in childhood, where there is relatively less research. Participants were 127 9- and 10-year-old children, recruited from the community. Self-report measures of cognitive and affective empathy, and internalizing symptoms were administered, as well as a task-based measure of cognitive empathy. Canonical correlation analysis demonstrated that components of affective empathy, specifically affective sharing and empathic distress, were associated with internalizing (particularly social anxiety) symptoms. Although empathy is important for successful social interaction, this study suggests that children who share each other’s emotions strongly are more likely to experience anxiety, particularly of a social nature. 
+  
+  <!-- https://tinyurl.com/ybremelq -->
+  
+keywords          : "keywords"
+wordcount         : "X"
+
+bibliography      : ["r-references.bib"]
+
+floatsintext      : yes
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+linenumbers       : yes
+mask              : no
+draft             : no
+
+documentclass     : "apa6"
+classoption       : "man"
+\ output            : papaja::apa6_pdf
+output            : papaja::apa6_word
+  
+---
+
+```{r setup, include = FALSE}
+library("papaja")
+library(psych)
+library(dplyr)
+library(corx) #formats corr tables
+library(ggplot2)
+
+r_refs("r-references.bib")
+
+cca_maindata <- read.csv("../scored_data/cca_maindata.csv", header=TRUE, stringsAsFactors = FALSE)
+my_dataset_scored <- read.csv("../scored_data/cca_data_scored.csv", header=TRUE, stringsAsFactors = FALSE)
+ccatable <- read.csv("../scored_data/ccatable.csv", header=TRUE, stringsAsFactors = FALSE)
+desctable <- read.csv("../scored_data/desctable.csv", header=TRUE, stringsAsFactors = FALSE)
+corrmatrix <- read.csv("../scored_data/corrmatrix.csv", header=TRUE, stringsAsFactors = FALSE)
+scatter <- read.csv("../scored_data/scatter.csv", header=TRUE, stringsAsFactors = FALSE)
+xcoeftable <- read.csv("../scored_data/xcoeftable.csv", header=TRUE, stringsAsFactors = FALSE)
+ycoeftable <- read.csv("../scored_data/ycoeftable.csv", header=TRUE, stringsAsFactors = FALSE)
+np_rc_f <- read.csv("../scored_data/non-para_rc_F.csv", header=TRUE, stringsAsFactors = FALSE)
+NPX <- read.csv("../scored_data/NPX.csv", header=TRUE, stringsAsFactors = FALSE)
+NPY <- read.csv("../scored_data/NPY.csv", header=TRUE, stringsAsFactors = FALSE)
+```
+
+```{r analysis-preferences}
+# Seed for random number generation
+#set.seed(42)
+#knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
+```
+
+
+
+# Methods
+
+
+## Participants
+
+## Material
+
+## Procedure
+
+## Data analysis
+#We used `r cite_r("r-references.bib")` for all our analyses.
+
+
+# Results
+## Canonical Correlation Analysis
+```{r, desctable, echo=FALSE, results='asis'}
+
+row.names(desctable) <- c("Female","Male","blank1","blank2","Grade 7 to 12", "Graduated High School","Partial tertiary university", "TAFE", "Bachelor’s degree",
+                          "Honors", "Partial graduate school", "Completed graduate school", "Quintile 1", "Quintile 2", "Quintile 3", "Quintile 4",
+                          "Quintile 5", "White", "Asian", "Mixed or other", "Missing", "Australian (or New Zealander)", "Australian/European",
+                          "Australian/Asian", "Asian1", "European", "Other", "Missin")
+
+
+apa_table(
+  list(`Sex` = desctable[1:2,2:3], `Age` = desctable[3,2:3],`Est. FSIQ` = desctable[4,2:3], `Parent Education` = desctable[5:12,2:3], `Neighborhood advantage` = desctable[13:17,2:3], `Race` = desctable[18:21,2:3], `Ethnicity` = desctable[22:28,2:3] ),
+          caption = "Descriptive statistics characterizing the sample used for the CCA analysis",
+          note = "Est. FSIQ = Estimated full scale IQ, Neighborhood advantage is listed from least advantage to most",
+          align = c("l",rep("c", 2)),
+          col.names = c( "Demographic measure","Frequency or Mean","Percentage or Stnd. Dev."),
+  digits = c(0,0,2),
+  longtable = TRUE,
+  font_size = "small"
+  )
+
+
+```
+
+```{r, cronalpha, include = FALSE}
+
+##Cronbach's alpha
+#find the Fs from the cca set
+ID <- cca_maindata$FACTS_ID
+#subset the original set by just the participants who were in the cca dataset
+cronbach_set <- my_dataset_scored[my_dataset_scored$FACTS_ID %in% ID, ]
+#collect together the items for each measure
+##Aff shar
+cron_aff_shar<- cronbach_set[,c("F_T1_C_EMPATHY_1_5","F_T1_C_EMPATHY_1_7","F_T1_C_EMPATHY_1_9","F_T1_C_EMPATHY_1_12")]
+psych::alpha(cron_aff_shar)
+cron_cog_emp<- cronbach_set[,c("F_T1_C_EMPATHY_1_1", "F_T1_C_EMPATHY_1_3","F_T1_C_EMPATHY_1_8","F_T1_C_EMPATHY_1_10")]
+psych::alpha(cron_cog_emp)
+cron_emp_conc<- cronbach_set[,c("F_T1_C_EMPATHY_1_2","F_T1_C_EMPATHY_1_4","F_T1_C_EMPATHY_1_6","F_T1_C_EMPATHY_1_11")]
+psych::alpha(cron_emp_conc)
+cron_emp_dist<- cronbach_set[,c("F_T1_C_EMPATHY_2_1","F_T1_C_EMPATHY_2_2","F_T1_C_EMPATHY_2_3")]
+psych::alpha(cron_emp_dist)
+cron_sil_films<- cronbach_set[,c("F_T1_C_SF_1","F_T1_C_SF_2","F_T1_C_SF_3","F_T1_C_SF_4","F_T1_C_SF_5","F_T1_C_SF_6")]
+psych::alpha(cron_sil_films)
+cron_negmood_phys<- cronbach_set[,c("F_T1_C_CDI_1","F_T1_C_CDI_9","F_T1_C_CDI_10","F_T1_C_CDI_15" , "F_T1_C_CDI_16" , "F_T1_C_CDI_17" ,
+                                 "F_T1_C_CDI_18","F_T1_C_CDI_26" , "F_T1_C_CDI_27")]
+psych::alpha(cron_negmood_phys, keys=c("F_T1_C_CDI_9","F_T1_C_CDI_10","F_T1_C_CDI_15" , "F_T1_C_CDI_17" ,
+                                       "F_T1_C_CDI_26" , "F_T1_C_CDI_27"))
+cron_neg_selfest<- cronbach_set[,c("F_T1_C_CDI_2","F_T1_C_CDI_6","F_T1_C_CDI_7" , "F_T1_C_CDI_8", "F_T1_C_CDI_13","F_T1_C_CDI_24")]
+psych::alpha(cron_neg_selfest, keys=c("F_T1_C_CDI_2","F_T1_C_CDI_6","F_T1_C_CDI_7" ,"F_T1_C_CDI_24"))
+cron_ineff<- cronbach_set[,c("F_T1_C_CDI_3" , "F_T1_C_CDI_4","F_T1_C_CDI_12", "F_T1_C_CDI_14","F_T1_C_CDI_20","F_T1_C_CDI_22", "F_T1_C_CDI_23", 
+                             "F_T1_C_CDI_28")]
+psych::alpha(cron_ineff, keys=c("F_T1_C_CDI_12", "F_T1_C_CDI_14","F_T1_C_CDI_20", "F_T1_C_CDI_23"))
+cron_intprobs<- cronbach_set[,c("F_T1_C_CDI_5","F_T1_C_CDI_11","F_T1_C_CDI_19","F_T1_C_CDI_21", "F_T1_C_CDI_25")]
+psych::alpha(cron_intprobs)
+cron_scasseps<- cronbach_set[,c("F_T1_C_SCAS_5","F_T1_C_SCAS_8","F_T1_C_SCAS_12","F_T1_C_SCAS_15" , 
+                                "F_T1_C_SCAS_16","F_T1_C_SCAS_44")]
+psych::alpha(cron_scasseps)
+cron_scassoc<- cronbach_set[,c("F_T1_C_SCAS_6","F_T1_C_SCAS_7","F_T1_C_SCAS_9","F_T1_C_SCAS_10" , 
+                               "F_T1_C_SCAS_29","F_T1_C_SCAS_35")]
+psych::alpha(cron_scassoc)
+cron_scasocd<- cronbach_set[,c("F_T1_C_SCAS_14","F_T1_C_SCAS_19","F_T1_C_SCAS_27","F_T1_C_SCAS_40" , 
+                               "F_T1_C_SCAS_41","F_T1_C_SCAS_42")]
+psych::alpha(cron_scasocd)
+cron_scasopanicag<- cronbach_set[,c("F_T1_C_SCAS_13","F_T1_C_SCAS_21","F_T1_C_SCAS_28","F_T1_C_SCAS_30" , 
+                                    "F_T1_C_SCAS_32","F_T1_C_SCAS_34","F_T1_C_SCAS_36","F_T1_C_SCAS_37","F_T1_C_SCAS_39")]
+psych::alpha(cron_scasopanicag)
+cron_scasphysinj<- cronbach_set[,c("F_T1_C_SCAS_2","F_T1_C_SCAS_18","F_T1_C_SCAS_23","F_T1_C_SCAS_25" , 
+                                   "F_T1_C_SCAS_33")]
+psych::alpha(cron_scasphysinj)
+cron_scasgad<- cronbach_set[,c("F_T1_C_SCAS_1","F_T1_C_SCAS_3","F_T1_C_SCAS_4","F_T1_C_SCAS_20" , 
+                               "F_T1_C_SCAS_22","F_T1_C_SCAS_24")]
+psych::alpha(cron_scasgad)
+
+#Collect the alphas together
+c1 <- psych::alpha(cron_aff_shar)
+c2 <- psych::alpha(cron_cog_emp)
+c3 <- psych::alpha(cron_emp_conc)
+c4 <- psych::alpha(cron_emp_dist)
+c5 <- psych::alpha(cron_sil_films)
+
+c6 <- psych::alpha(cron_negmood_phys, keys=c("F_T1_C_CDI_9","F_T1_C_CDI_10","F_T1_C_CDI_15" , "F_T1_C_CDI_17" ,
+                                       "F_T1_C_CDI_26" , "F_T1_C_CDI_27"))
+c7 <- psych::alpha(cron_neg_selfest, keys=c("F_T1_C_CDI_2","F_T1_C_CDI_6","F_T1_C_CDI_7" ,"F_T1_C_CDI_24"))
+c8 <- psych::alpha(cron_ineff, keys=c("F_T1_C_CDI_12", "F_T1_C_CDI_14","F_T1_C_CDI_20", "F_T1_C_CDI_23"))
+c9 <- psych::alpha(cron_intprobs)
+
+c10 <- psych::alpha(cron_scasseps)
+c11 <- psych::alpha(cron_scassoc)
+c12 <- psych::alpha(cron_scasocd)
+c13 <- psych::alpha(cron_scasopanicag)
+c14 <- psych::alpha(cron_scasphysinj)
+c15 <- psych::alpha(cron_scasgad)
+
+cronemp <- papaja::printnum(rbind(c1$total[2], c2$total[2], c3$total[2], c4$total[2], c5$total[2]), gt1 = FALSE) # the printnum plus gt1 = FALSE argument removes leading zeros
+croncdi <- papaja::printnum(rbind(c6$total[2], c7$total[2], c8$total[2], c9$total[2]), gt1 = FALSE)
+cronscas <- papaja::printnum(rbind(c10$total[2], c11$total[2], c12$total[2], c13$total[2], c14$total[2], c15$total[2]), gt1 = FALSE)
+
+```
+
+```{r, table1, echo=FALSE, results='asis'}
+
+
+
+#Select the variables to go in (keeping separate to allow for variable grouping)
+emp_analysis_vars<- dplyr::select(cca_maindata, aff_shar, cog_emp, emp_conc, emp_dist, silent_films_total)
+cdi_analysis_vars<- dplyr::select(cca_maindata, negmood_phys, neg_selfest, ineff, intprobs)
+scas_analysis_vars<- dplyr::select(cca_maindata, scasseps, scassoc, scasphysinj, scasgad, scasocd, scasopanicag)
+
+
+#provides mean, sd, kurtosis, skew etc
+emp_desc <- describe(emp_analysis_vars)
+cdi_desc <- describe(cdi_analysis_vars)
+scas_desc <- describe(scas_analysis_vars)
+
+
+#Just select the columns want for table (at this point n,m,sd,range)
+emp_desc <- emp_desc[, c("n", "mean", "sd", "range", "skew", "kurtosis")]
+cdi_desc <- cdi_desc[, c("n", "mean", "sd", "range", "skew", "kurtosis")]
+scas_desc <- scas_desc[, c("n", "mean", "sd", "range", "skew", "kurtosis")]
+
+row.names(emp_desc) <- c("Affective Sharing","Cognitive Empathy","Empathic Concern","Empathic Distress","Silent Films")
+row.names(cdi_desc) <- c("Neg. mood/phys. symptoms","Negative self-esteem","Ineffectiveness","Interpersonal problems")
+row.names(scas_desc) <- c("Separation anxiety","Social phobia","Physical injury fears","Generalized anxiety","Obsessive compulsive", "Panic/agoraphobia")
+
+
+#append the C alphas onto the other desc.
+emp_desc<- cbind(emp_desc, cronemp)
+cdi_desc<- cbind(cdi_desc, croncdi)
+scas_desc<- cbind(scas_desc, cronscas)
+
+#Use the wrapper apa_table to make an apa table of the descriptive
+apa_table(
+  list(`Empathy` = emp_desc, `CDI (before binarization)` = cdi_desc, `SCAS` = scas_desc),
+            caption = "Means, standard deviations, range, skew and kurtosis for the key measures used in the CCA",
+          align = c("l",rep("c", 7) ),
+          col.names = c("Measure of interest", "$N$","Mean","SD","Range", "Skew", "Kurtosis", "Cronbach’s $\\alpha$"),
+  digits = c(0,0, 2,2,2,2,2,2),
+  font_size = "small"
+)
+
+#c(0, 2,2,2,2,2,2)
+```
+
+```{r}
+
+```
+
+
+```{r, cortable, echo=FALSE, results='asis'}
+
+#removes the extra column
+corrmatrix$X <- NULL
+
+colnames(corrmatrix) <- c("Aff. Sharing","Cog. Emp.","Emp. Concern","Emp. Distress", "Silent Films","Neg. Mood","Neg. Self-est.", "Ineff.", "Interpersonal", "Sep. Anx.","Social Anx.","Phys.Injury" ,"GAD" , "OCD" , "Panic/Ag." , "Sex" , "IQ","Parent Ed.","Neighborhood", "Age" )     
+
+x <- corx(corrmatrix,
+          triangle = "lower",
+          stars = c(0.05, 0.01, 0.001))
+
+papaja::apa_table(x$apa, # apa contains the data.frame needed for apa_table
+                  caption = "Bivariate correlations for key variables and covariates (Pearson’s)",
+                  note = "* p < 0.05; ** p < 0.01; *** p < 0.001. Not corrected for multiple comparisons. Full variable names: ineffectiveness, negative self-esteem, negative mood and physical symptoms, interpersonal problems, physical injury fears, separation anxiety, social anxiety/phobia, obsessive compulsive symptoms, generalized anxiety symptoms, panic/agoraphobia, parent education, neighborhood advantage, silent films task, full scale IQ estimate, sex, cognitive empathy, empathic concern, affective sharing and empathic distress.",
+                  landscape = TRUE,
+                  font_size = "small"
+                  )
+
+```
+
+
+```{r, ccatable, echo=FALSE, results='asis'}
+
+
+apa_table(cbind(ccatable[,1], papaja::printnum(ccatable[,2:4], gt1 = FALSE), ccatable[,5:7], papaja::printp(ccatable[,8]), papaja::printp(np_rc_f$np_f), papaja::printp(ccatable[,9]), papaja::printp(np_rc_f$np_rc)),
+          caption = "Pertinent values from the CCA analysis for each of the nine canonical functions created",
+          note = "* = <0.05, bold text = both parametric and non-parametric p-value significant. Rc = Canonical Correlation, Rc2 = Canonical Correlation Squared",
+          align = c("l",rep("c", 10) ),
+          col.names = c("Dimension",	"Rc",	"Rc2",	"Wilk’s $\\Lambda$",	"Multiple $F$",	"df1",	"df2",	"Para. $p$ ($F$)","Non-para. $p$ ($F$)",	"Para. $p$ (Rc)",	"Non-para. $p$ (Rc)"),
+          font_size = "small"
+)
+```
+(ref:scatter-caption) Scatterplot displaying the correlation between the empathy synthetic variable   (linear combination of the original empathy measures and the covariates), and the internalising synthetic variable from the first function in the CCA.  
+
+```{r, scatterplot, echo=FALSE, results='asis', fig.cap = "(ref:scatter-caption)"}
+
+ggplot(data = scatter, aes(x = X, y = Y)) +
+  geom_point() +
+  theme_apa()+ 
+  labs(x = "Empathy Synthetic Variable Score", y="Internalising Synthetic Variable Score")+
+  theme(panel.border = element_blank(), axis.line = element_line())
+
+
+```
+
+```{r, coefftableprep, echo=FALSE}
+
+row.names(xcoeftable) <- c("Affective Sharing","Cognitive Empathy","Empathic Concern","Empathic Distress","Silent Films","Sex","IQ","Parent Education","Neighborhood Advantage")
+xcoeftable$X <- NULL
+
+row.names(ycoeftable) <- c("Negative mood/physical symptoms","Negative self-esteem","Ineffectiveness","Interpersonal problems",
+                           "Separation anxiety","Social phobia","Physical injury fears","Generalized anxiety","Obsessive compulsive", "Panic/agoraphobia")
+ycoeftable$X <- NULL
+```
+
+```{r, coeffxtable, echo=FALSE, results='asis'}
+
+#see if I can find out about the stars code
+
+
+apa_table(cbind(xcoeftable[,1], papaja::printnum(xcoeftable[,2:3], gt1 = FALSE), papaja::printp(xcoeftable[,4]), papaja::printp(NPX$x)),
+          caption = "Coefficients for X variables, first function.",
+          note = "* Survive correction for multiple comparisons (Bonferroni).",
+          align = c("l",rep("c", 5) ),
+          col.names = c("X Variables", "Standardized X canonical coefficients",	"Structure coefficient (rs)",	"Squared structure",	"Para. $p$ (rs)", "Non-para. $p$ (rs)"),
+          font_size = "small"
+)
+```
+
+```{r, coeffytable, echo=FALSE, results='asis'}
+
+
+apa_table(cbind(ycoeftable[,1], papaja::printnum(ycoeftable[,2:3], gt1 = FALSE),papaja::printp(ycoeftable[,4]), papaja::printp(NPY$x)),
+          caption = "Coefficients for Y variables, first function.",
+          note = "* Survive correction for multiple comparisons (Bonferroni).",
+          align = c("l",rep("c", 5) ),
+          col.names = c("Y Variables", "Standardized X canonical coefficients",	"Structure coefficient (rs)",	"Squared structure",	"Para. $p$ (rs)", "Non-para. $p$ (rs)"),
+          font_size = "small"
+)
+
+```
+
+# Discussion
+
+
+\newpage
+
+# References
+
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+<div id="refs" custom-style="Bibliography"></div>
+\endgroup

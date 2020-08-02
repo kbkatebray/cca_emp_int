@@ -1,0 +1,486 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  english,
+  man,floatsintext]{apa6}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Associations between cognitive and affective empathy and internalizing symptoms in late childhood},
+  pdflang={en-EN},
+  pdfkeywords={keywords},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+% Make \paragraph and \subparagraph free-standing
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+% Manuscript styling
+\usepackage{upgreek}
+\captionsetup{font=singlespacing,justification=justified}
+
+% Table formatting
+\usepackage{longtable}
+\usepackage{lscape}
+% \usepackage[counterclockwise]{rotating}   % Landscape page setup for large tables
+\usepackage{multirow}		% Table styling
+\usepackage{tabularx}		% Control Column width
+\usepackage[flushleft]{threeparttable}	% Allows for three part tables with a specified notes section
+\usepackage{threeparttablex}            % Lets threeparttable work with longtable
+
+% Create new environments so endfloat can handle them
+% \newenvironment{ltable}
+%   {\begin{landscape}\begin{center}\begin{threeparttable}}
+%   {\end{threeparttable}\end{center}\end{landscape}}
+\newenvironment{lltable}{\begin{landscape}\begin{center}\begin{ThreePartTable}}{\end{ThreePartTable}\end{center}\end{landscape}}
+
+% Enables adjusting longtable caption width to table width
+% Solution found at http://golatex.de/longtable-mit-caption-so-breit-wie-die-tabelle-t15767.html
+\makeatletter
+\newcommand\LastLTentrywidth{1em}
+\newlength\longtablewidth
+\setlength{\longtablewidth}{1in}
+\newcommand{\getlongtablewidth}{\begingroup \ifcsname LT@\roman{LT@tables}\endcsname \global\longtablewidth=0pt \renewcommand{\LT@entry}[2]{\global\advance\longtablewidth by ##2\relax\gdef\LastLTentrywidth{##2}}\@nameuse{LT@\roman{LT@tables}} \fi \endgroup}
+
+% \setlength{\parindent}{0.5in}
+% \setlength{\parskip}{0pt plus 0pt minus 0pt}
+
+% \usepackage{etoolbox}
+\makeatletter
+\patchcmd{\HyOrg@maketitle}
+  {\section{\normalfont\normalsize\abstractname}}
+  {\section*{\normalfont\normalsize\abstractname}}
+  {}{\typeout{Failed to patch abstract.}}
+\makeatother
+\shorttitle{Empathy and internalizing symptoms in late childhood}
+\author{Kate Bray\textsuperscript{1,2}, Elena Pozzi\textsuperscript{1,4}, Orli S. Schwartz\textsuperscript{4}, Nandita Vijayakumar\textsuperscript{5}, Sally Richmond\textsuperscript{6}, Camille Deane\textsuperscript{5}, Nicholas B. Allen\textsuperscript{7}, Vicki Anderson\textsuperscript{2,3}, Christos Pantelis\textsuperscript{1}, \& Sarah Whittle\textsuperscript{1}}
+\affiliation{
+\vspace{0.5cm}
+\textsuperscript{1} Melbourne Neuropsychiatry Centre (MNC), Department of Psychiatry, The University of Melbourne \& Melbourne Health, Melbourne, Australia\\\textsuperscript{2} Melbourne School of Psychological Sciences, University of Melbourne, Melbourne, Australia\\\textsuperscript{3} Murdoch Children's Research Centre, Melbourne, Australia\\\textsuperscript{4} Orygen, Melbourne Australia, Centre for Youth Mental Health, University of Melbourne, Australia\\\textsuperscript{5} School of Psychology, Deakin University, Melbourne, Australia\\\textsuperscript{6} Turner Institute for Brain and Mental Health, School of Psychological Sciences, Monash University, Melbourne, Australia\\\textsuperscript{7} Department of Psychology, University of Oregon, USA}
+\authornote{Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
+
+Enter author note here.
+
+
+Correspondence concerning this article should be addressed to Kate Bray, Postal address. E-mail: my@email.com}
+\keywords{keywords\newline\indent Word count: X}
+\usepackage{lineno}
+
+\linenumbers
+\usepackage{csquotes}
+\ifxetex
+  % Load polyglossia as late as possible: uses bidi with RTL langages (e.g. Hebrew, Arabic)
+  \usepackage{polyglossia}
+  \setmainlanguage[]{english}
+\else
+  \usepackage[shorthands=off,main=english]{babel}
+\fi
+
+\title{Associations between cognitive and affective empathy and internalizing symptoms in late childhood}
+
+\date{}
+
+\abstract{
+Empathy is a multidimensional construct, which includes cognitive (i.e., understanding another's emotional state) and affective (i.e., experiencing and reacting to another's emotional state) components. Studies in adults have demonstrated that both affective and cognitive empathy are related to anxious and depressive symptoms. The aim of this study was to examine these associations in childhood, where there is relatively less research. Participants were 127 9- and 10-year-old children, recruited from the community. Self-report measures of cognitive and affective empathy, and internalizing symptoms were administered, as well as a task-based measure of cognitive empathy. Canonical correlation analysis demonstrated that components of affective empathy, specifically affective sharing and empathic distress, were associated with internalizing (particularly social anxiety) symptoms. Although empathy is important for successful social interaction, this study suggests that children who share each other's emotions strongly are more likely to experience anxiety, particularly of a social nature.
+}
+
+\begin{document}
+\maketitle
+
+\hypertarget{methods}{%
+\section{Methods}\label{methods}}
+
+\hypertarget{participants}{%
+\subsection{Participants}\label{participants}}
+
+\hypertarget{material}{%
+\subsection{Material}\label{material}}
+
+\hypertarget{procedure}{%
+\subsection{Procedure}\label{procedure}}
+
+\hypertarget{data-analysis}{%
+\subsection{Data analysis}\label{data-analysis}}
+
+\#We used R (Version 4.0.2; R Core Team, 2020) and the R-packages \emph{car} (Version 3.0.8; Fox \& Weisberg, 2019; Fox, Weisberg, \& Price, 2020), \emph{carData} (Version 3.0.4; Fox et al., 2020), \emph{corx} (Version 1.0.6.1; Conigrave, 2020), \emph{dplyr} (Version 1.0.0; Wickham, François, Henry, \& Müller, 2020), \emph{ggplot2} (Version 3.3.2; Wickham, 2016), \emph{lubridate} (Version 1.7.9; Grolemund \& Wickham, 2011), \emph{papaja} (Version 0.1.0.9942; Aust \& Barth, 2020), \emph{plyr} (Version 1.8.6; Wickham et al., 2020; Wickham, 2011), and \emph{psych} (Version 1.9.12.31; Revelle, 2019) for all our analyses.
+
+\hypertarget{results}{%
+\section{Results}\label{results}}
+
+\hypertarget{canonical-correlation-analysis}{%
+\subsection{Canonical Correlation Analysis}\label{canonical-correlation-analysis}}
+
+\begin{center}
+\begin{ThreePartTable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} Est. FSIQ = Estimated full scale IQ, Neighborhood advantage is listed from least advantage to most}
+\end{TableNotes}
+
+\small{
+
+\begin{longtable}{lcc}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:desctable}Descriptive statistics characterizing the sample used for the CCA analysis}\\
+\toprule
+Demographic measure & Frequency or Mean & Percentage or Stnd. Dev.\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:desctable} continued}}\\
+\toprule
+Demographic measure & Frequency or Mean & Percentage or Stnd. Dev.\\
+\midrule
+\endhead
+Sex &  & \\
+\ \ \ Female & 68 & 53.54\\
+\ \ \ Male & 59 & 46.46\\
+Age &  & \\
+\ \ \ blank1 & 10 & 4.55\\
+Est. FSIQ &  & \\
+\ \ \ blank2 & 106 & 10.91\\
+Parent Education &  & \\
+\ \ \ Grade 7 to 12 & 13 & 10.24\\
+\ \ \ Graduated High School & 10 & 7.87\\
+\ \ \ Partial tertiary university & 5 & 3.94\\
+\ \ \ TAFE & 21 & 16.54\\
+\ \ \ Bachelor’s degree & 29 & 22.83\\
+\ \ \ Honors & 4 & 3.15\\
+\ \ \ Partial graduate school & 9 & 7.09\\
+\ \ \ Completed graduate school & 36 & 28.35\\
+Neighborhood advantage &  & \\
+\ \ \ Quintile 1 & 28 & 22.05\\
+\ \ \ Quintile 2 & 33 & 25.98\\
+\ \ \ Quintile 3 & 30 & 23.62\\
+\ \ \ Quintile 4 & 24 & 18.90\\
+\ \ \ Quintile 5 & 12 & 9.45\\
+Race &  & \\
+\ \ \ White & 92 & 72.44\\
+\ \ \ Asian & 14 & 11.02\\
+\ \ \ Mixed or other & 14 & 11.02\\
+\ \ \ Missing & 7 & 5.51\\
+Ethnicity &  & \\
+\ \ \ Australian (or New Zealander) & 75 & 59.06\\
+\ \ \ Australian/European & 17 & 13.39\\
+\ \ \ Australian/Asian & 11 & 8.66\\
+\ \ \ Asian1 & 6 & 4.72\\
+\ \ \ European & 3 & 2.36\\
+\ \ \ Other & 8 & 6.30\\
+\ \ \ Missin & 7 & 5.51\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{ThreePartTable}
+\end{center}
+
+\begin{table}[tbp]
+
+\begin{center}
+\begin{threeparttable}
+
+\caption{\label{tab:table1}Means, standard deviations, range, skew and kurtosis for the key measures used in the CCA}
+
+\small{
+
+\begin{tabular}{lccccccc}
+\toprule
+Measure of interest & $N$ & Mean & SD & Range & Skew & Kurtosis & Cronbach’s $\alpha$\\
+\midrule
+Empathy &  &  &  &  &  &  & \\
+\ \ \ Affective Sharing & 127 & 9.59 & 3.69 & 16.00 & 0.35 & -0.22 & 0.84\\
+\ \ \ Cognitive Empathy & 127 & 13.34 & 2.79 & 16.00 & -0.15 & 0.06 & 0.68\\
+\ \ \ Empathic Concern & 127 & 16.53 & 2.32 & 11.00 & -0.43 & -0.17 & 0.58\\
+\ \ \ Empathic Distress & 127 & 8.16 & 3.09 & 15.00 & 0.31 & -0.29 & 0.64\\
+\ \ \ Silent Films & 127 & 7.68 & 2.21 & 11.00 & -0.54 & 0.44 & 0.31\\
+CDI (before binarization) &  &  &  &  &  &  & \\
+\ \ \ Neg. mood/phys. symptoms & 127 & 2.61 & 2.31 & 9.00 & 0.68 & -0.42 & 0.62\\
+\ \ \ Negative self-esteem & 127 & 0.84 & 1.20 & 5.00 & 1.62 & 2.07 & 0.61\\
+\ \ \ Ineffectiveness & 127 & 2.63 & 2.43 & 10.00 & 0.95 & 0.06 & 0.70\\
+\ \ \ Interpersonal problems & 127 & 0.73 & 1.21 & 5.00 & 1.70 & 1.91 & 0.65\\
+SCAS &  &  &  &  &  &  & \\
+\ \ \ Separation anxiety & 127 & 3.96 & 3.03 & 16.00 & 0.96 & 1.23 & 0.71\\
+\ \ \ Social phobia & 127 & 3.51 & 2.91 & 12.00 & 0.77 & -0.14 & 0.75\\
+\ \ \ Physical injury fears & 127 & 3.65 & 2.59 & 12.00 & 0.72 & 0.15 & 0.75\\
+\ \ \ Generalized anxiety & 127 & 4.94 & 2.94 & 16.00 & 0.65 & 0.52 & 0.74\\
+\ \ \ Obsessive compulsive & 127 & 5.02 & 3.42 & 14.00 & 0.53 & -0.21 & 0.52\\
+\ \ \ Panic/agoraphobia & 127 & 2.67 & 2.83 & 14.00 & 1.41 & 2.16 & 0.76\\
+\bottomrule
+\end{tabular}
+
+}
+
+\end{threeparttable}
+\end{center}
+
+\end{table}
+
+\begin{lltable}
+
+\begin{TableNotes}[para]
+\normalsize{\textit{Note.} * p < 0.05; ** p < 0.01; *** p < 0.001. Not corrected for multiple comparisons. Full variable names: ineffectiveness, negative self-esteem, negative mood and physical symptoms, interpersonal problems, physical injury fears, separation anxiety, social anxiety/phobia, obsessive compulsive symptoms, generalized anxiety symptoms, panic/agoraphobia, parent education, neighborhood advantage, silent films task, full scale IQ estimate, sex, cognitive empathy, empathic concern, affective sharing and empathic distress.}
+\end{TableNotes}
+
+\small{
+
+\begin{longtable}{llllllllllllllllllll}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:cortable}Bivariate correlations for key variables and covariates (Pearson’s)}\\
+\toprule
+ & \multicolumn{1}{c}{1} & \multicolumn{1}{c}{2} & \multicolumn{1}{c}{3} & \multicolumn{1}{c}{4} & \multicolumn{1}{c}{5} & \multicolumn{1}{c}{6} & \multicolumn{1}{c}{7} & \multicolumn{1}{c}{8} & \multicolumn{1}{c}{9} & \multicolumn{1}{c}{10} & \multicolumn{1}{c}{11} & \multicolumn{1}{c}{12} & \multicolumn{1}{c}{13} & \multicolumn{1}{c}{14} & \multicolumn{1}{c}{15} & \multicolumn{1}{c}{16} & \multicolumn{1}{c}{17} & \multicolumn{1}{c}{18} & \multicolumn{1}{c}{19}\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:cortable} continued}}\\
+\toprule
+ & \multicolumn{1}{c}{1} & \multicolumn{1}{c}{2} & \multicolumn{1}{c}{3} & \multicolumn{1}{c}{4} & \multicolumn{1}{c}{5} & \multicolumn{1}{c}{6} & \multicolumn{1}{c}{7} & \multicolumn{1}{c}{8} & \multicolumn{1}{c}{9} & \multicolumn{1}{c}{10} & \multicolumn{1}{c}{11} & \multicolumn{1}{c}{12} & \multicolumn{1}{c}{13} & \multicolumn{1}{c}{14} & \multicolumn{1}{c}{15} & \multicolumn{1}{c}{16} & \multicolumn{1}{c}{17} & \multicolumn{1}{c}{18} & \multicolumn{1}{c}{19}\\
+\midrule
+\endhead
+1. Aff. Sharing & - &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \\
+2. Cog. Emp. & .31*** & - &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \\
+3. Emp. Concern & .31*** & .51*** & - &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \\
+4. Emp. Distress & .48*** & .25** & .33*** & - &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \\
+5. Silent Films & -.04 & .07 & .03 & .11 & - &  &  &  &  &  &  &  &  &  &  &  &  &  & \\
+6. Neg. Mood & .30*** & -.09 & -.01 & .23** & -.02 & - &  &  &  &  &  &  &  &  &  &  &  &  & \\
+7. Neg. Self-est. & .04 & -.05 & .03 & .10 & .08 & .53*** & - &  &  &  &  &  &  &  &  &  &  &  & \\
+8. Ineff. & .21* & -.22* & -.20* & .02 & -.09 & .47*** & .49*** & - &  &  &  &  &  &  &  &  &  &  & \\
+9. Interpersonal & .12 & -.08 & -.04 & .12 & .03 & .57*** & .57*** & .49*** & - &  &  &  &  &  &  &  &  &  & \\
+10. Sep. Anx. & .31*** & -.04 & .08 & .21* & -.08 & .46*** & .30*** & .37*** & .36*** & - &  &  &  &  &  &  &  &  & \\
+11. Social Anx. & .42*** & -.07 & .04 & .33*** & -.04 & .50*** & .36*** & .54*** & .41*** & .53*** & - &  &  &  &  &  &  &  & \\
+12. Phys.Injury & .26** & -.05 & .04 & .17 & -.12 & .29*** & .15 & .40*** & .20* & .47*** & .45*** & - &  &  &  &  &  &  & \\
+13. GAD & .37*** & .10 & .21* & .35*** & -.06 & .43*** & .29** & .38*** & .30*** & .55*** & .58*** & .38*** & - &  &  &  &  &  & \\
+14. OCD & .28** & .05 & .16 & .19* & -.19* & .47*** & .36*** & .44*** & .25** & .48*** & .54*** & .33*** & .57*** & - &  &  &  &  & \\
+15. Panic/Ag. & .29*** & .10 & .14 & .25** & -.08 & .43*** & .42*** & .54*** & .49*** & .53*** & .56*** & .42*** & .70*** & .61*** & - &  &  &  & \\
+16. Sex & .23** & .09 & .10 & .20* & .05 & .01 & .07 & .00 & .11 & .36*** & .30*** & .22* & .18* & .06 & .13 & - &  &  & \\
+17. IQ & .08 & .13 & .15 & .16 & .32*** & -.07 & -.14 & -.26** & -.06 & -.08 & -.06 & -.01 & .00 & -.08 & -.13 & -.01 & - &  & \\
+18. Parent Ed. & .19* & .12 & .06 & -.09 & -.06 & -.01 & -.14 & -.19* & -.01 & .05 & .03 & .01 & .00 & -.07 & -.03 & .11 & .27** & - & \\
+19. Neighborhood & -.01 & .06 & .06 & .05 & -.13 & -.20* & -.12 & -.17 & -.09 & -.14 & -.13 & -.02 & -.07 & -.09 & .02 & .01 & .13 & .28** & -\\
+20. Age & .10 & .05 & .14 & .22* & .03 & -.05 & -.08 & -.16 & -.11 & -.12 & .01 & -.10 & -.05 & -.05 & -.15 & -.05 & .04 & .07 & .26**\\
+\bottomrule
+\addlinespace
+\insertTableNotes
+\end{longtable}
+
+}
+
+\end{lltable}
+
+\begin{table}[tbp]
+
+\begin{center}
+\begin{threeparttable}
+
+\caption{\label{tab:ccatable}Pertinent values from the CCA analysis for each of the nine canonical functions created}
+
+\small{
+
+\begin{tabular}{lcccccccc}
+\toprule
+Dimension & Rc & Rc2 & Wilk’s $\Lambda$ & Multiple F & df1 & df2 & Para. p-value (F) & Para. p-value (Rc)\\
+\midrule
+1 & 0.63 & 0.40 & 0.30 & 1.59 & 90 & 742.75 & .001 & < .001\\
+2 & 0.51 & 0.26 & 0.50 & 1.12 & 72 & 670.60 & .249 & < .001\\
+3 & 0.38 & 0.15 & 0.68 & 0.78 & 56 & 597.68 & .876 & < .001\\
+4 & 0.31 & 0.09 & 0.80 & 0.60 & 42 & 524.09 & .978 & < .001\\
+5 & 0.27 & 0.07 & 0.88 & 0.47 & 30 & 450.00 & .993 & .003\\
+6 & 0.16 & 0.03 & 0.95 & 0.28 & 20 & 375.73 & .999 & .071\\
+7 & 0.13 & 0.02 & 0.98 & 0.23 & 12 & 301.91 & .997 & .151\\
+8 & 0.08 & 0.01 & 0.99 & 0.14 & 6 & 230.00 & .991 & .352\\
+9 & 0.01 & 0.00 & 1.00 & NA & 2 & NA &  & .900\\
+\bottomrule
+\addlinespace
+\end{tabular}
+
+}
+
+\begin{tablenotes}[para]
+\normalsize{\textit{Note.} * = <0.05, bold text = both parametric and non-parametric p-value significant. Rc = Canonical Correlation, Rc2 = Canonical Correlation Squared}
+\end{tablenotes}
+
+\end{threeparttable}
+\end{center}
+
+\end{table}
+
+
+
+\begin{figure}
+\centering
+\includegraphics{papajatest_cca_files/figure-latex/scatterplot-1.pdf}
+\caption{\label{fig:scatterplot}Scatterplot displaying the correlation between the empathy synthetic variable (linear combination of the original empathy measures and the covariates), and the internalising synthetic variable from the first function in the CCA.}
+\end{figure}
+
+\begin{table}[tbp]
+
+\begin{center}
+\begin{threeparttable}
+
+\caption{\label{tab:coeffxtable}Coefficients for X variables, first function.}
+
+\small{
+
+\begin{tabular}{lcccc}
+\toprule
+X Variables & Standardized X canonical coefficients & Structure coefficient (rs) & Squared structure & Parametric p-value for rs\\
+\midrule
+Affective Sharing & -0.50 & -0.62 & 0.38 & < .001\\
+Cognitive Empathy & 0.48 & 0.25 & 0.06 & .004\\
+Empathic Concern & 0.06 & 0.02 & 0.00 & .803\\
+Empathic Distress & -0.34 & -0.49 & 0.24 & < .001\\
+Silent Films & -0.01 & -0.02 & 0.00 & .812\\
+Sex & -0.46 & -0.60 & 0.36 & < .001\\
+IQ & 0.08 & 0.08 & 0.01 & .353\\
+Parent Education & -0.09 & -0.02 & 0.00 & .841\\
+Neighborhood Advantage & 0.34 & 0.34 & 0.12 & < .001\\
+\bottomrule
+\addlinespace
+\end{tabular}
+
+}
+
+\begin{tablenotes}[para]
+\normalsize{\textit{Note.} * Survive correction for multiple comparisons (Bonferroni).}
+\end{tablenotes}
+
+\end{threeparttable}
+\end{center}
+
+\end{table}
+
+\begin{table}[tbp]
+
+\begin{center}
+\begin{threeparttable}
+
+\caption{\label{tab:coeffytable}Coefficients for Y variables, first function.}
+
+\small{
+
+\begin{tabular}{lcccc}
+\toprule
+Y Variables & Standardized X canonical coefficients & Structure coefficient (rs) & Squared structure & Parametric p-value for rs\\
+\midrule
+Negative mood/physical symptoms & -0.04 & -0.37 & 0.14 & < .001\\
+Negative self-esteem & -0.05 & -0.30 & 0.09 & .001\\
+Ineffectiveness & -0.23 & -0.46 & 0.22 & < .001\\
+Interpersonal problems & 0.05 & -0.30 & 0.09 & < .001\\
+Separation anxiety & -0.47 & -0.74 & 0.54 & < .001\\
+Social phobia & -0.72 & -0.86 & 0.74 & < .001\\
+Physical injury fears & -0.06 & -0.50 & 0.25 & < .001\\
+Generalized anxiety & -0.19 & -0.55 & 0.31 & < .001\\
+Obsessive compulsive & 0.28 & -0.36 & 0.13 & < .001\\
+Panic/agoraphobia & 0.34 & -0.37 & 0.13 & < .001\\
+\bottomrule
+\addlinespace
+\end{tabular}
+
+}
+
+\begin{tablenotes}[para]
+\normalsize{\textit{Note.} * Survive correction for multiple comparisons (Bonferroni).}
+\end{tablenotes}
+
+\end{threeparttable}
+\end{center}
+
+\end{table}
+
+\hypertarget{discussion}{%
+\section{Discussion}\label{discussion}}
+
+\newpage
+
+\hypertarget{references}{%
+\section{References}\label{references}}
+
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+\hypertarget{refs}{}
+\leavevmode\hypertarget{ref-R-papaja}{}%
+Aust, F., \& Barth, M. (2020). \emph{papaja: Create APA manuscripts with R Markdown}. Retrieved from \url{https://github.com/crsh/papaja}
+
+\leavevmode\hypertarget{ref-R-corx}{}%
+Conigrave, J. (2020). \emph{Corx: Create and format correlation matrices}. Retrieved from \url{https://CRAN.R-project.org/package=corx}
+
+\leavevmode\hypertarget{ref-R-car}{}%
+Fox, J., \& Weisberg, S. (2019). \emph{An R companion to applied regression} (Third). Thousand Oaks CA: Sage. Retrieved from \url{https://socialsciences.mcmaster.ca/jfox/Books/Companion/}
+
+\leavevmode\hypertarget{ref-R-carData}{}%
+Fox, J., Weisberg, S., \& Price, B. (2020). \emph{CarData: Companion to applied regression data sets}. Retrieved from \url{https://CRAN.R-project.org/package=carData}
+
+\leavevmode\hypertarget{ref-R-lubridate}{}%
+Grolemund, G., \& Wickham, H. (2011). Dates and times made easy with lubridate. \emph{Journal of Statistical Software}, \emph{40}(3), 1--25. Retrieved from \url{http://www.jstatsoft.org/v40/i03/}
+
+\leavevmode\hypertarget{ref-R-base}{}%
+R Core Team. (2020). \emph{R: A language and environment for statistical computing}. Vienna, Austria: R Foundation for Statistical Computing. Retrieved from \url{https://www.R-project.org/}
+
+\leavevmode\hypertarget{ref-R-psych}{}%
+Revelle, W. (2019). \emph{Psych: Procedures for psychological, psychometric, and personality research}. Evanston, Illinois: Northwestern University. Retrieved from \url{https://CRAN.R-project.org/package=psych}
+
+\leavevmode\hypertarget{ref-R-plyr}{}%
+Wickham, H. (2011). The split-apply-combine strategy for data analysis. \emph{Journal of Statistical Software}, \emph{40}(1), 1--29. Retrieved from \url{http://www.jstatsoft.org/v40/i01/}
+
+\leavevmode\hypertarget{ref-R-ggplot2}{}%
+Wickham, H. (2016). \emph{Ggplot2: Elegant graphics for data analysis}. Springer-Verlag New York. Retrieved from \url{https://ggplot2.tidyverse.org}
+
+\leavevmode\hypertarget{ref-R-dplyr}{}%
+Wickham, H., François, R., Henry, L., \& Müller, K. (2020). \emph{Dplyr: A grammar of data manipulation}. Retrieved from \url{https://CRAN.R-project.org/package=dplyr}
+
+\endgroup
+
+\end{document}
