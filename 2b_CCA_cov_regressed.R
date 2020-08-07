@@ -226,6 +226,15 @@ rcorr(res.cc$scores$xscores[,4], res.cc$scores$yscores[,4])
 rcorr(res.cc$scores$xscores[,5], res.cc$scores$yscores[,5])
 
 
+#put these things into a table
+alt2_ccatable<- cbind(res.cc$cor, res.cc$cor^2, cca_signif(res.cc,mainX,mainY)[,1], cca_signif(res.cc,mainX,mainY)[,2],
+                      cca_signif(res.cc,mainX,mainY)[,3], cca_signif(res.cc,mainX,mainY)[,4], cca_signif(res.cc,mainX,mainY)[,5], 
+                      rbind(rcorr(res.cc$scores$xscores[,1], res.cc$scores$yscores[,1])$P[2,1], rcorr(res.cc$scores$xscores[,2], res.cc$scores$yscores[,2])$P[2,1],
+                            rcorr(res.cc$scores$xscores[,3], res.cc$scores$yscores[,3])$P[2,1], rcorr(res.cc$scores$xscores[,4], res.cc$scores$yscores[,4])$P[2,1], 
+                            rcorr(res.cc$scores$xscores[,5], res.cc$scores$yscores[,5])$P[2,1]))
+
+
+
 ##Make the matrix
 corrmatrix <-  dplyr::select(cca_maindata, 
                              aff_shar_resid, cog_emp_resid, emp_conc_resid, emp_dist_resid, silent_films_total_resid, 
@@ -263,3 +272,16 @@ ggplot(data = cca_maindata, aes(x = res.cc$scores$xscores[,1], y = res.cc$scores
 
 
 
+##Exports
+
+#create coefficients tables
+alt2_xcoeftable <- cbind(standardised_xcanonical_coefficients(res.cc,mainX,mainY)[,1],structurecoefs$xvar.corr.r[2:6], ((structurecoefs$xvar.corr.r)^2)[2:6], structurecoefs$xvar.corr.p[2:6])
+colnames(alt2_xcoeftable) <- c("stnd_x_can_coef","str_coef", "sq_str_coef","para_p")
+
+alt2_ycoeftable <- cbind(standardised_ycanonical_coefficients(res.cc,mainX,mainY)[,1],structurecoefs$yvar.corr.r[2:11], ((structurecoefs$yvar.corr.r)^2)[2:11], structurecoefs$yvar.corr.p[2:11])
+colnames(alt2_ycoeftable) <- c("stnd_y_can_coef","str_coef", "sq_str_coef","para_p")
+
+
+write.csv(alt2_ccatable, file = "scored_data/alt2_ccatable.csv")
+write.csv(alt2_xcoeftable, file = "scored_data/alt2_xcoeftable.csv")
+write.csv(alt2_ycoeftable, file = "scored_data/alt2_ycoeftable.csv")

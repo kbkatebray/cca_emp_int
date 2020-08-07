@@ -21,12 +21,16 @@ library(GGally) #ggpairs
 library(ppcor) #pcor
 library(numform) #leading zeros
 library(apaTables)
-
+library(car)
 
 #read in csv files
 cca_maindata <- read.csv("scored_data/cca_maindata.csv", header=TRUE, stringsAsFactors = FALSE)
 my_dataset_scored <- read.csv("scored_data/cca_data_scored.csv", header=TRUE, stringsAsFactors = FALSE)
 ethnic_race <- read.csv("raw_data/37_F_T1_FollowUP_ParIV.csv", header=TRUE, stringsAsFactors = FALSE)
+male_cdi_tscores <- read.csv("raw_data/male_cdi_tscores.csv", 
+                             header=TRUE, stringsAsFactors = FALSE)
+female_cdi_tscores <- read.csv("raw_data/female_cdi_tscores.csv", 
+                               header=TRUE, stringsAsFactors = FALSE)
 ```
 
 ## Descriptive Statistics etc
@@ -92,8 +96,8 @@ sd(cca_maindata$age)
 range(cca_maindata$age)
 
 cca_maindata$gender <- as.factor(cca_maindata$gender)
-cca_maindata$gender <- factor(cca_maindata$gender,
-                              labels = c("male", "female"))
+# cca_maindata$gender <- factor(cca_maindata$gender,
+#                               labels = c("male", "female"))
 
 
 plyr::count(cca_maindata$F_T1_P_education)
@@ -433,12 +437,6 @@ grid.arrange(p9,p10,p11,p12,p13,p14 ,nrow=1)
 #Round the values to make them match a t-scores precisely
 cca_maindata$totalCDI <- round(cca_maindata$totalCDI)
 
-##look up table for categories
-
-male_cdi_tscores <- read.csv("raw_data/male_cdi_tscores.csv", 
-                             header=TRUE, stringsAsFactors = FALSE)
-female_cdi_tscores <- read.csv("raw_data/female_cdi_tscores.csv", 
-                               header=TRUE, stringsAsFactors = FALSE)
 
 #create vector
 cca_maindata$totalCDI_tscores <- cca_maindata[,"totalCDI"]
@@ -458,6 +456,7 @@ for (i in 1: length(female_cdi_tscores$female_raw_score_total)) {
   cca_maindata$totalCDI_tscores[c] <- b
 }
 
+cca_maindata$totalCDI_tscores
 
 #categories
 ##Very Elevated - 70
@@ -466,11 +465,18 @@ for (i in 1: length(female_cdi_tscores$female_raw_score_total)) {
 ##Ave - 40-60
 
 # To count how many in each bracket modify this code
-plyr::count(cca_maindata$gender[which(cca_maindata$totalCDI_tscores< 60)])
- summarytools::freq(cca_maindata$gender[which(cca_maindata$totalCDI_tscores< 60)], order = "freq")
+#plyr::count(cca_maindata$gender[which(cca_maindata$totalCDI_tscores< 60)])
+# summarytools::freq(cca_maindata$gender[which(cca_maindata$totalCDI_tscores< 60)], order = "freq")
 
 # Or if need can put into categories e.g.
-cca_maindata$CDIcategory<- ifelse(cca_maindata$totalCDI_tscores < 65, 1, ifelse(cca_maindata$totalCDI_tscores >= 65, 2, NA))
+cca_maindata$CDIcategory<- ifelse(cca_maindata$totalCDI_tscores < 60, 1, 
+                                  ifelse(cca_maindata$totalCDI_tscores < 65, 2,
+                                         ifelse(cca_maindata$totalCDI_tscores < 70, 3,
+                                                ifelse(cca_maindata$totalCDI_tscores >= 70, 4,
+                                         NA))))
+
+#car::recode(cca_maindata$totalCDI_tscoress, "0:59='Average (40-60)'; 60:64=' High Average (60-65)';65:69='Elevated (65-70)';NA=NA; else='Very elevated (70+)'")
+cca_maindata$CDIcategory
 
 
 # SCAS 
@@ -512,6 +518,25 @@ for (i in 1: length(female_scas_tscores$Total_SCAS)) {
 # To count how many in each bracket modify this code
 plyr::count(cca_maindata$gender[which(cca_maindata$totalSCAS_tscores< 60)])
  summarytools::freq(cca_maindata$gender[which(cca_maindata$totalSCAS_tscores< 60)], order = "freq")
+ 
+ 
+ # Or if need can put into categories e.g.
+cca_maindata$SCAScategory<- ifelse(cca_maindata$totalSCAS_tscores < 60, 1, 
+                                  ifelse(cca_maindata$totalSCAS_tscores < 65, 2,
+                                         ifelse(cca_maindata$totalSCAS_tscores < 70, 3,
+                                                ifelse(cca_maindata$totalSCAS_tscores >= 70, 4,
+                                         NA))))
+cca_maindata$SCAScategory
+
+#Make the frequency tables for the t-score table
+t_cdi<- summarytools::freq(cca_maindata$CDIcategory)
+t_cdi
+t_scas<- summarytools::freq(cca_maindata$SCAScategory)
+t_scas
+
+t_freq<- rbind(t_cdi, t_scas)
+t_freq
+t_freq<- t_freq[c(1:4,7:10) ,c(1,2)]
 
 ```
 
@@ -543,4 +568,5 @@ write.csv(corrmatrix, file = "scored_data/corrmatrix.csv") #this is for the corr
 #Export these for easy making of tables
 write.csv(M, file = "scored_data/corrvalues.csv")
 write.csv(res1$p, file = "scored_data/pvalues.csv")
+write.csv(t_freq, file = "scored_data/t_freq.csv")
 ```

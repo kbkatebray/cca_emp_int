@@ -19,7 +19,7 @@ mainY <- dplyr::select(cca_maindata, negmood_phys_bin, neg_selfest_bin, ineff_bi
 
 res.cc=cc(mainX,mainY)
 
-#Making some functions to caluclate stats to be used in next section -----------------------------
+#Making some functions to calculate stats to be used in next section -----------------------------
 
 ##Create function that gives the Wilks stat for all components, the F stat, degrees of freedom and pvalues
 
@@ -242,6 +242,14 @@ rcorr(res.cc$scores$xscores[,4], res.cc$scores$yscores[,4])
 rcorr(res.cc$scores$xscores[,5], res.cc$scores$yscores[,5])
 
 
+#put these things into a table
+alt1_ccatable<- cbind(res.cc$cor, res.cc$cor^2, cca_signif(res.cc,mainX,mainY)[,1], cca_signif(res.cc,mainX,mainY)[,2],
+                 cca_signif(res.cc,mainX,mainY)[,3], cca_signif(res.cc,mainX,mainY)[,4], cca_signif(res.cc,mainX,mainY)[,5], 
+                 rbind(rcorr(res.cc$scores$xscores[,1], res.cc$scores$yscores[,1])$P[2,1], rcorr(res.cc$scores$xscores[,2], res.cc$scores$yscores[,2])$P[2,1],
+                       rcorr(res.cc$scores$xscores[,3], res.cc$scores$yscores[,3])$P[2,1], rcorr(res.cc$scores$xscores[,4], res.cc$scores$yscores[,4])$P[2,1], 
+                       rcorr(res.cc$scores$xscores[,5], res.cc$scores$yscores[,5])$P[2,1]))
+
+
 
 ggplot(data = cca_maindata, aes(x = res.cc$scores$xscores[,1], y = res.cc$scores$yscores[,1])) +
   geom_point() +
@@ -251,6 +259,20 @@ ggplot(data = cca_maindata, aes(x = res.cc$scores$xscores[,1], y = res.cc$scores
 
 ggplot(data = cca_maindata, aes(x = res.cc$scores$xscores[,1], y = res.cc$scores$yscores[,1], colour = factor(gender))) +
   geom_point()
+
+# Exports-----------------------------------------------------------------------------
+
+#create coefficients tables
+alt1_xcoeftable <- cbind(standardised_xcanonical_coefficients(res.cc,mainX,mainY)[,1],structurecoefs$xvar.corr.r[2:6], ((structurecoefs$xvar.corr.r)^2)[2:6], structurecoefs$xvar.corr.p[2:6])
+colnames(alt1_xcoeftable) <- c("stnd_x_can_coef","str_coef", "sq_str_coef","para_p")
+
+alt1_ycoeftable <- cbind(standardised_ycanonical_coefficients(res.cc,mainX,mainY)[,1],structurecoefs$yvar.corr.r[2:15], ((structurecoefs$yvar.corr.r)^2)[2:15], structurecoefs$yvar.corr.p[2:15])
+colnames(alt1_ycoeftable) <- c("stnd_y_can_coef","str_coef", "sq_str_coef","para_p")
+
+#write files
+write.csv(alt1_ccatable, file = "scored_data/alt1_ccatable.csv")
+write.csv(alt1_xcoeftable, file = "scored_data/alt1_xcoeftable.csv")
+write.csv(alt1_ycoeftable, file = "scored_data/alt1_ycoeftable.csv")
 
 
 

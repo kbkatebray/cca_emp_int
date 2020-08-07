@@ -4,10 +4,10 @@ library(jtools)#for apa_theme
 
 
 #!!!!!  Start from section 2 if don't want to redo the permutation  !!!!!
-#eventually seperate out these sections?
+#eventually separate out these sections?
 
 ##########Generate the permutation###################
-#run cca script first
+#run cca script first in the console
 
 ##Make the blank dataframe where the values of interest can be saved to
 perm <- data.frame(matrix(NA, nrow = 10000, ncol = 56))

@@ -6,7 +6,7 @@ library(jtools)#for apa_theme
 #Start from section 2 the plots if don't want to redo the permutation
 
 ##########Generate the permutation###################
-#run cca script first
+#run cca 2c script first in the console
 
 ##Make the blank dataframe where the values of interest can be saved to
 perm <- data.frame(matrix(NA, nrow = 10000, ncol = 25))
@@ -63,14 +63,73 @@ for (i in c(1:nrow(perm))){
 
 #Write perm table
 write.csv(perm, 
-          file = "scored_data/permuted_results_alt_cov_onright.csv")
+          file = "scored_data/permuted_results_regressedout.csv")
 
 
 ########Plots - Go from this point if don't want to redo the permutation##################
 
 
-perm <- read.csv("scored_data/permuted_results_alt_cov_onright.csv", header=TRUE, stringsAsFactors = FALSE)
+perm <- read.csv("scored_data/permuted_results_regressedout.csv", header=TRUE, stringsAsFactors = FALSE)
 
+#calculate non-parametric pvalue
+np_rc1 <- length(which(perm$corr1 > 0.54))/length(perm$corr1)
+np_rc2 <- length(which(perm$corr2 > 0.46))/length(perm$corr2)
+np_rc3 <- length(which(perm$corr3 > 0.27))/length(perm$corr3)
+np_rc4 <- length(which(perm$corr4 > 0.13))/length(perm$corr4)
+np_rc5 <- length(which(perm$corr5 > 0.05))/length(perm$corr5)
+
+np_rc<-c(np_rc1, np_rc2, np_rc3, np_rc4, np_rc5) 
+
+#calculate non-parametric pvalue for F (not wilks by the way)
+np_f1 <- length(which(perm$wilks1 > 1.72))/length(perm$wilks1)
+np_f2 <- length(which(perm$wilks2 > 1.15))/length(perm$wilks2)
+np_f3 <- length(which(perm$wilks3 > 0.48))/length(perm$wilks3)
+np_f4 <- length(which(perm$wilks4 > 0.18))/length(perm$wilks4)
+np_f5 <- length(which(perm$wilks5 > 0.05))/length(perm$wilks5)
+
+
+np_f<-c(np_f1, np_f2, np_f3, np_f4, np_f5) 
+#bind the non-parametric p values for both Rc and F together for the 5 dimensions
+np_rc_F_alt2<- cbind(np_rc, np_f)
+
+
+#calculate non-parametric pvalue
+X1 <- length(which(perm$aff_shar < -0.8950896))/length(perm$aff_shar)
+X2 <- length(which(perm$cog_emp < -0.2206367))/length(perm$cog_emp)
+X3 <- length(which(perm$emp_conc < -0.3977909))/length(perm$emp_conc)
+X4 <- length(which(perm$emp_dist < -0.6509764))/length(perm$emp_dist)
+X5 <- length(which(perm$silent_films_total > 0.4035908))/length(perm$silent_films_total)
+
+Y1 <- length(which(perm$negmood_phys_bin < -0.2516486 ))/length(perm$negmood_phys_bin)
+Y2 <- length(which(perm$neg_selfest_bin > 0.1416600 ))/length(perm$neg_selfest_bin)
+Y3 <- length(which(perm$ineff_bin < -0.2791820 ))/length(perm$ineff_bin)
+Y4 <- length(which(perm$intprobs_bin < -0.1202286 ))/length(perm$intprobs_bin)
+Y5 <- length(which(perm$scasseps < -0.5169413 ))/length(perm$scasseps)
+Y6 <- length(which(perm$scassoc < -0.7710572 ))/length(perm$scassoc)
+Y7 <- length(which(perm$scasphysinj < -0.5004022 ))/length(perm$scasphysinj)
+Y8 <- length(which(perm$scasgad < -0.8053940  ))/length(perm$scasgad)
+Y9 <- length(which(perm$scasocd < -0.6862993  ))/length(perm$scasocd)
+Y10 <- length(which(perm$scasopanicag < -0.6071823 ))/length(perm$scasopanicag)
+
+
+alt2_NPX <- c(X1, X2, X3, X4, X5)
+alt2_NPY <- c(Y1, Y3, Y3, Y4, Y5, Y6, Y7, Y8, Y9, Y10)
+
+#grid.arrange(p1,p2,p3,p4,p5,p6,p7,p8,p9, nrow=3)
+#grid.arrange(p10,p11,p12,p13,p14,p15,p16,p17,p18, p19, nrow=3)
+
+
+# ##Using the CCP package
+# p.perm(mainX, mainY, nboot = 9999, rhostart = 1, type = "Wilks")
+# wilks_perm<- p.perm(mainX, mainY, nboot = 9999, rhostart = 1, type = "Wilks")
+# 
+# plt.perm(wilks_perm)
+# 
+# 
+# p.perm(mainX, mainY, nboot = 9999, rhostart = 2, type = "Wilks")
+# #etc
+
+# Plots ----------------------------------------------------------------------------------------------------------
 
 #Plot canonical correlation. 
 ##Red dotted line is original value
@@ -81,9 +140,6 @@ ggplot(perm, aes(x=corr1)) +
   labs(x = "Canonical Correlation", y="Number of Permutations") +
   theme(panel.border = element_blank(), axis.line = element_line())
 
-#calculate non-parametric pvalue
-length(which(perm$corr1 > 0.54))/length(perm$corr1)
-
 #Plot canonical correlation 2 
 ##Red dotted line is original value
 ggplot(perm, aes(x=corr2)) +
@@ -93,9 +149,6 @@ ggplot(perm, aes(x=corr2)) +
   labs(x = "Canonical Correlation", y="Number of Permutations") +
   theme(panel.border = element_blank(), axis.line = element_line())
 
-#calculate non-parametric pvalue
-length(which(perm$corr2 > 0.46))/length(perm$corr2)
-
 #Plot canonical correlation 3 
 ##Red dotted line is original value
 ggplot(perm, aes(x=corr3)) +
@@ -104,9 +157,6 @@ ggplot(perm, aes(x=corr3)) +
   theme_apa()+ 
   labs(x = "Canonical Correlation", y="Number of Permutations") +
   theme(panel.border = element_blank(), axis.line = element_line())
-
-#calculate non-parametric pvalue
-length(which(perm$corr3 > 0.27))/length(perm$corr3)
 
 #Plot canonical correlation 4 
 ##Red dotted line is original value
@@ -118,9 +168,6 @@ ggplot(perm, aes(x=corr4)) +
   labs(x = "Canonical Correlation", y="Number of Permutations") +
   theme(panel.border = element_blank(), axis.line = element_line())
 
-#calculate non-parametric pvalue
-length(which(perm$corr4 > 0.13))/length(perm$corr4)
-
 #Plot canonical correlation 4 
 ##Red dotted line is original value
 
@@ -131,11 +178,6 @@ ggplot(perm, aes(x=corr5)) +
   labs(x = "Canonical Correlation", y="Number of Permutations") +
   theme(panel.border = element_blank(), axis.line = element_line())
 
-#calculate non-parametric pvalue
-length(which(perm$corr5 > 0.05))/length(perm$corr4)
-
-
-#Plot canonical correlation 4 
 ##Red dotted line is original value
 #T%his is actually Fstat
 
@@ -146,18 +188,12 @@ ggplot(perm, aes(x=wilks1)) +
   labs(x = "Canonical Correlation", y="Number of Permutations") +
   theme(panel.border = element_blank(), axis.line = element_line())
 
-#calculate non-parametric pvalue
-length(which(perm$wilks1 > 1.72))/length(perm$wilks1)
-
 ggplot(perm, aes(x=wilks2)) +
   geom_histogram(colour="black", fill="white") +
   geom_vline(aes(xintercept=1.15), color="red", linetype="dashed", size=1)+
   theme_apa()+ 
   labs(x = "Canonical Correlation", y="Number of Permutations") +
   theme(panel.border = element_blank(), axis.line = element_line())
-
-#calculate non-parametric pvalue
-length(which(perm$wilks2 > 1.15))/length(perm$wilks2)
 
 ggplot(perm, aes(x=wilks3)) +
   geom_histogram(colour="black", fill="white") +
@@ -166,9 +202,6 @@ ggplot(perm, aes(x=wilks3)) +
   labs(x = "Canonical Correlation", y="Number of Permutations") +
   theme(panel.border = element_blank(), axis.line = element_line())
 
-#calculate non-parametric pvalue
-length(which(perm$wilks3 > 0.48))/length(perm$wilks3)
-
 ggplot(perm, aes(x=wilks4)) +
   geom_histogram(colour="black", fill="white") +
   geom_vline(aes(xintercept=0.18), color="red", linetype="dashed", size=1)+
@@ -176,18 +209,12 @@ ggplot(perm, aes(x=wilks4)) +
   labs(x = "Canonical Correlation", y="Number of Permutations") +
   theme(panel.border = element_blank(), axis.line = element_line())
 
-#calculate non-parametric pvalue
-length(which(perm$wilks4 > 0.18))/length(perm$wilks4)
-
 ggplot(perm, aes(x=wilks5)) +
   geom_histogram(colour="black", fill="white") +
   geom_vline(aes(xintercept=0.05), color="red", linetype="dashed", size=1)+
   theme_apa()+ 
   labs(x = "Canonical Correlation", y="Number of Permutations") +
   theme(panel.border = element_blank(), axis.line = element_line())
-
-#calculate non-parametric pvalue
-length(which(perm$wilks5 > 0.05))/length(perm$wilks5)
 
 #Plot structure coefficients
 
@@ -198,9 +225,6 @@ p1 <- ggplot(perm, aes(x=aff_shar)) +
   labs(x = "Affective Sharing", y="Number of Permutations")+
   theme(axis.title.y =element_blank(), panel.border = element_blank(), axis.line = element_line())
 
-#calculate non-parametric pvalue
-length(which(perm$aff_shar < -0.8950896))/length(perm$aff_shar)
-
 p2 <- ggplot(perm, aes(x=cog_emp)) +
   geom_histogram(colour="black", fill="white") +
   geom_vline(aes(xintercept=-0.2206367), color="red", linetype="dashed", size=1)+
@@ -208,10 +232,6 @@ p2 <- ggplot(perm, aes(x=cog_emp)) +
   labs(x = "Cognitive Empathy")+
   theme(axis.title.y =element_blank(), panel.border = element_blank(), 
         axis.line = element_line())
-
-#calculate non-parametric pvalue
-length(which(perm$cog_emp < -0.2206367))/length(perm$cog_emp)
-
 
 p3 <- ggplot(perm, aes(x=emp_conc)) +
   geom_histogram(colour="black", fill="white") +
@@ -221,10 +241,6 @@ p3 <- ggplot(perm, aes(x=emp_conc)) +
   theme(axis.title.y=element_blank(), panel.border = element_blank(),
         axis.line = element_line())
 
-#calculate non-parametric pvalue
-length(which(perm$emp_conc < -0.3977909))/length(perm$emp_conc)
-
-
 p4 <- ggplot(perm, aes(x=emp_dist)) +
   geom_histogram(colour="black", fill="white") +
   geom_vline(aes(xintercept=-0.6509764), color="red", linetype="dashed", size=1)+
@@ -232,10 +248,6 @@ p4 <- ggplot(perm, aes(x=emp_dist)) +
   labs(x = "Empathic Distress", y="Number of Permutations")+
   theme(panel.border = element_blank(),
         axis.line = element_line())
-
-#calculate non-parametric pvalue
-length(which(perm$emp_dist < -0.6509764))/length(perm$emp_dist)
-
 
 p5 <- ggplot(perm, aes(x=silent_films_total)) +
   geom_histogram(colour="black", fill="white") +
@@ -245,11 +257,6 @@ p5 <- ggplot(perm, aes(x=silent_films_total)) +
   theme(axis.title.y=element_blank(), panel.border = element_blank(),
         axis.line = element_line())
 
-#calculate non-parametric pvalue
-length(which(perm$silent_films_total > 0.4035908))/length(perm$silent_films_total)
-
-
-
 p10 <- ggplot(perm, aes(x=negmood_phys_bin)) +
   geom_histogram(colour="black", fill="white") +
   geom_vline(aes(xintercept=-0.2516486), color="red", linetype="dashed", size=1)+
@@ -257,11 +264,6 @@ p10 <- ggplot(perm, aes(x=negmood_phys_bin)) +
   labs(x = "Neg. Mood/Phys. Sympt.", y="Number of Permutations")+
   theme(axis.title.y =element_blank(), panel.border = element_blank(),
         axis.line = element_line())
-
-#calculate non-parametric pvalue
-length(which(perm$negmood_phys_bin < -0.2516486 ))/length(perm$negmood_phys_bin)
-
-
 p11 <- ggplot(perm, aes(x=neg_selfest_bin)) +
   geom_histogram(colour="black", fill="white") +
   geom_vline(aes(xintercept=0.1416600), color="red", linetype="dashed", size=1)+
@@ -269,10 +271,6 @@ p11 <- ggplot(perm, aes(x=neg_selfest_bin)) +
   labs(x = "Neg. Self-est.")+
   theme(axis.title.y=element_blank(), panel.border = element_blank(),
         axis.line = element_line())
-
-#calculate non-parametric pvalue
-length(which(perm$neg_selfest_bin > 0.1416600 ))/length(perm$neg_selfest_bin)
-
 
 p12 <- ggplot(perm, aes(x=ineff_bin)) +
   geom_histogram(colour="black", fill="white") +
@@ -282,9 +280,6 @@ p12 <- ggplot(perm, aes(x=ineff_bin)) +
   theme(axis.title.y=element_blank(), panel.border = element_blank(),
         axis.line = element_line())
 
-#calculate non-parametric pvalue
-length(which(perm$ineff_bin < -0.2791820 ))/length(perm$ineff_bin)
-
 p13 <- ggplot(perm, aes(x=intprobs_bin)) +
   geom_histogram(colour="black", fill="white") +
   geom_vline(aes(xintercept=-0.1202286), color="red", linetype="dashed", size=1)+
@@ -292,9 +287,6 @@ p13 <- ggplot(perm, aes(x=intprobs_bin)) +
   labs(x = "Interpersonal")+
   theme(axis.title.y=element_blank(), panel.border = element_blank(),
         axis.line = element_line())
-
-#calculate non-parametric pvalue
-length(which(perm$intprobs_bin < -0.1202286 ))/length(perm$intprobs_bin)
 
 p14 <- ggplot(perm, aes(x=scasseps)) +
   geom_histogram(colour="black", fill="white") +
@@ -304,10 +296,6 @@ p14 <- ggplot(perm, aes(x=scasseps)) +
   theme(panel.border = element_blank(),
         axis.line = element_line())
 
-#calculate non-parametric pvalue
-length(which(perm$scasseps < -0.5169413 ))/length(perm$scasseps)
-
-
 p15 <- ggplot(perm, aes(x=scassoc)) +
   geom_histogram(colour="black", fill="white") +
   geom_vline(aes(xintercept=-0.7710572), color="red", linetype="dashed", size=1)+
@@ -315,10 +303,6 @@ p15 <- ggplot(perm, aes(x=scassoc)) +
   labs(x = "Social Anx.")+
   theme(axis.title.y=element_blank(), panel.border = element_blank(),
         axis.line = element_line())
-
-#calculate non-parametric pvalue
-length(which(perm$scassoc < -0.7710572 ))/length(perm$scassoc)
-
 
 p16 <- ggplot(perm, aes(x=scasphysinj)) +
   geom_histogram(colour="black", fill="white") +
@@ -328,10 +312,6 @@ p16 <- ggplot(perm, aes(x=scasphysinj)) +
   theme(axis.title.y=element_blank(), panel.border = element_blank(),
         axis.line = element_line())
 
-#calculate non-parametric pvalue
-length(which(perm$scasphysinj < -0.5004022 ))/length(perm$scasphysinj)
-
-
 p17 <- ggplot(perm, aes(x=scasgad)) +
   geom_histogram(colour="black", fill="white") +
   geom_vline(aes(xintercept=-0.8053940 ), color="red", linetype="dashed", size=1)+
@@ -339,10 +319,6 @@ p17 <- ggplot(perm, aes(x=scasgad)) +
   labs(x = "GAD")+
   theme(axis.title.y=element_blank(), panel.border = element_blank(),
         axis.line = element_line())
-
-#calculate non-parametric pvalue
-length(which(perm$scasgad < -0.8053940  ))/length(perm$scasgad)
-
 
 p18 <- ggplot(perm, aes(x=scasocd)) +
   geom_histogram(colour="black", fill="white") +
@@ -352,9 +328,6 @@ p18 <- ggplot(perm, aes(x=scasocd)) +
   theme(axis.title.y =element_blank(), panel.border = element_blank(),
         axis.line = element_line())
 
-length(which(perm$scasocd < -0.6862993  ))/length(perm$scasocd)
-
-
 p19 <- ggplot(perm, aes(x=scasopanicag)) +
   geom_histogram(colour="black", fill="white") +
   geom_vline(aes(xintercept=-0.6071823), color="red", linetype="dashed", size=1)+
@@ -363,18 +336,8 @@ p19 <- ggplot(perm, aes(x=scasopanicag)) +
   theme(axis.title.y=element_blank(), panel.border = element_blank(),
         axis.line = element_line())
 
-length(which(perm$scasopanicag < -0.6071823 ))/length(perm$scasopanicag)
+# SAVING and output -----------------------------------------------------------------------------------------------
 
-#grid.arrange(p1,p2,p3,p4,p5,p6,p7,p8,p9, nrow=3)
-#grid.arrange(p10,p11,p12,p13,p14,p15,p16,p17,p18, p19, nrow=3)
-
-
-##Using the CCP package
-p.perm(mainX, mainY, nboot = 9999, rhostart = 1, type = "Wilks")
-wilks_perm<- p.perm(mainX, mainY, nboot = 9999, rhostart = 1, type = "Wilks")
-
-plt.perm(wilks_perm)
-
-
-p.perm(mainX, mainY, nboot = 9999, rhostart = 2, type = "Wilks")
-#etc
+write.csv(np_rc_F_alt2, file = "scored_data/non-para_rc_F_alt2.csv")
+write.csv(alt2_NPX, file = "scored_data/alt2_NPX.csv")
+write.csv(alt2_NPY, file = "scored_data/alt2_NPY.csv")
