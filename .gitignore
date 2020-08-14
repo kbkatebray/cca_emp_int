@@ -1,6 +1,7 @@
 # to stop data been uploaded to remote repo.
 *.csv
 *.RData
+*.rds
 
 # ignores word docs
 *.docx
