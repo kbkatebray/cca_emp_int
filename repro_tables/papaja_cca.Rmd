@@ -44,12 +44,24 @@ affiliation:
     institution   : "Department of Psychology, University of Oregon, USA"
 
 authornote: |
-  Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
+  Add complete departmental affiliations for each author here. Each new line herein must be indented, 
+  like this line.
 
   Enter author note here.
 
 abstract: |
-  Empathy is a multidimensional construct, which includes cognitive (i.e., understanding another’s emotional state) and affective (i.e., experiencing and reacting to another’s emotional state) components. Studies in adults have demonstrated that both affective and cognitive empathy are related to anxious and depressive symptoms. The aim of this study was to examine these associations in childhood, where there is relatively less research. Participants were 127 9- and 10-year-old children, recruited from the community. Self-report measures of cognitive and affective empathy, and internalizing symptoms were administered, as well as a task-based measure of cognitive empathy. Canonical correlation analysis demonstrated that components of affective empathy, specifically affective sharing and empathic distress, were associated with internalizing (particularly social anxiety) symptoms. Although empathy is important for successful social interaction, this study suggests that children who share each other’s emotions strongly are more likely to experience anxiety, particularly of a social nature. 
+  Empathy is a multidimensional construct, which includes cognitive (i.e., understanding another’s 
+  emotional state) and affective (i.e., experiencing and reacting to another’s emotional state) 
+  components. Studies in adults have demonstrated that both affective and cognitive empathy are 
+  related to anxious and depressive symptoms. The aim of this study was to examine these associations
+  in childhood, where there is relatively less research. Participants were 127 9- and 10-year-old
+  children, recruited from the community. Self-report measures of cognitive and affective empathy, 
+  and internalizing symptoms were administered, as well as a task-based measure of cognitive empathy. 
+  Canonical correlation analysis demonstrated that components of affective empathy, specifically 
+  affective sharing and empathic distress, were associated with internalizing (particularly social 
+  anxiety) symptoms. Although empathy is important for successful social interaction, this study 
+  suggests that children who share each other’s emotions strongly are more likely to experience 
+  anxiety, particularly of a social nature. 
   
   <!-- https://tinyurl.com/ybremelq -->
   
@@ -85,7 +97,8 @@ r_refs("r-references.bib")
 #read in relevant files (can I make this more concise?)
 ## large scored dataframes
 cca_maindata <- read.csv("../scored_data/cca_maindata.csv", header=TRUE, stringsAsFactors = FALSE)
-my_dataset_scored <- read.csv("../scored_data/cca_data_scored.csv", header=TRUE, stringsAsFactors = FALSE)
+my_dataset_scored <- read.csv("../scored_data/cca_data_scored.csv", header=TRUE, stringsAsFactors =
+                                FALSE)
 ## specific smaller dataframes for certain tables
 ### Descriptives
 desctable <- read.csv("../scored_data/desctable.csv", header=TRUE, stringsAsFactors = FALSE)
@@ -99,14 +112,20 @@ alt2_ccatable <- read.csv("../scored_data/alt2_ccatable.csv", header=TRUE, strin
 ### Coefficients
 xcoeftable <- read.csv("../scored_data/xcoeftable.csv", header=TRUE, stringsAsFactors = FALSE)
 ycoeftable <- read.csv("../scored_data/ycoeftable.csv", header=TRUE, stringsAsFactors = FALSE)
-alt1_xcoeftable <- read.csv("../scored_data/alt1_xcoeftable.csv", header=TRUE, stringsAsFactors = FALSE)
-alt1_ycoeftable <- read.csv("../scored_data/alt1_ycoeftable.csv", header=TRUE, stringsAsFactors = FALSE)
-alt2_xcoeftable <- read.csv("../scored_data/alt2_xcoeftable.csv", header=TRUE, stringsAsFactors = FALSE)
-alt2_ycoeftable <- read.csv("../scored_data/alt2_ycoeftable.csv", header=TRUE, stringsAsFactors = FALSE)
+alt1_xcoeftable <- read.csv("../scored_data/alt1_xcoeftable.csv", header=TRUE, stringsAsFactors = 
+                              FALSE)
+alt1_ycoeftable <- read.csv("../scored_data/alt1_ycoeftable.csv", header=TRUE, stringsAsFactors = 
+                              FALSE)
+alt2_xcoeftable <- read.csv("../scored_data/alt2_xcoeftable.csv", header=TRUE, stringsAsFactors = 
+                              FALSE)
+alt2_ycoeftable <- read.csv("../scored_data/alt2_ycoeftable.csv", header=TRUE, stringsAsFactors = 
+                              FALSE)
 ### Non-parametric info
 np_rc_f <- read.csv("../scored_data/non-para_rc_F.csv", header=TRUE, stringsAsFactors = FALSE)
-np_rc_f_alt1 <- read.csv("../scored_data/non-para_rc_F_alt1.csv", header=TRUE, stringsAsFactors = FALSE)
-np_rc_f_alt2 <- read.csv("../scored_data/non-para_rc_F_alt2.csv", header=TRUE, stringsAsFactors = FALSE)
+np_rc_f_alt1 <- read.csv("../scored_data/non-para_rc_F_alt1.csv", header=TRUE, stringsAsFactors = 
+                           FALSE)
+np_rc_f_alt2 <- read.csv("../scored_data/non-para_rc_F_alt2.csv", header=TRUE, stringsAsFactors = 
+                           FALSE)
 NPX <- read.csv("../scored_data/NPX.csv", header=TRUE, stringsAsFactors = FALSE)
 NPY <- read.csv("../scored_data/NPY.csv", header=TRUE, stringsAsFactors = FALSE)
 alt1_NPX <- read.csv("../scored_data/alt1_NPX.csv", header=TRUE, stringsAsFactors = FALSE)
@@ -114,6 +133,9 @@ alt1_NPY <- read.csv("../scored_data/alt1_NPY.csv", header=TRUE, stringsAsFactor
 alt2_NPX <- read.csv("../scored_data/alt2_NPX.csv", header=TRUE, stringsAsFactors = FALSE)
 alt2_NPY <- read.csv("../scored_data/alt2_NPY.csv", header=TRUE, stringsAsFactors = FALSE)
 
+bf_2 <- readRDS("../scored_data/2_bonferroni_val.rds")
+bf_2a <- readRDS("../scored_data/2a_bonferroni_val.rds")
+bf_2b <- readRDS("../scored_data/2b_bonferroni_val.rds")
 ```
 
 ```{r analysis-preferences}
@@ -131,16 +153,22 @@ alt2_NPY <- read.csv("../scored_data/alt2_NPY.csv", header=TRUE, stringsAsFactor
 ## Canonical Correlation Analysis
 ```{r, desctable, echo=FALSE, results='asis'}
 
-row.names(desctable) <- c("Female","Male","blank1","blank2","Grade 7 to 12", "Graduated High School","Partial tertiary university", "TAFE", "Bachelor’s degree",
-                          "Honors", "Partial graduate school", "Completed graduate school", "Quintile 1", "Quintile 2", "Quintile 3", "Quintile 4",
-                          "Quintile 5", "White", "Asian", "Mixed or other", "Missing", "Australian (or New Zealander)", "Australian/European",
+row.names(desctable) <- c("Female","Male","blank1","blank2","Grade 7 to 12", "Graduated High School",
+                          "Partial tertiary university", "TAFE", "Bachelor’s degree",
+                          "Honors", "Partial graduate school", "Completed graduate school", 
+                          "Quintile 1", "Quintile 2", "Quintile 3", "Quintile 4",
+                          "Quintile 5", "White", "Asian", "Mixed or other", "Missing", "Australian 
+                          (or New Zealander)", "Australian/European",
                           "Australian/Asian", "Asian1", "European", "Other", "Missin")
 
 
 apa_table(
-  list(`Sex` = desctable[1:2,2:3], `Age` = desctable[3,2:3],`Est. FSIQ` = desctable[4,2:3], `Parent Education` = desctable[5:12,2:3], `Neighborhood advantage` = desctable[13:17,2:3], `Race` = desctable[18:21,2:3], `Ethnicity` = desctable[22:28,2:3] ),
+  list(`Sex` = desctable[1:2,2:3], `Age` = desctable[3,2:3],`Est. FSIQ` = desctable[4,2:3], 
+       `Parent Education` = desctable[5:12,2:3], `Neighborhood advantage` = desctable[13:17,2:3], 
+       `Race` = desctable[18:21,2:3], `Ethnicity` = desctable[22:28,2:3] ),
           caption = "Descriptive statistics characterizing the sample used for the CCA analysis",
-          note = "Est. FSIQ = Estimated full scale IQ, Neighborhood advantage is listed from least advantage to most",
+          note = "Est. FSIQ = Estimated full scale IQ, Neighborhood advantage is listed from least 
+  advantage to most",
           align = c("l",rep("c", 2)),
           col.names = c( "Demographic measure","Frequency or Mean","Percentage or Stnd. Dev."),
   digits = c(0,0,2),
@@ -160,26 +188,33 @@ ID <- cca_maindata$FACTS_ID
 cronbach_set <- my_dataset_scored[my_dataset_scored$FACTS_ID %in% ID, ]
 #collect together the items for each measure
 ##Aff shar
-cron_aff_shar<- cronbach_set[,c("F_T1_C_EMPATHY_1_5","F_T1_C_EMPATHY_1_7","F_T1_C_EMPATHY_1_9","F_T1_C_EMPATHY_1_12")]
+cron_aff_shar<- cronbach_set[,c("F_T1_C_EMPATHY_1_5","F_T1_C_EMPATHY_1_7","F_T1_C_EMPATHY_1_9",
+                                "F_T1_C_EMPATHY_1_12")]
 psych::alpha(cron_aff_shar)
-cron_cog_emp<- cronbach_set[,c("F_T1_C_EMPATHY_1_1", "F_T1_C_EMPATHY_1_3","F_T1_C_EMPATHY_1_8","F_T1_C_EMPATHY_1_10")]
+cron_cog_emp<- cronbach_set[,c("F_T1_C_EMPATHY_1_1", "F_T1_C_EMPATHY_1_3","F_T1_C_EMPATHY_1_8",
+                               "F_T1_C_EMPATHY_1_10")]
 psych::alpha(cron_cog_emp)
-cron_emp_conc<- cronbach_set[,c("F_T1_C_EMPATHY_1_2","F_T1_C_EMPATHY_1_4","F_T1_C_EMPATHY_1_6","F_T1_C_EMPATHY_1_11")]
+cron_emp_conc<- cronbach_set[,c("F_T1_C_EMPATHY_1_2","F_T1_C_EMPATHY_1_4","F_T1_C_EMPATHY_1_6",
+                                "F_T1_C_EMPATHY_1_11")]
 psych::alpha(cron_emp_conc)
 cron_emp_dist<- cronbach_set[,c("F_T1_C_EMPATHY_2_1","F_T1_C_EMPATHY_2_2","F_T1_C_EMPATHY_2_3")]
 psych::alpha(cron_emp_dist)
-cron_sil_films<- cronbach_set[,c("F_T1_C_SF_1","F_T1_C_SF_2","F_T1_C_SF_3","F_T1_C_SF_4","F_T1_C_SF_5","F_T1_C_SF_6")]
+cron_sil_films<- cronbach_set[,c("F_T1_C_SF_1","F_T1_C_SF_2","F_T1_C_SF_3","F_T1_C_SF_4",
+                                 "F_T1_C_SF_5","F_T1_C_SF_6")]
 psych::alpha(cron_sil_films)
-cron_negmood_phys<- cronbach_set[,c("F_T1_C_CDI_1","F_T1_C_CDI_9","F_T1_C_CDI_10","F_T1_C_CDI_15" , "F_T1_C_CDI_16" , "F_T1_C_CDI_17" ,
-                                 "F_T1_C_CDI_18","F_T1_C_CDI_26" , "F_T1_C_CDI_27")]
-psych::alpha(cron_negmood_phys, keys=c("F_T1_C_CDI_9","F_T1_C_CDI_10","F_T1_C_CDI_15" , "F_T1_C_CDI_17" ,
-                                       "F_T1_C_CDI_26" , "F_T1_C_CDI_27"))
-cron_neg_selfest<- cronbach_set[,c("F_T1_C_CDI_2","F_T1_C_CDI_6","F_T1_C_CDI_7" , "F_T1_C_CDI_8", "F_T1_C_CDI_13","F_T1_C_CDI_24")]
-psych::alpha(cron_neg_selfest, keys=c("F_T1_C_CDI_2","F_T1_C_CDI_6","F_T1_C_CDI_7" ,"F_T1_C_CDI_24"))
-cron_ineff<- cronbach_set[,c("F_T1_C_CDI_3" , "F_T1_C_CDI_4","F_T1_C_CDI_12", "F_T1_C_CDI_14","F_T1_C_CDI_20","F_T1_C_CDI_22", "F_T1_C_CDI_23", 
-                             "F_T1_C_CDI_28")]
+cron_negmood_phys<- cronbach_set[,c("F_T1_C_CDI_1","F_T1_C_CDI_9","F_T1_C_CDI_10","F_T1_C_CDI_15", 
+                                    "F_T1_C_CDI_16" , "F_T1_C_CDI_17", "F_T1_C_CDI_18",
+                                    "F_T1_C_CDI_26" , "F_T1_C_CDI_27")]
+psych::alpha(cron_negmood_phys, keys=c("F_T1_C_CDI_9","F_T1_C_CDI_10","F_T1_C_CDI_15" , 
+                                       "F_T1_C_CDI_17", "F_T1_C_CDI_26" , "F_T1_C_CDI_27"))
+cron_neg_selfest<- cronbach_set[,c("F_T1_C_CDI_2","F_T1_C_CDI_6","F_T1_C_CDI_7" , "F_T1_C_CDI_8", 
+                                   "F_T1_C_CDI_13","F_T1_C_CDI_24")]
+psych::alpha(cron_neg_selfest, keys=c("F_T1_C_CDI_2","F_T1_C_CDI_6","F_T1_C_CDI_7","F_T1_C_CDI_24"))
+cron_ineff<- cronbach_set[,c("F_T1_C_CDI_3" , "F_T1_C_CDI_4","F_T1_C_CDI_12", "F_T1_C_CDI_14",
+                             "F_T1_C_CDI_20","F_T1_C_CDI_22", "F_T1_C_CDI_23", "F_T1_C_CDI_28")]
 psych::alpha(cron_ineff, keys=c("F_T1_C_CDI_12", "F_T1_C_CDI_14","F_T1_C_CDI_20", "F_T1_C_CDI_23"))
-cron_intprobs<- cronbach_set[,c("F_T1_C_CDI_5","F_T1_C_CDI_11","F_T1_C_CDI_19","F_T1_C_CDI_21", "F_T1_C_CDI_25")]
+cron_intprobs<- cronbach_set[,c("F_T1_C_CDI_5","F_T1_C_CDI_11","F_T1_C_CDI_19","F_T1_C_CDI_21", 
+                                "F_T1_C_CDI_25")]
 psych::alpha(cron_intprobs)
 cron_scasseps<- cronbach_set[,c("F_T1_C_SCAS_5","F_T1_C_SCAS_8","F_T1_C_SCAS_12","F_T1_C_SCAS_15" , 
                                 "F_T1_C_SCAS_16","F_T1_C_SCAS_44")]
@@ -190,10 +225,11 @@ psych::alpha(cron_scassoc)
 cron_scasocd<- cronbach_set[,c("F_T1_C_SCAS_14","F_T1_C_SCAS_19","F_T1_C_SCAS_27","F_T1_C_SCAS_40" , 
                                "F_T1_C_SCAS_41","F_T1_C_SCAS_42")]
 psych::alpha(cron_scasocd)
-cron_scasopanicag<- cronbach_set[,c("F_T1_C_SCAS_13","F_T1_C_SCAS_21","F_T1_C_SCAS_28","F_T1_C_SCAS_30" , 
-                                    "F_T1_C_SCAS_32","F_T1_C_SCAS_34","F_T1_C_SCAS_36","F_T1_C_SCAS_37","F_T1_C_SCAS_39")]
+cron_scasopanicag<- cronbach_set[,c("F_T1_C_SCAS_13","F_T1_C_SCAS_21","F_T1_C_SCAS_28",
+                                    "F_T1_C_SCAS_30", "F_T1_C_SCAS_32","F_T1_C_SCAS_34",
+                                    "F_T1_C_SCAS_36","F_T1_C_SCAS_37","F_T1_C_SCAS_39")]
 psych::alpha(cron_scasopanicag)
-cron_scasphysinj<- cronbach_set[,c("F_T1_C_SCAS_2","F_T1_C_SCAS_18","F_T1_C_SCAS_23","F_T1_C_SCAS_25" , 
+cron_scasphysinj<- cronbach_set[,c("F_T1_C_SCAS_2","F_T1_C_SCAS_18","F_T1_C_SCAS_23","F_T1_C_SCAS_25", 
                                    "F_T1_C_SCAS_33")]
 psych::alpha(cron_scasphysinj)
 cron_scasgad<- cronbach_set[,c("F_T1_C_SCAS_1","F_T1_C_SCAS_3","F_T1_C_SCAS_4","F_T1_C_SCAS_20" , 
@@ -207,10 +243,12 @@ c3 <- psych::alpha(cron_emp_conc)
 c4 <- psych::alpha(cron_emp_dist)
 c5 <- psych::alpha(cron_sil_films)
 
-c6 <- psych::alpha(cron_negmood_phys, keys=c("F_T1_C_CDI_9","F_T1_C_CDI_10","F_T1_C_CDI_15" , "F_T1_C_CDI_17" ,
-                                       "F_T1_C_CDI_26" , "F_T1_C_CDI_27"))
-c7 <- psych::alpha(cron_neg_selfest, keys=c("F_T1_C_CDI_2","F_T1_C_CDI_6","F_T1_C_CDI_7" ,"F_T1_C_CDI_24"))
-c8 <- psych::alpha(cron_ineff, keys=c("F_T1_C_CDI_12", "F_T1_C_CDI_14","F_T1_C_CDI_20", "F_T1_C_CDI_23"))
+c6 <- psych::alpha(cron_negmood_phys, keys=c("F_T1_C_CDI_9","F_T1_C_CDI_10","F_T1_C_CDI_15", 
+                                             "F_T1_C_CDI_17", "F_T1_C_CDI_26" , "F_T1_C_CDI_27"))
+c7 <- psych::alpha(cron_neg_selfest, keys=c("F_T1_C_CDI_2","F_T1_C_CDI_6","F_T1_C_CDI_7",
+                                            "F_T1_C_CDI_24"))
+c8 <- psych::alpha(cron_ineff, keys=c("F_T1_C_CDI_12", "F_T1_C_CDI_14","F_T1_C_CDI_20", 
+                                      "F_T1_C_CDI_23"))
 c9 <- psych::alpha(cron_intprobs)
 
 c10 <- psych::alpha(cron_scasseps)
@@ -220,9 +258,12 @@ c13 <- psych::alpha(cron_scasopanicag)
 c14 <- psych::alpha(cron_scasphysinj)
 c15 <- psych::alpha(cron_scasgad)
 
-cronemp <- papaja::printnum(rbind(c1$total[2], c2$total[2], c3$total[2], c4$total[2], c5$total[2]), gt1 = FALSE) # the printnum plus gt1 = FALSE argument removes leading zeros
+cronemp <- papaja::printnum(rbind(c1$total[2], c2$total[2], c3$total[2], c4$total[2], c5$total[2]), 
+                            gt1 = FALSE) 
+#the printnum plus gt1 = FALSE argument removes leading zeros
 croncdi <- papaja::printnum(rbind(c6$total[2], c7$total[2], c8$total[2], c9$total[2]), gt1 = FALSE)
-cronscas <- papaja::printnum(rbind(c10$total[2], c11$total[2], c12$total[2], c13$total[2], c14$total[2], c15$total[2]), gt1 = FALSE)
+cronscas <- papaja::printnum(rbind(c10$total[2], c11$total[2], c12$total[2], c13$total[2], 
+                                   c14$total[2], c15$total[2]), gt1 = FALSE)
 
 ```
 
@@ -231,9 +272,11 @@ cronscas <- papaja::printnum(rbind(c10$total[2], c11$total[2], c12$total[2], c13
 
 
 #Select the variables to go in (keeping separate to allow for variable grouping)
-emp_analysis_vars<- dplyr::select(cca_maindata, aff_shar, cog_emp, emp_conc, emp_dist, silent_films_total)
+emp_analysis_vars<- dplyr::select(cca_maindata, aff_shar, cog_emp, emp_conc, emp_dist, 
+                                  silent_films_total)
 cdi_analysis_vars<- dplyr::select(cca_maindata, negmood_phys, neg_selfest, ineff, intprobs)
-scas_analysis_vars<- dplyr::select(cca_maindata, scasseps, scassoc, scasphysinj, scasgad, scasocd, scasopanicag)
+scas_analysis_vars<- dplyr::select(cca_maindata, scasseps, scassoc, scasphysinj, scasgad, scasocd, 
+                                   scasopanicag)
 
 
 #provides mean, sd, kurtosis, skew etc
@@ -247,9 +290,12 @@ emp_desc <- emp_desc[, c("n", "mean", "sd", "range", "skew", "kurtosis")]
 cdi_desc <- cdi_desc[, c("n", "mean", "sd", "range", "skew", "kurtosis")]
 scas_desc <- scas_desc[, c("n", "mean", "sd", "range", "skew", "kurtosis")]
 
-row.names(emp_desc) <- c("Affective Sharing","Cognitive Empathy","Empathic Concern","Empathic Distress","Silent Films")
-row.names(cdi_desc) <- c("Neg. mood/phys. symptoms","Negative self-esteem","Ineffectiveness","Interpersonal problems")
-row.names(scas_desc) <- c("Separation anxiety","Social phobia","Physical injury fears","Generalized anxiety","Obsessive compulsive", "Panic/agoraphobia")
+row.names(emp_desc) <- c("Affective Sharing","Cognitive Empathy","Empathic Concern",
+                         "Empathic Distress","Silent Films")
+row.names(cdi_desc) <- c("Neg. mood/phys. symptoms","Negative self-esteem","Ineffectiveness",
+                         "Interpersonal problems")
+row.names(scas_desc) <- c("Separation anxiety","Social phobia","Physical injury fears",
+                          "Generalized anxiety","Obsessive compulsive", "Panic/agoraphobia")
 
 
 #append the C alphas onto the other desc.
@@ -260,14 +306,15 @@ scas_desc<- cbind(scas_desc, cronscas)
 #Use the wrapper apa_table to make an apa table of the descriptive
 apa_table(
   list(`Empathy` = emp_desc, `CDI (before binarization)` = cdi_desc, `SCAS` = scas_desc),
-            caption = "Means, standard deviations, range, skew and kurtosis for the key measures used in the CCA",
+            caption = "Means, standard deviations, range, skew and kurtosis for the key measures 
+  used in the CCA",
           align = c("l",rep("c", 7) ),
-          col.names = c("Measure of interest", "$N$","Mean","SD","Range", "Skew", "Kurtosis", "Cronbach’s $\\alpha$"),
+          col.names = c("Measure of interest", "$N$","Mean","SD","Range", "Skew", "Kurtosis", 
+                        "Cronbach’s $\\alpha$"),
   digits = c(0,0, 2,2,2,2,2,2),
   font_size = "small"
 )
 
-#c(0, 2,2,2,2,2,2)
 ```
 
 
@@ -294,16 +341,40 @@ papaja::apa_table(x$apa, # apa contains the data.frame needed for apa_table
 
 ```{r, ccatable, echo=FALSE, results='asis'}
 
+#put together the pvalues will use in table
+p_bind <- cbind(ccatable[,8], np_rc_f$np_f, ccatable[,9], np_rc_f$np_rc)
 
-apa_table(cbind(ccatable[,1], papaja::printnum(ccatable[,2:4], gt1 = FALSE), ccatable[,5:7], papaja::printp(ccatable[,8]), papaja::printp(np_rc_f$np_f), papaja::printp(ccatable[,9]), papaja::printp(np_rc_f$np_rc)),
-          caption = "Pertinent values from the CCA analysis for each of the nine canonical functions created",
-          note = "* = <0.05, bold text = both parametric and non-parametric p-value significant. Rc = Canonical Correlation, Rc2 = Canonical Correlation Squared",
+#define notions for significance levels
+ mystars <- ifelse(p_bind < .001, "***"
+                   , ifelse(p_bind< .01, "**"
+                            , ifelse(p_bind < .05, "*", " ")))
+ 
+ #format pvalues and paste mystars
+ format_p_bind  <- papaja::printp(p_bind)
+ p_stars <- data.frame(matrix(NA, nrow = nrow(format_p_bind), ncol = ncol(format_p_bind)))
+ 
+ for (i in 1:ncol(format_p_bind)) {
+   p_stars[,i] <- paste(format_p_bind[,i], mystars[,i], sep="")
+ }
+ 
+
+#Put together the variables I want for my table (gt1=FALSE removes leading zero) using cbind
+apa_table(cbind(ccatable[,1], papaja::printnum(ccatable[,2:4], gt1 = FALSE), ccatable[,5:7], 
+                p_stars),
+          caption = "Pertinent values from the CCA analysis for each of the nine canonical functions
+          created",
+          note = "* = <0.05, bold text = both parametric and non-parametric p-value significant.
+          Rc = Canonical Correlation, Rc2 = Canonical Correlation Squared",
           align = c("l",rep("c", 10) ),
-          col.names = c("Dimension",	"Rc",	"Rc2",	"Wilk’s $\\Lambda$",	"Multiple $F$",	"df1",	"df2",	"Para. $p$ ($F$)","Non-para. $p$ ($F$)",	"Para. $p$ (Rc)",	"Non-para. $p$ (Rc)"),
+          col.names = c("Dimension",	"Rc",	"Rc2",	"Wilk’s $\\Lambda$",	"Multiple $F$",	"df1",	
+                        "df2",	"Para. $p$ ($F$)","Non-para. $p$ ($F$)",	"Para. $p$ (Rc)",	
+                        "Non-para. $p$ (Rc)"),
           font_size = "small"
 )
 ```
-(ref:scatter-caption) Scatterplot displaying the correlation between the empathy synthetic variable   (linear combination of the original empathy measures and the covariates), and the internalising synthetic variable from the first function in the CCA.  
+(ref:scatter-caption) Scatterplot displaying the correlation between the empathy synthetic variable 
+(linear combination of the original empathy measures and the covariates), and the internalizing 
+synthetic variable from the first function in the CCA.  
 
 ```{r, scatterplot, echo=FALSE, results='asis', fig.cap = "(ref:scatter-caption)"}
 
@@ -318,24 +389,45 @@ ggplot(data = scatter, aes(x = X, y = Y)) +
 
 ```{r, coefftableprep, echo=FALSE}
 
-row.names(xcoeftable) <- c("Affective Sharing","Cognitive Empathy","Empathic Concern","Empathic Distress","Silent Films","Sex","IQ","Parent Education","Neighborhood Advantage")
+row.names(xcoeftable) <- c("Affective Sharing","Cognitive Empathy","Empathic Concern",
+                           "Empathic Distress","Silent Films","Sex","IQ","Parent Education",
+                           "Neighborhood Advantage")
 xcoeftable$X <- NULL
 
-row.names(ycoeftable) <- c("Negative mood/physical symptoms","Negative self-esteem","Ineffectiveness","Interpersonal problems",
-                           "Separation anxiety","Social phobia","Physical injury fears","Generalized anxiety","Obsessive compulsive", "Panic/agoraphobia")
+row.names(ycoeftable) <- c("Negative mood/physical symptoms","Negative self-esteem",
+                           "Ineffectiveness","Interpersonal problems",
+                           "Separation anxiety","Social phobia","Physical injury fears",
+                           "Generalized anxiety","Obsessive compulsive", "Panic/agoraphobia")
 ycoeftable$X <- NULL
 ```
 
 ```{r, coeffxtable, echo=FALSE, results='asis'}
 
-#see if I can find out about the stars code
+#bind together the p_values
+coef_ps<- cbind(xcoeftable[,"para_p"],NPX$x)
+#add a star if they less than bonferroni correction
+coef_stars <- ifelse(coef_ps < bf_2, "*", "")
+
+#format pvalues and paste mystars
+format_coef_ps  <- papaja::printp(as.numeric(coef_ps))
+format_coef_ps <- matrix(format_coef_ps , nrow = nrow(coef_ps), ncol = 
+                              ncol(coef_ps))
+p_stars_coef <- data.frame(matrix(NA, nrow = nrow(format_coef_ps), ncol = 
+                                   ncol(format_coef_ps)))
+ 
+ for (i in 1:ncol(format_coef_ps)) {
+   p_stars_coef[,i] <- paste(format_coef_ps[,i], coef_stars[,i], sep="")
+ }
 
 
-apa_table(cbind(xcoeftable[,1], papaja::printnum(xcoeftable[,2:3], gt1 = FALSE), papaja::printp(xcoeftable[,4]), papaja::printp(NPX$x)),
+apa_table(cbind(xcoeftable[,"stnd_x_can_coef"], papaja::printnum(xcoeftable[,c("str_coef","sq_str_coef")], gt1 = FALSE), 
+                p_stars_coef),
           caption = "Coefficients for X variables, first function.",
           note = "* Survive correction for multiple comparisons (Bonferroni).",
           align = c("l",rep("c", 5) ),
-          col.names = c("X Variables", "Standardized X canonical coefficients",	"Structure coefficient (rs)",	"Squared structure",	"Para. $p$ (rs)", "Non-para. $p$ (rs)"),
+          col.names = c("X Variables","Standardized X canonical coefficients",	
+                        "Structure coefficient (rs)",	"Squared structure",	"Para. $p$ (rs)", 
+                        "Non-para. $p$ (rs)"),
           font_size = "small"
 )
 ```
@@ -343,11 +435,30 @@ apa_table(cbind(xcoeftable[,1], papaja::printnum(xcoeftable[,2:3], gt1 = FALSE),
 ```{r, coeffytable, echo=FALSE, results='asis'}
 
 
-apa_table(cbind(ycoeftable[,1], papaja::printnum(ycoeftable[,2:3], gt1 = FALSE),papaja::printp(ycoeftable[,4]), papaja::printp(NPY$x)),
+#bind together the p_values
+coef_ps<- cbind(ycoeftable[,"para_p"],NPY$x)
+#add a star if they less than bonferroni correction
+coef_stars <- ifelse(coef_ps < bf_2, "*", "")
+
+#format pvalues and paste mystars
+format_coef_ps  <- papaja::printp(as.numeric(coef_ps))
+format_coef_ps <- matrix(format_coef_ps , nrow = nrow(coef_ps), ncol = 
+                              ncol(coef_ps))
+p_stars_coef <- data.frame(matrix(NA, nrow = nrow(format_coef_ps), ncol = 
+                                   ncol(format_coef_ps)))
+ 
+ for (i in 1:ncol(format_coef_ps)) {
+   p_stars_coef[,i] <- paste(format_coef_ps[,i], coef_stars[,i], sep="")
+ }
+
+
+apa_table(cbind(ycoeftable[,"stnd_y_can_coef"], papaja::printnum(ycoeftable[,c("str_coef","sq_str_coef")], gt1 = FALSE), p_stars_coef),
           caption = "Coefficients for Y variables, first function.",
           note = "* Survive correction for multiple comparisons (Bonferroni).",
           align = c("l",rep("c", 5) ),
-          col.names = c("Y Variables", "Standardized X canonical coefficients",	"Structure coefficient (rs)",	"Squared structure",	"Para. $p$ (rs)", "Non-para. $p$ (rs)"),
+          col.names = c("Y Variables", "Standardized X canonical coefficients",	
+                        "Structure coefficient (rs)",	"Squared structure",	"Para. $p$ (rs)", 
+                        "Non-para. $p$ (rs)"),
           font_size = "small"
 )
 
@@ -359,13 +470,20 @@ apa_table(cbind(ycoeftable[,1], papaja::printnum(ycoeftable[,2:3], gt1 = FALSE),
 ```{r,tscore_table, echo=FALSE, results='asis'}
 
 
-row.names(t_freq) <- c("Average (40-60)","High Average (60-65)", "Elevated (65-70)", "Very elevated (70+)", "Average (40-60).", "Elevated (60-65) - top 16% of population", "(65-70) - top 6% of population", "(70+) - top 2% of population")
+row.names(t_freq) <- c("Average (40-60)","High Average (60-65)", "Elevated (65-70)", 
+                       "Very elevated (70+)", "Average (40-60).", 
+                       "Elevated (60-65) - top 16% of population", "(65-70) - top 6% of population", 
+                       "(70+) - top 2% of population")
 
 
 apa_table(
   list(`CDI` = t_freq[1:4,2:3], `SCAS` = t_freq[5:8,2:3] ),
           caption = "T-scores from the CDI and SCAS measures",
-          note = "T-scores have a mean of 50 and a standard deviation of 10. There were 25 children (20%) scoring higher than average depressive symptoms in the sample.  For anxiety symptoms, there were only 6 children (5%) scoring higher than average. The t-scores suggest 16% of the population in this age group might be expected to score higher than average. (For CDI see Kovacs, 2010; for SCAS see https://www.scaswebsite.com/index.php?p=1_9).",
+          note = "T-scores have a mean of 50 and a standard deviation of 10. There were 25 children 
+  (20%) scoring higher than average depressive symptoms in the sample.  For anxiety symptoms, there 
+  were only 6 children (5%) scoring higher than average. The t-scores suggest 16% of the population 
+  in this age group might be expected to score higher than average. (For CDI see Kovacs, 2010; for 
+  SCAS see https://www.scaswebsite.com/index.php?p=1_9).",
           align = c("l",rep("c", 2)),
           col.names = c( "Internalizing scale t-score bracket","Frequency","Percentage"),
   digits = c(0,0,2),
@@ -383,47 +501,114 @@ apa_table(
 ```{r, alt1_ccatable, echo=FALSE, results='asis'}
 
 
-apa_table(cbind(alt1_ccatable[,1], papaja::printnum(alt1_ccatable[,2:4], gt1 = FALSE), alt1_ccatable[,5:7], papaja::printp(alt1_ccatable[,8]), papaja::printp(np_rc_f_alt1$np_f), papaja::printp(alt1_ccatable[,9]), papaja::printp(np_rc_f_alt1$np_rc)),
-          caption = "Pertinent values from the CCA analysis for each of the five canonical functions created from alternate model one",
-          note = "* = <0.05, bold text = both parametric and non-parametric p-value significant. Rc = Canonical Correlation, Rc2 = Canonical Correlation Squared. Although the first and second functions were both significant, only the first function was interpreted as this was consistent across all three models (in addition the main associations within the second function appear to be between the cognitive empathy task and IQ).",
+#put together the pvalues will use in table
+alt1_p_bind <- cbind(alt1_ccatable[,8], np_rc_f_alt1$np_f, alt1_ccatable[,9], np_rc_f_alt1$np_rc)
+
+#define notions for significance levels
+ mystars_alt1 <- ifelse(alt1_p_bind < .001, "***"
+                   , ifelse(alt1_p_bind< .01, "**"
+                            , ifelse(alt1_p_bind < .05, "*", " ")))
+
+
+#format pvalues and paste mystars
+format_alt1_p_bind  <- papaja::printp(as.numeric(alt1_p_bind))
+format_alt1_p_bind <- matrix(format_alt1_p_bind , nrow = nrow(alt1_p_bind), ncol = 
+                              ncol(alt1_p_bind))
+p_stars_alt1 <- data.frame(matrix(NA, nrow = nrow(format_alt1_p_bind), ncol = 
+                                   ncol(format_alt1_p_bind)))
+ 
+ for (i in 1:ncol(format_p_bind)) {
+   p_stars_alt1[,i] <- paste(format_alt1_p_bind[,i], mystars_alt1[,i], sep="")
+ }
+ 
+
+apa_table(cbind(alt1_ccatable[,1], papaja::printnum(alt1_ccatable[,2:4], gt1 = FALSE), 
+                alt1_ccatable[,5:7], p_stars_alt1),
+          caption = "Pertinent values from the CCA analysis for each of the five canonical functions 
+          created from alternate model one",
+          note = "* = <0.05, bold text = both parametric and non-parametric p-value significant. 
+          Rc = Canonical Correlation, Rc2 = Canonical Correlation Squared. Although the first and 
+          second functions were both significant, only the first function was interpreted as this 
+          was consistent across all three models (in addition the main associations within the 
+          second function appear to be between the cognitive empathy task and IQ).",
           align = c("l",rep("c", 10) ),
-          col.names = c("Dimension",	"Rc",	"Rc2",	"Wilk’s $\\Lambda$",	"Multiple $F$",	"df1",	"df2",	"Para. $p$ ($F$)","Non-para. $p$ ($F$)",	"Para. $p$ (Rc)",	"Non-para. $p$ (Rc)"),
+          col.names = c("Dimension",	"Rc",	"Rc2",	"Wilk’s $\\Lambda$",	"Multiple $F$",	"df1",	
+                        "df2",	"Para. $p$ ($F$)","Non-para. $p$ ($F$)",	"Para. $p$ (Rc)",	
+                        "Non-para. $p$ (Rc)"),
           font_size = "small"
 )
 ```
 
 ```{r, alt1_coefftableprep, echo=FALSE}
 
-row.names(alt1_xcoeftable) <- c("Affective Sharing","Cognitive Empathy","Empathic Concern","Empathic Distress","Silent Films")
+row.names(alt1_xcoeftable) <- c("Affective Sharing","Cognitive Empathy","Empathic Concern",
+                                "Empathic Distress","Silent Films")
 alt1_xcoeftable$X <- NULL
 
-row.names(alt1_ycoeftable) <- c("Negative mood/physical symptoms","Negative self-esteem","Ineffectiveness","Interpersonal problems",
-                           "Separation anxiety","Social phobia","Physical injury fears","Generalized anxiety","Obsessive compulsive", "Panic/agoraphobia","Sex","IQ","Parent Education","Neighborhood Advantage")
+row.names(alt1_ycoeftable) <- c("Negative mood/physical symptoms","Negative self-esteem",
+                                "Ineffectiveness","Interpersonal problems",
+                           "Separation anxiety","Social phobia","Physical injury fears",
+                           "Generalized anxiety","Obsessive compulsive", "Panic/agoraphobia","Sex",
+                           "IQ","Parent Education","Neighborhood Advantage")
 alt1_ycoeftable$X <- NULL
 ```
 
 ```{r, alt1_coeffxtable, echo=FALSE, results='asis'}
 
-#see if I can find out about the stars code
+#bind together the p_values
+coef_ps<- cbind(alt1_xcoeftable[,"para_p"],alt1_NPX$x)
+#add a star if they less than bonferroni correction
+coef_stars <- ifelse(coef_ps < bf_2a, "*", "")
+
+#format pvalues and paste mystars
+format_coef_ps  <- papaja::printp(as.numeric(coef_ps))
+format_coef_ps <- matrix(format_coef_ps , nrow = nrow(coef_ps), ncol = 
+                              ncol(coef_ps))
+p_stars_coef <- data.frame(matrix(NA, nrow = nrow(format_coef_ps), ncol = 
+                                   ncol(format_coef_ps)))
+ 
+ for (i in 1:ncol(format_coef_ps)) {
+   p_stars_coef[,i] <- paste(format_coef_ps[,i], coef_stars[,i], sep="")
+ }
 
 
-apa_table(cbind(alt1_xcoeftable[,1], papaja::printnum(alt1_xcoeftable[,2:3], gt1 = FALSE), papaja::printp(alt1_xcoeftable[,4]), papaja::printp(alt1_NPX$x)),
+apa_table(cbind(alt1_xcoeftable[,"stnd_x_can_coef"], papaja::printnum(alt1_xcoeftable[,c("str_coef","sq_str_coef")], gt1 = FALSE), 
+                p_stars_coef),
           caption = "Coefficients for X variables, first function.",
           note = "* Survive correction for multiple comparisons (Bonferroni).",
           align = c("l",rep("c", 5) ),
-          col.names = c("X Variables", "Standardized X canonical coefficients",	"Structure coefficient (rs)",	"Squared structure",	"Para. $p$ (rs)", "Non-para. $p$ (rs)"),
+          col.names = c("X Variables", "Standardized X canonical coefficients",	
+                        "Structure coefficient (rs)",	"Squared structure",	"Para. $p$ (rs)", 
+                        "Non-para. $p$ (rs)"),
           font_size = "small"
 )
 ```
 
 ```{r, alt1_coeffytable, echo=FALSE, results='asis'}
 
+#bind together the p_values
+coef_ps<- cbind(alt1_ycoeftable[,"para_p"],alt1_NPY$x)
+#add a star if they less than bonferroni correction
+coef_stars <- ifelse(coef_ps < bf_2a, "*", "")
 
-apa_table(cbind(alt1_ycoeftable[,1], papaja::printnum(alt1_ycoeftable[,2:3], gt1 = FALSE),papaja::printp(alt1_ycoeftable[,4]), papaja::printp(alt1_NPY$x)),
+#format pvalues and paste mystars
+format_coef_ps  <- papaja::printp(as.numeric(coef_ps))
+format_coef_ps <- matrix(format_coef_ps , nrow = nrow(coef_ps), ncol = 
+                              ncol(coef_ps))
+p_stars_coef <- data.frame(matrix(NA, nrow = nrow(format_coef_ps), ncol = 
+                                   ncol(format_coef_ps)))
+ 
+ for (i in 1:ncol(format_coef_ps)) {
+   p_stars_coef[,i] <- paste(format_coef_ps[,i], coef_stars[,i], sep="")
+ }
+
+apa_table(cbind(alt1_ycoeftable[,"stnd_y_can_coef"], papaja::printnum(alt1_ycoeftable[,c("str_coef","sq_str_coef")], gt1 = FALSE), p_stars_coef),
           caption = "Coefficients for Y variables, first function.",
           note = "* Survive correction for multiple comparisons (Bonferroni).",
           align = c("l",rep("c", 5) ),
-          col.names = c("Y Variables", "Standardized X canonical coefficients",	"Structure coefficient (rs)",	"Squared structure",	"Para. $p$ (rs)", "Non-para. $p$ (rs)"),
+          col.names = c("Y Variables", "Standardized X canonical coefficients",	
+                        "Structure coefficient (rs)",	"Squared structure",	"Para. $p$ (rs)", 
+                        "Non-para. $p$ (rs)"),
           font_size = "small"
 )
 
@@ -434,36 +619,78 @@ apa_table(cbind(alt1_ycoeftable[,1], papaja::printnum(alt1_ycoeftable[,2:3], gt1
 
 ```{r, alt2_ccatable, echo=FALSE, results='asis'}
 
+#put together the pvalues will use in table
+alt2_p_bind <- cbind(alt2_ccatable[,8], np_rc_f_alt2$np_f, alt2_ccatable[,9], np_rc_f_alt2$np_rc)
 
-apa_table(cbind(alt2_ccatable[,1], papaja::printnum(alt2_ccatable[,2:4], gt1 = FALSE), alt2_ccatable[,5:7], papaja::printp(alt2_ccatable[,8]), papaja::printp(np_rc_f_alt2$np_f), papaja::printp(alt2_ccatable[,9]), papaja::printp(np_rc_f_alt2$np_rc)),
-          caption = "Pertinent values from the CCA analysis for each of the five canonical functions created from alternate model two",
-          note = "* = <0.05, bold text = both parametric and non-parametric p-value significant. Rc = Canonical Correlation, Rc2 = Canonical Correlation Squared.",
+#define notions for significance levels
+ mystars_alt2 <- ifelse(alt2_p_bind < .001, "***"
+                   , ifelse(alt2_p_bind< .01, "**"
+                            , ifelse(alt2_p_bind < .05, "*", " ")))
+
+ #format pvalues and paste mystars
+ format_alt2_p_bind  <- papaja::printp(as.numeric(alt2_p_bind))
+ format_alt2_p_bind <- matrix(format_alt2_p_bind , nrow = nrow(alt2_p_bind), ncol = 
+                                ncol(alt2_p_bind))
+ p_stars_alt2 <- data.frame(matrix(NA, nrow = nrow(format_alt2_p_bind), ncol = 
+                                     ncol(format_alt2_p_bind)))
+ 
+ for (i in 1:ncol(format_alt2_p_bind)) {
+   p_stars_alt2[,i] <- paste(format_alt2_p_bind[,i], mystars_alt2[,i], sep="")
+ }
+
+apa_table(cbind(alt2_ccatable[,1], papaja::printnum(alt2_ccatable[,2:4], gt1 = FALSE), 
+                alt2_ccatable[,5:7], p_stars_alt2),
+          caption = "Pertinent values from the CCA analysis for each of the five canonical functions
+          created from alternate model two",
+          note = "* = <0.05, bold text = both parametric and non-parametric p-value significant. 
+          Rc = Canonical Correlation, Rc2 = Canonical Correlation Squared.",
           align = c("l",rep("c", 10) ),
-          col.names = c("Dimension",	"Rc",	"Rc2",	"Wilk’s $\\Lambda$",	"Multiple $F$",	"df1",	"df2",	"Para. $p$ ($F$)","Non-para. $p$ ($F$)",	"Para. $p$ (Rc)",	"Non-para. $p$ (Rc)"),
+          col.names = c("Dimension",	"Rc",	"Rc2",	"Wilk’s $\\Lambda$",	"Multiple $F$",	"df1",	
+                        "df2",	"Para. $p$ ($F$)","Non-para. $p$ ($F$)",	"Para. $p$ (Rc)",	
+                        "Non-para. $p$ (Rc)"),
           font_size = "small"
 )
 ```
 
 ```{r, alt2_coefftableprep, echo=FALSE}
 
-row.names(alt2_xcoeftable) <- c("Affective Sharing","Cognitive Empathy","Empathic Concern","Empathic Distress","Silent Films")
+row.names(alt2_xcoeftable) <- c("Affective Sharing","Cognitive Empathy","Empathic Concern",
+                                "Empathic Distress","Silent Films")
 alt2_xcoeftable$X <- NULL
 
-row.names(alt2_ycoeftable) <- c("Negative mood/physical symptoms","Negative self-esteem","Ineffectiveness","Interpersonal problems",
-                           "Separation anxiety","Social phobia","Physical injury fears","Generalized anxiety","Obsessive compulsive", "Panic/agoraphobia")
+row.names(alt2_ycoeftable) <- c("Negative mood/physical symptoms","Negative self-esteem",
+                                "Ineffectiveness","Interpersonal problems",
+                           "Separation anxiety","Social phobia","Physical injury fears",
+                           "Generalized anxiety","Obsessive compulsive", "Panic/agoraphobia")
 alt2_ycoeftable$X <- NULL
 ```
 
 ```{r, alt2_coeffxtable, echo=FALSE, results='asis'}
 
-#see if I can find out about the stars code
+#bind together the p_values
+coef_ps<- cbind(alt2_xcoeftable[,"para_p"],alt2_NPX$x)
+#add a star if they less than bonferroni correction
+coef_stars <- ifelse(coef_ps < bf_2b, "*", "")
+
+#format pvalues and paste mystars
+format_coef_ps  <- papaja::printp(as.numeric(coef_ps))
+format_coef_ps <- matrix(format_coef_ps , nrow = nrow(coef_ps), ncol = 
+                              ncol(coef_ps))
+p_stars_coef <- data.frame(matrix(NA, nrow = nrow(format_coef_ps), ncol = 
+                                   ncol(format_coef_ps)))
+ 
+ for (i in 1:ncol(format_coef_ps)) {
+   p_stars_coef[,i] <- paste(format_coef_ps[,i], coef_stars[,i], sep="")
+ }
 
 
-apa_table(cbind(alt2_xcoeftable[,1], papaja::printnum(alt2_xcoeftable[,2:3], gt1 = FALSE), papaja::printp(alt2_xcoeftable[,4]), papaja::printp(alt2_NPX$x)),
+apa_table(cbind(alt2_xcoeftable[,"stnd_x_can_coef"], papaja::printnum(alt2_xcoeftable[,c("str_coef", "sq_str_coef")], gt1 = FALSE), p_stars_coef),
           caption = "Coefficients for X variables, first function.",
           note = "* Survive correction for multiple comparisons (Bonferroni).",
           align = c("l",rep("c", 5) ),
-          col.names = c("X Variables", "Standardized X canonical coefficients",	"Structure coefficient (rs)",	"Squared structure",	"Para. $p$ (rs)", "Non-para. $p$ (rs)"),
+          col.names = c("X Variables", "Standardized X canonical coefficients",	
+                        "Structure coefficient (rs)",	"Squared structure",	"Para. $p$ (rs)", 
+                        "Non-para. $p$ (rs)"),
           font_size = "small"
 )
 ```
@@ -471,11 +698,29 @@ apa_table(cbind(alt2_xcoeftable[,1], papaja::printnum(alt2_xcoeftable[,2:3], gt1
 ```{r, alt2_coeffytable, echo=FALSE, results='asis'}
 
 
-apa_table(cbind(alt2_ycoeftable[,1], papaja::printnum(alt2_ycoeftable[,2:3], gt1 = FALSE),papaja::printp(alt2_ycoeftable[,4]), papaja::printp(alt2_NPY$x)),
+#bind together the p_values
+coef_ps<- cbind(alt2_ycoeftable[,"para_p"],alt2_NPY$x)
+#add a star if they less than bonferroni correction
+coef_stars <- ifelse(coef_ps < bf_2b, "*", "")
+
+#format pvalues and paste mystars
+format_coef_ps  <- papaja::printp(as.numeric(coef_ps))
+format_coef_ps <- matrix(format_coef_ps , nrow = nrow(coef_ps), ncol = 
+                              ncol(coef_ps))
+p_stars_coef <- data.frame(matrix(NA, nrow = nrow(format_coef_ps), ncol = 
+                                   ncol(format_coef_ps)))
+ 
+ for (i in 1:ncol(format_coef_ps)) {
+   p_stars_coef[,i] <- paste(format_coef_ps[,i], coef_stars[,i], sep="")
+ }
+
+apa_table(cbind(alt2_ycoeftable[,"stnd_y_can_coef"], papaja::printnum(alt2_ycoeftable[,c("str_coef", "sq_str_coef")], gt1 = FALSE),p_stars_coef),
           caption = "Coefficients for Y variables, first function.",
           note = "* Survive correction for multiple comparisons (Bonferroni).",
           align = c("l",rep("c", 5) ),
-          col.names = c("Y Variables", "Standardized X canonical coefficients",	"Structure coefficient (rs)",	"Squared structure",	"Para. $p$ (rs)", "Non-para. $p$ (rs)"),
+          col.names = c("Y Variables", "Standardized X canonical coefficients",	
+                        "Structure coefficient (rs)",	"Squared structure",	"Para. $p$ (rs)", 
+                        "Non-para. $p$ (rs)"),
           font_size = "small"
 )
 
