@@ -309,7 +309,7 @@ apa_table(
             caption = "Means, standard deviations, range, skew and kurtosis for the key measures 
   used in the CCA",
           align = c("l",rep("c", 7) ),
-          col.names = c("Measure of interest", "$N$","Mean","SD","Range", "Skew", "Kurtosis", 
+          col.names = c("Measure of interest", "$N$","Mean","$SD$","Range", "Skew", "Kurtosis", 
                         "Cronbach’s $\\alpha$"),
   digits = c(0,0, 2,2,2,2,2,2),
   font_size = "small"
@@ -363,12 +363,12 @@ apa_table(cbind(ccatable[,1], papaja::printnum(ccatable[,2:4], gt1 = FALSE), cca
                 p_stars),
           caption = "Pertinent values from the CCA analysis for each of the nine canonical functions
           created",
-          note = "* = <0.05, bold text = both parametric and non-parametric p-value significant.
-          Rc = Canonical Correlation, Rc2 = Canonical Correlation Squared",
+          note = "* = <0.05, bold text = both parametric and non-parametric p-value significant. Abbreviations: Dim. = Dimension, *Rc* = Canonical Correlation, *Rc2* = Canonical Correlation Squared, 
+          para. = parametric.",
           align = c("l",rep("c", 10) ),
-          col.names = c("Dimension",	"Rc",	"Rc2",	"Wilk’s $\\Lambda$",	"Multiple $F$",	"df1",	
-                        "df2",	"Para. $p$ ($F$)","Non-para. $p$ ($F$)",	"Para. $p$ (Rc)",	
-                        "Non-para. $p$ (Rc)"),
+          col.names = c("Dim.", "$R_{c}$", "$R^{2}_{c}$", "Wilk’s $\\Lambda$", "Multiple $F$",	
+                        "$df$ 1",	"$df$ 2", "Para. $p$ ($F$)","Non-para. $p$ ($F$)", 
+                        "Para. $p$ ($R_{c}$)",	"Non-para. $p$ ($R_{c}$)"),
           font_size = "small"
 )
 ```
@@ -423,11 +423,12 @@ p_stars_coef <- data.frame(matrix(NA, nrow = nrow(format_coef_ps), ncol =
 apa_table(cbind(xcoeftable[,"stnd_x_can_coef"], papaja::printnum(xcoeftable[,c("str_coef","sq_str_coef")], gt1 = FALSE), 
                 p_stars_coef),
           caption = "Coefficients for X variables, first function.",
-          note = "* Survive correction for multiple comparisons (Bonferroni).",
+          note = "* Survive correction for multiple comparisons (Bonferroni). Bold text = both 
+          parametric and non-parametric p-value significant.",
           align = c("l",rep("c", 5) ),
           col.names = c("X Variables","Standardized X canonical coefficients",	
-                        "Structure coefficient (rs)",	"Squared structure",	"Para. $p$ (rs)", 
-                        "Non-para. $p$ (rs)"),
+                        "Structure coefficient ($r_{s}$)", "Squared structure coefficient ($r^{2}_{s}$)",
+                        "Para. $p$ ($r_{s}$)", "Non-para. $p$ ($r_{s}$)"),
           font_size = "small"
 )
 ```
@@ -454,11 +455,12 @@ p_stars_coef <- data.frame(matrix(NA, nrow = nrow(format_coef_ps), ncol =
 
 apa_table(cbind(ycoeftable[,"stnd_y_can_coef"], papaja::printnum(ycoeftable[,c("str_coef","sq_str_coef")], gt1 = FALSE), p_stars_coef),
           caption = "Coefficients for Y variables, first function.",
-          note = "* Survive correction for multiple comparisons (Bonferroni).",
+          note = "* Survive correction for multiple comparisons (Bonferroni). Bold text = both 
+          parametric and non-parametric p-value significant.",
           align = c("l",rep("c", 5) ),
-          col.names = c("Y Variables", "Standardized X canonical coefficients",	
-                        "Structure coefficient (rs)",	"Squared structure",	"Para. $p$ (rs)", 
-                        "Non-para. $p$ (rs)"),
+          col.names = c("Y Variables", "Standardized Y canonical coefficients",	
+                        "Structure coefficient ($r_{s}$)", "Squared structure coefficient ($r^{2}_{s}$)",
+                        "Para. $p$ ($r_{s}$)", "Non-para. $p$ ($r_{s}$)"),
           font_size = "small"
 )
 
@@ -527,14 +529,14 @@ apa_table(cbind(alt1_ccatable[,1], papaja::printnum(alt1_ccatable[,2:4], gt1 = F
           caption = "Pertinent values from the CCA analysis for each of the five canonical functions 
           created from alternate model one",
           note = "* = <0.05, bold text = both parametric and non-parametric p-value significant. 
-          Rc = Canonical Correlation, Rc2 = Canonical Correlation Squared. Although the first and 
-          second functions were both significant, only the first function was interpreted as this 
-          was consistent across all three models (in addition the main associations within the 
-          second function appear to be between the cognitive empathy task and IQ).",
+          Although the first and second functions were both significant, only the first function was interpreted as this was consistent across all three models (in addition the main associations within 
+          the second function appear to be between the cognitive empathy task and IQ). Abbreviations: 
+          Dim. = Dimension, *Rc* = Canonical Correlation, *Rc2* = Canonical Correlation Squared, 
+          para. = parametric.",
           align = c("l",rep("c", 10) ),
-          col.names = c("Dimension",	"Rc",	"Rc2",	"Wilk’s $\\Lambda$",	"Multiple $F$",	"df1",	
-                        "df2",	"Para. $p$ ($F$)","Non-para. $p$ ($F$)",	"Para. $p$ (Rc)",	
-                        "Non-para. $p$ (Rc)"),
+          col.names = c("Dim.", "$R_{c}$", "$R^{2}_{c}$", "Wilk’s $\\Lambda$", "Multiple $F$",	
+                        "$df$ 1",	"$df$ 2", "Para. $p$ ($F$)","Non-para. $p$ ($F$)", 
+                        "Para. $p$ ($R_{c}$)",	"Non-para. $p$ ($R_{c}$)"),
           font_size = "small"
 )
 ```
@@ -575,11 +577,12 @@ p_stars_coef <- data.frame(matrix(NA, nrow = nrow(format_coef_ps), ncol =
 apa_table(cbind(alt1_xcoeftable[,"stnd_x_can_coef"], papaja::printnum(alt1_xcoeftable[,c("str_coef","sq_str_coef")], gt1 = FALSE), 
                 p_stars_coef),
           caption = "Coefficients for X variables, first function.",
-          note = "* Survive correction for multiple comparisons (Bonferroni).",
+          note = "* Survive correction for multiple comparisons (Bonferroni). Bold text = both 
+          parametric and non-parametric p-value significant.",
           align = c("l",rep("c", 5) ),
           col.names = c("X Variables", "Standardized X canonical coefficients",	
-                        "Structure coefficient (rs)",	"Squared structure",	"Para. $p$ (rs)", 
-                        "Non-para. $p$ (rs)"),
+                        "Structure coefficient ($r_{s}$)", "Squared structure coefficient ($r^{2}_{s}$)",
+                        "Para. $p$ ($r_{s}$)", "Non-para. $p$ ($r_{s}$)"),
           font_size = "small"
 )
 ```
@@ -604,11 +607,12 @@ p_stars_coef <- data.frame(matrix(NA, nrow = nrow(format_coef_ps), ncol =
 
 apa_table(cbind(alt1_ycoeftable[,"stnd_y_can_coef"], papaja::printnum(alt1_ycoeftable[,c("str_coef","sq_str_coef")], gt1 = FALSE), p_stars_coef),
           caption = "Coefficients for Y variables, first function.",
-          note = "* Survive correction for multiple comparisons (Bonferroni).",
+          note = "* Survive correction for multiple comparisons (Bonferroni). Bold text = both 
+          parametric and non-parametric p-value significant.",
           align = c("l",rep("c", 5) ),
-          col.names = c("Y Variables", "Standardized X canonical coefficients",	
-                        "Structure coefficient (rs)",	"Squared structure",	"Para. $p$ (rs)", 
-                        "Non-para. $p$ (rs)"),
+          col.names = c("Y Variables", "Standardized Y canonical coefficients",	
+                        "Structure coefficient ($r_{s}$)", "Squared structure coefficient ($r^{2}_{s}$)",
+                        "Para. $p$ ($r_{s}$)", "Non-para. $p$ ($r_{s}$)"),
           font_size = "small"
 )
 
@@ -643,11 +647,12 @@ apa_table(cbind(alt2_ccatable[,1], papaja::printnum(alt2_ccatable[,2:4], gt1 = F
           caption = "Pertinent values from the CCA analysis for each of the five canonical functions
           created from alternate model two",
           note = "* = <0.05, bold text = both parametric and non-parametric p-value significant. 
-          Rc = Canonical Correlation, Rc2 = Canonical Correlation Squared.",
+          Abbreviations: Dim. = Dimension, *Rc* = Canonical Correlation, *Rc2* = Canonical 
+          Correlation Squared, para. = parametric.",
           align = c("l",rep("c", 10) ),
-          col.names = c("Dimension",	"Rc",	"Rc2",	"Wilk’s $\\Lambda$",	"Multiple $F$",	"df1",	
-                        "df2",	"Para. $p$ ($F$)","Non-para. $p$ ($F$)",	"Para. $p$ (Rc)",	
-                        "Non-para. $p$ (Rc)"),
+          col.names = c("Dim.", "$R_{c}$", "$R^{2}_{c}$", "Wilk’s $\\Lambda$", "Multiple $F$",	
+                        "$df$ 1",	"$df$ 2", "Para. $p$ ($F$)","Non-para. $p$ ($F$)", 
+                        "Para. $p$ ($R_{c}$)",	"Non-para. $p$ ($R_{c}$)"),
           font_size = "small"
 )
 ```
@@ -686,11 +691,12 @@ p_stars_coef <- data.frame(matrix(NA, nrow = nrow(format_coef_ps), ncol =
 
 apa_table(cbind(alt2_xcoeftable[,"stnd_x_can_coef"], papaja::printnum(alt2_xcoeftable[,c("str_coef", "sq_str_coef")], gt1 = FALSE), p_stars_coef),
           caption = "Coefficients for X variables, first function.",
-          note = "* Survive correction for multiple comparisons (Bonferroni).",
+          note = "* Survive correction for multiple comparisons (Bonferroni). Bold text = both 
+          parametric and non-parametric p-value significant.",
           align = c("l",rep("c", 5) ),
           col.names = c("X Variables", "Standardized X canonical coefficients",	
-                        "Structure coefficient (rs)",	"Squared structure",	"Para. $p$ (rs)", 
-                        "Non-para. $p$ (rs)"),
+                        "Structure coefficient ($r_{s}$)", "Squared structure coefficient ($r^{2}_{s}$)",
+                        "Para. $p$ ($r_{s}$)", "Non-para. $p$ ($r_{s}$)"),
           font_size = "small"
 )
 ```
@@ -716,11 +722,12 @@ p_stars_coef <- data.frame(matrix(NA, nrow = nrow(format_coef_ps), ncol =
 
 apa_table(cbind(alt2_ycoeftable[,"stnd_y_can_coef"], papaja::printnum(alt2_ycoeftable[,c("str_coef", "sq_str_coef")], gt1 = FALSE),p_stars_coef),
           caption = "Coefficients for Y variables, first function.",
-          note = "* Survive correction for multiple comparisons (Bonferroni).",
+          note = "* Survive correction for multiple comparisons (Bonferroni). Bold text = both 
+          parametric and non-parametric p-value significant.",
           align = c("l",rep("c", 5) ),
-          col.names = c("Y Variables", "Standardized X canonical coefficients",	
-                        "Structure coefficient (rs)",	"Squared structure",	"Para. $p$ (rs)", 
-                        "Non-para. $p$ (rs)"),
+          col.names = c("Y Variables", "Standardized Y canonical coefficients",	
+                        "Structure coefficient ($r_{s}$)", "Squared structure coefficient ($r^{2}_{s}$)",
+                        "Para. $p$ ($r_{s}$)", "Non-para. $p$ ($r_{s}$)"),
           font_size = "small"
 )
 
