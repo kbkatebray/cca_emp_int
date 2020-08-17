@@ -1,5 +1,5 @@
 
-This repository contains the scripts for the CCA analysis (chapter 1 of thesis).
+This repository contains the scripts for the CCA analysis.
 
 # Data 
 - Is stored in csv files and these files are currently ignored by git. 
