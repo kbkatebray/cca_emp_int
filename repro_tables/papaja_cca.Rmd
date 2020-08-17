@@ -20,8 +20,6 @@ author:
     affiliation   : "5" 
   - name          : "Sally Richmond"
     affiliation   : "6" 
-  - name          : "Camille Deane"
-    affiliation   : "5" 
   - name          : "Nicholas B. Allen"
     affiliation   : "7" 
   - name          : "Sarah Whittle"
@@ -331,7 +329,7 @@ x <- corx(corrmatrix,
 
 papaja::apa_table(x$apa, # apa contains the data.frame needed for apa_table
                   caption = "Bivariate correlations for key variables and covariates (Pearson’s)",
-                  note = "* p < 0.05; ** p < 0.01; *** p < 0.001. Not corrected for multiple comparisons. Full variable names: ineffectiveness, negative self-esteem, negative mood and physical symptoms, interpersonal problems, physical injury fears, separation anxiety, social anxiety/phobia, obsessive compulsive symptoms, generalized anxiety symptoms, panic/agoraphobia, parent education, neighborhood advantage, silent films task, full scale IQ estimate, sex, cognitive empathy, empathic concern, affective sharing and empathic distress.",
+                  note = "* *p* < 0.05; ** *p* < 0.01; *** *p* < 0.001. Not corrected for multiple comparisons. Full variable names: ineffectiveness, negative self-esteem, negative mood and physical symptoms, interpersonal problems, physical injury fears, separation anxiety, social anxiety/phobia, obsessive compulsive symptoms, generalized anxiety symptoms, panic/agoraphobia, parent education, neighborhood advantage, silent films task, full scale IQ estimate, sex, cognitive empathy, empathic concern, affective sharing and empathic distress.",
                   landscape = TRUE,
                   font_size = "small"
                   )
