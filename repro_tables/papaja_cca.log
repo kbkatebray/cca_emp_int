@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.7.22)  31 JUL 2020 09:11
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.7.22)  21 AUG 2020 10:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**papajatest_cca.tex
-(./papajatest_cca.tex
+**papaja_cca.tex
+(./papaja_cca.tex
 LaTeX2e <2020-02-02> patch level 5
 L3 programming layer <2020-07-17> (c:/Users/kbkat/AppData/Roaming/TinyTeX/texmf
 -dist/tex/latex/apa6/apa6.cls
@@ -646,27 +646,27 @@ d-pdfmode.def
 File: l3backend-pdfmode.def 2020-06-29 L3 backend support: PDF mode
 \l__kernel_color_stack_int=\count303
 \l__pdf_internal_box=\box58
-) (./papajatest_cca.aux)
-\openout1 = `papajatest_cca.aux'.
+) (./papaja_cca.aux)
+\openout1 = `papaja_cca.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 141.
-LaTeX Font Info:    ... okay on input line 141.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 141.
-LaTeX Font Info:    ... okay on input line 141.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 141.
-LaTeX Font Info:    ... okay on input line 141.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 141.
-LaTeX Font Info:    ... okay on input line 141.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 141.
-LaTeX Font Info:    ... okay on input line 141.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 141.
-LaTeX Font Info:    ... okay on input line 141.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 141.
-LaTeX Font Info:    ... okay on input line 141.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 141.
-LaTeX Font Info:    ... okay on input line 141.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 141.
-LaTeX Font Info:    ... okay on input line 141.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 153.
+LaTeX Font Info:    ... okay on input line 153.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 153.
+LaTeX Font Info:    ... okay on input line 153.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 153.
+LaTeX Font Info:    ... okay on input line 153.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 153.
+LaTeX Font Info:    ... okay on input line 153.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 153.
+LaTeX Font Info:    ... okay on input line 153.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 153.
+LaTeX Font Info:    ... okay on input line 153.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 153.
+LaTeX Font Info:    ... okay on input line 153.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 153.
+LaTeX Font Info:    ... okay on input line 153.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 153.
+LaTeX Font Info:    ... okay on input line 153.
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -735,7 +735,7 @@ Package: ltcaption 2020/05/30 v1.4b longtable captions (AR)
 )
 Package caption Info: End \AtBeginDocument code.
 \AtBeginShipoutBox=\box59
-Package hyperref Info: Link coloring OFF on input line 141.
+Package hyperref Info: Link coloring OFF on input line 153.
 
 (c:/Users/kbkat/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.s
 ty
@@ -751,50 +751,50 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count304
 )
-LaTeX Info: Redefining \ref on input line 141.
-LaTeX Info: Redefining \pageref on input line 141.
-LaTeX Info: Redefining \nameref on input line 141.
-(./papajatest_cca.out) (./papajatest_cca.out)
+LaTeX Info: Redefining \ref on input line 153.
+LaTeX Info: Redefining \pageref on input line 153.
+LaTeX Info: Redefining \nameref on input line 153.
+(./papaja_cca.out) (./papaja_cca.out)
 \@outlinefile=\write5
-\openout5 = `papajatest_cca.out'.
+\openout5 = `papaja_cca.out'.
 
 LaTeX Font Info:    Trying to load font information for T1+lmss on input line 1
-43.
+55.
 (c:/Users/kbkat/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmss.fd
 File: t1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 1
-43.
+55.
 (c:/Users/kbkat/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
-43.
+55.
 (c:/Users/kbkat/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-143.
+155.
 (c:/Users/kbkat/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-143.
+155.
 (c:/Users/kbkat/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 143.
+(Font)              <12> on input line 155.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 143.
+(Font)              <8> on input line 155.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 143.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 143
+(Font)              <6> on input line 155.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 155
 .
 (c:/Users/kbkat/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 143
+LaTeX Font Info:    Trying to load font information for U+msb on input line 155
 .
 (c:/Users/kbkat/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -809,98 +809,157 @@ This may cause the page layout to be inconsistent, however.
 tex.map}
 
 ] [2] [3]
+Overfull \hbox (16.47963pt too wide) in paragraph at lines 178--178
+[] [] 
+ []
+
+
+Overfull \hbox (32.95924pt too wide) in alignment at lines 177--182
+ [] [] [] 
+ []
+
+
+Overfull \hbox (16.47963pt too wide) in paragraph at lines 183--183
+[] [] 
+ []
+
+
+Overfull \hbox (32.95924pt too wide) in alignment at lines 182--187
+ [] [] [] 
+ []
+
+
+Overfull \hbox (32.95924pt too wide) in alignment at lines 187--208
+ [] [] [] 
+ []
+
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 224.
+(Font)              <10.95> on input line 226.
+
+Overfull \hbox (32.95924pt too wide) in alignment at lines 208--227
+ [] [] [] 
+ []
+
 [4] [5] [6] [7]
-Overfull \hbox (105.80994pt too wide) in paragraph at lines 282--282
+Overfull \hbox (105.80994pt too wide) in paragraph at lines 285--285
 [] [] 
  []
 
 
-Overfull \hbox (211.61986pt too wide) in alignment at lines 281--286
+Overfull \hbox (211.61986pt too wide) in alignment at lines 284--289
  [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (105.80994pt too wide) in paragraph at lines 287--287
+Overfull \hbox (105.80994pt too wide) in paragraph at lines 290--290
 [] [] 
  []
 
 
-Overfull \hbox (211.61986pt too wide) in alignment at lines 286--291
+Overfull \hbox (211.61986pt too wide) in alignment at lines 289--294
  [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (211.61986pt too wide) in alignment at lines 291--312
+Overfull \hbox (211.61986pt too wide) in alignment at lines 294--315
  [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (211.61986pt too wide) in alignment at lines 312--315
+Overfull \hbox (211.61986pt too wide) in alignment at lines 315--318
  [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] 
  []
 
 [8
 
 ] [9]
-Overfull \hbox (39.62424pt too wide) in paragraph at lines 325--354
+Overfull \hbox (136.86766pt too wide) in paragraph at lines 328--359
  [] 
  []
 
-<papajatest_cca_files/figure-latex/scatterplot-1.pdf, id=104, 469.755pt x 325.2
-15pt>
-File: papajatest_cca_files/figure-latex/scatterplot-1.pdf Graphic file (type pd
-f)
-<use papajatest_cca_files/figure-latex/scatterplot-1.pdf>
-Package pdftex.def Info: papajatest_cca_files/figure-latex/scatterplot-1.pdf  u
-sed on input line 362.
+<papaja_cca_files/figure-latex/scatterplot-1.pdf, id=84, 469.755pt x 325.215pt>
+
+File: papaja_cca_files/figure-latex/scatterplot-1.pdf Graphic file (type pdf)
+<use papaja_cca_files/figure-latex/scatterplot-1.pdf>
+Package pdftex.def Info: papaja_cca_files/figure-latex/scatterplot-1.pdf  used 
+on input line 369.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
-Overfull \hbox (212.11343pt too wide) in paragraph at lines 370--399
+Overfull \hbox (315.30522pt too wide) in paragraph at lines 379--409
  [] 
  []
 
 
-Overfull \hbox (258.80281pt too wide) in paragraph at lines 407--437
+Overfull \hbox (361.9946pt too wide) in paragraph at lines 417--448
+ [] 
+ []
+
+
+Overfull \hbox (136.86766pt too wide) in paragraph at lines 501--531
+ [] 
+ []
+
+
+Overfull \hbox (287.13927pt too wide) in paragraph at lines 539--565
+ [] 
+ []
+
+
+Overfull \hbox (361.9946pt too wide) in paragraph at lines 573--608
+ [] 
+ []
+
+
+Overfull \hbox (136.86766pt too wide) in paragraph at lines 616--644
+ [] 
+ []
+
+
+Overfull \hbox (287.13927pt too wide) in paragraph at lines 652--678
+ [] 
+ []
+
+
+Overfull \hbox (361.9946pt too wide) in paragraph at lines 686--717
  [] 
  []
 
 [10
 
- <./papajatest_cca_files/figure-latex/scatterplot-1.pdf>] [11] [12] AED endfloa
-t: Processing end Figures and Tables [13]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 486.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 486.
-(./papajatest_cca.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 486.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 486.
-Package rerunfilecheck Info: File `papajatest_cca.out' has not changed.
-(rerunfilecheck)             Checksum: 0B0F810BC9EDA1276FF7D9D534D5BD61;1550.
+ <./papaja_cca_files/figure-latex/scatterplot-1.pdf>] [11] [12] [13] [14] [15] 
+[16] [17] [18] AED endfloat: Processing end Figures and Tables [19]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 796.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 796.
+(./papaja_cca.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 796.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 796.
+Package rerunfilecheck Info: File `papaja_cca.out' has not changed.
+(rerunfilecheck)             Checksum: E1DB16C64704822E1C6751128DA4C3F2;1216.
  ) 
 Here is how much of TeX's memory you used:
- 14776 strings out of 482854
- 218186 string characters out of 5955215
- 521993 words of memory out of 5000000
+ 14799 strings out of 482854
+ 218522 string characters out of 5955215
+ 535548 words of memory out of 5000000
  29777 multiletter control sequences out of 15000+600000
  589198 words of font info for 74 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 46i,11n,51p,2253b,654s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 46i,12n,51p,2249b,654s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/Users/kbkat/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.e
 nc}{c:/Users/kbkat/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mat
 hit.enc}{c:/Users/kbkat/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/l
 m-ec.enc}<c:/Users/kbkat/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/
 lm/lmbx12.pfb><c:/Users/kbkat/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/pu
 blic/lm/lmmi10.pfb><c:/Users/kbkat/AppData/Roaming/TinyTeX/texmf-dist/fonts/typ
-e1/public/lm/lmr10.pfb><c:/Users/kbkat/AppData/Roaming/TinyTeX/texmf-dist/fonts
-/type1/public/lm/lmr12.pfb><c:/Users/kbkat/AppData/Roaming/TinyTeX/texmf-dist/f
-onts/type1/public/lm/lmr8.pfb><c:/Users/kbkat/AppData/Roaming/TinyTeX/texmf-dis
-t/fonts/type1/public/lm/lmri12.pfb><c:/Users/kbkat/AppData/Roaming/TinyTeX/texm
-f-dist/fonts/type1/public/lm/lmss8.pfb>
-Output written on papajatest_cca.pdf (13 pages, 187627 bytes).
+e1/public/lm/lmmi8.pfb><c:/Users/kbkat/AppData/Roaming/TinyTeX/texmf-dist/fonts
+/type1/public/lm/lmr10.pfb><c:/Users/kbkat/AppData/Roaming/TinyTeX/texmf-dist/f
+onts/type1/public/lm/lmr12.pfb><c:/Users/kbkat/AppData/Roaming/TinyTeX/texmf-di
+st/fonts/type1/public/lm/lmr8.pfb><c:/Users/kbkat/AppData/Roaming/TinyTeX/texmf
+-dist/fonts/type1/public/lm/lmri12.pfb><c:/Users/kbkat/AppData/Roaming/TinyTeX/
+texmf-dist/fonts/type1/public/lm/lmss8.pfb>
+Output written on papaja_cca.pdf (19 pages, 207463 bytes).
 PDF statistics:
- 202 PDF objects out of 1000 (max. 8388607)
- 176 compressed objects within 2 object streams
- 56 named destinations out of 1000 (max. 500000)
- 86 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 255 PDF objects out of 1000 (max. 8388607)
+ 221 compressed objects within 3 object streams
+ 79 named destinations out of 1000 (max. 500000)
+ 54 words of extra memory for PDF output out of 10000 (max. 10000000)
 

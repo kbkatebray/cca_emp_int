@@ -3,7 +3,7 @@ title             : "Associations between cognitive and affective empathy and in
 shorttitle        : "Empathy and internalizing symptoms in late childhood"
 
 author: 
-  - name          : "Kate Bray"
+  - name          : "Katherine O. Bray"
     affiliation   : "1,2"
     corresponding : yes    # Define only one corresponding author
     address       : "Postal address"
@@ -20,6 +20,8 @@ author:
     affiliation   : "5" 
   - name          : "Sally Richmond"
     affiliation   : "6" 
+  - name          : "Camille Deane"
+    affiliation   : "5" 
   - name          : "Nicholas B. Allen"
     affiliation   : "7" 
   - name          : "Sarah Whittle"

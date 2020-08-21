@@ -3,8 +3,9 @@
 *.RData
 *.rds
 
-# ignores word docs
+# ignores word docs/pdfs
 *.docx
+*.pdf
 
 # ignores R history file
 *.Rhistory
