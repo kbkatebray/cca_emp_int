@@ -823,6 +823,13 @@ ethnic_coded &lt;- read.csv(&quot;scored_data/ccaonlyethnic_coded.csv&quot;, hea
  ethn &lt;- summarytools::freq(as.factor(ethnic_coded$coded_ethnicity), order = &quot;levels&quot;)[c(1:7), c(1,4)]
  
  desctable &lt;- rbind(sex, age, IQ, pared, neigh, race, ethn)
+ short_desctable&lt;- rbind(desctable[1:4,],desctable[5,]+desctable[6,], desctable[7,]+desctable[8,]+desctable[9,]+desctable[10,], desctable[11,]+desctable[12,], desctable[13:28,])
+ 
+ # change to 2dp
+ #dp&lt;- format(round(desctable, 2), nsmall = 2)
+short_dp&lt;- format(round(short_desctable, 2), nsmall = 2) 
+ #edit the means and standard deviations together in one column
+desctable&lt;- paste(trimws(short_dp[,1]), &quot; (&quot;, trimws(short_dp[,2]), &quot;)&quot;, sep = &quot;&quot;)
 
 ##Cronbach&#39;s alpha
 #find the Fs from the cca set

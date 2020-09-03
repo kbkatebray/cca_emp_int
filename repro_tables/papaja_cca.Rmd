@@ -153,25 +153,37 @@ bf_2b <- readRDS("../scored_data/2b_bonferroni_val.rds")
 ## Canonical Correlation Analysis
 ```{r, desctable, echo=FALSE, results='asis'}
 
-row.names(desctable) <- c("Female","Male","blank1","blank2","Grade 7 to 12", "Graduated High School",
-                          "Partial tertiary university", "TAFE", "Bachelor’s degree",
-                          "Honors", "Partial graduate school", "Completed graduate school", 
+#desctable$X <- NULL
+#desctable<- as.vector(desctable)
+
+
+
+# row.names(desctable) <- c("Female","Male","blank1","blank2","Grade 7 to 12", "Graduated High School",
+#                           "Partial tertiary university", "TAFE", "Bachelor’s degree",
+#                           "Honors", "Partial graduate school", "Completed graduate school", 
+#                           "Quintile 1", "Quintile 2", "Quintile 3", "Quintile 4",
+#                           "Quintile 5", "White", "Asian", "Mixed or other", "Missing", "Australian 
+#                           (or New Zealander)", "Australian/European",
+#                           "Australian/Asian", "Asian1", "European", "Other", "Missin")
+
+row.names(desctable) <- c("Female","Male","blank1","blank2","Partial/Complete High School",
+                          "Partial/Complete University", "Partial/Complete Post-Graduate Degree", 
                           "Quintile 1", "Quintile 2", "Quintile 3", "Quintile 4",
-                          "Quintile 5", "White", "Asian", "Mixed or other", "Missing", "Australian 
-                          (or New Zealander)", "Australian/European",
+                          "Quintile 5", "White", "Asian", "Mixed or other", "Missing",
+                          "Australian (or New Zealander)", "Australian/European",
                           "Australian/Asian", "Asian1", "European", "Other", "Missin")
 
 
 apa_table(
-  list(`Sex` = desctable[1:2,2:3], `Age` = desctable[3,2:3],`Est. FSIQ` = desctable[4,2:3], 
-       `Parent Education` = desctable[5:12,2:3], `Neighborhood advantage` = desctable[13:17,2:3], 
-       `Race` = desctable[18:21,2:3], `Ethnicity` = desctable[22:28,2:3] ),
+  list(`Sex N (%)` = desctable[1,], `Age (years) M (SD)` = desctable[3,],`Est. FSIQ M (SD)` = desctable[4,], 
+       `Parent Education n (%)` = desctable[5:7,], `Neighborhood advantage n (%)` = desctable[8:12,], 
+       `Race n (%)` = desctable[13:15,], `Ethnicity n (%)` = desctable[17:22,] ),
           caption = "Descriptive statistics characterizing the sample used for the CCA analysis",
           note = "Est. FSIQ = Estimated full scale IQ, Neighborhood advantage is listed from least 
   advantage to most",
-          align = c("l",rep("c", 2)),
-          col.names = c( "Demographic measure","Frequency or Mean","Percentage or Stnd. Dev."),
-  digits = c(0,0,2),
+          align = c("l","c", "c"),
+          col.names = c( "Demographic measure","test", " "),
+  #digits = c(0,2),
   longtable = TRUE,
   font_size = "small"
   )
