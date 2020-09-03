@@ -1,3 +1,4 @@
+[![DOI](https://zenodo.org/badge/269261188.svg)](https://zenodo.org/badge/latestdoi/269261188)
 
 This repository contains the scripts for the CCA analysis.
 
