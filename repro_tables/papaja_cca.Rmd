@@ -179,8 +179,7 @@ apa_table(
        `Parent Education n (%)` = desctable[5:7,], `Neighborhood advantage n (%)` = desctable[8:12,], 
        `Race n (%)` = desctable[13:15,], `Ethnicity n (%)` = desctable[17:22,] ),
           caption = "Descriptive statistics characterizing the sample used for the CCA analysis",
-          note = "Est. FSIQ = Estimated full scale IQ, Neighborhood advantage is listed from least 
-  advantage to most",
+          note = "Abbreviations: CCA = Canonical Correlation Analysis; Est. FSIQ = Estimated full scale IQ; Neighborhood advantage is listed from least advantage to most.",
           align = c("l","c", "c"),
           col.names = c( "Demographic measure","test", " "),
   #digits = c(0,2),
@@ -317,9 +316,10 @@ scas_desc<- cbind(scas_desc, cronscas)
 
 #Use the wrapper apa_table to make an apa table of the descriptive
 apa_table(
-  list(`Empathy` = emp_desc, `CDI (before binarization)` = cdi_desc, `SCAS` = scas_desc),
-            caption = "Means, standard deviations, range, skew and kurtosis for the key measures 
+  list(`Empathy` = emp_desc, `CDI-2 (before binarization)` = cdi_desc, `SCAS` = scas_desc),
+          caption = "Means, standard deviations, range, skew and kurtosis for the key measures 
   used in the CCA",
+          note = "Abbreviations: CCA = Canonical Correlation Analysis, CDI-2 = Children’s Depression Inventory 2, SCAS = Spence Childrens Anxiety Scale.",
           align = c("l",rep("c", 7) ),
           col.names = c("Measure of interest", "$N$","Mean","$SD$","Range", "Skew", "Kurtosis", 
                         "Cronbach’s $\\alpha$"),
@@ -375,7 +375,7 @@ apa_table(cbind(ccatable[,1], papaja::printnum(ccatable[,2:4], gt1 = FALSE), cca
                 p_stars),
           caption = "Pertinent values from the CCA analysis for each of the nine canonical functions
           created",
-          note = "* = <0.05, bold text = both parametric and non-parametric p-value significant. Abbreviations: Dim. = Dimension, *Rc* = Canonical Correlation, *Rc2* = Canonical Correlation Squared, 
+          note = "* = <0.05, bold text = both parametric and non-parametric p-value significant. Abbreviations: CCA = Canonical Correlation Analysis, Dim. = Dimension, *Rc* = Canonical Correlation, *Rc2* = Canonical Correlation Squared, 
           para. = parametric.",
           align = c("l",rep("c", 10) ),
           col.names = c("Dim.", "$R_{c}$", "$R^{2}_{c}$", "Wilk’s $\\Lambda$", "Multiple $F$",	
