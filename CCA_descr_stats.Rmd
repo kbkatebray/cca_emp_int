@@ -568,6 +568,28 @@ ggpairs(mainX)
 
 ```
 
+```{r, extra_sec_differences_main_vars}
+
+#This piece of code added in after review to examine the differences between sexes in the main variables in the analysis
+means_by_group<- dplyr::select(cca_maindata, aff_shar, cog_emp, emp_conc, emp_dist, 
+                                  silent_films_total, negmood_phys, neg_selfest, ineff, intprobs,
+                               scasseps, scassoc, scasphysinj, scasgad, scasocd, 
+                               scasopanicag, gender)
+#data rearranged to long table
+means_by_group.long <- means_by_group %>%
+  pivot_longer(-gender, names_to = "variables", values_to = "value")
+
+#run a t-test on all the main variables examining sex
+stat.test <- means_by_group.long %>%
+  group_by(variables) %>%
+  t_test(value ~ gender) %>%
+  adjust_pvalue(method = "BH") %>%
+  add_significance()
+stat.test
+
+
+```
+
 ```{r, exports, include=FALSE}
 
 write.csv(desctable, file = "scored_data/desctable.csv")
